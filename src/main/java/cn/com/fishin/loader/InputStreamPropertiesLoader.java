@@ -8,7 +8,15 @@ import java.util.Properties;
 
 /**
  * <p>Properties 配置文件加载器</p>
- * <p>这个加载器用于使用 InputStream 加载，子类必须实现</p>
+ * <p>
+ *     这个加载器适用于使用 InputStream 加载资源文件的加载器，
+ *     子类必须实现 getInputStream(String resourceFileName) 方法
+ * </p>
+ * <p>Properties file loader</p>
+ * <p>
+ *     This loader uses inputStream to load resource,
+ *     subclass must implement method getInputStream(String resourceFileName)
+ * </p>
  *
  * @author Fish
  * ------> 1149062639@qq.com

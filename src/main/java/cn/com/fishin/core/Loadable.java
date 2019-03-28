@@ -27,5 +27,5 @@ public interface Loadable extends Tuzable {
      * @throws IOException <p>找不到资源文件就会抛出这个异常</p>
      *                     <p>The resource is not found</p>
      */
-    Map<String, Object> load() throws IOException;
+    Map<String, String> load() throws IOException;
 }

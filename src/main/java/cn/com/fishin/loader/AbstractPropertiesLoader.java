@@ -33,7 +33,7 @@ public abstract class AbstractPropertiesLoader implements Loadable {
     protected AbstractPropertiesLoader() {}
 
     @Override
-    public Map<String, Object> load() throws IOException {
+    public Map<String, String> load() throws IOException {
         return properties2Map(loadProperties());
     }
 
@@ -45,10 +45,10 @@ public abstract class AbstractPropertiesLoader implements Loadable {
 
     // 将一个 Properties 转换成 Map
     // you give it a Properties, and it returns a Map
-    private Map<String, Object> properties2Map(Properties properties) {
+    private Map<String, String> properties2Map(Properties properties) {
 
         // 这里选择使用 java.helper.concurrent.ConcurrentHashMap 来保证并发性能和安全性
-        Map<String, Object> result = new ConcurrentHashMap<>(sizeOfPropertiesKey(properties) * 2);
+        Map<String, String> result = new ConcurrentHashMap<>(sizeOfPropertiesKey(properties) * 2);
 
         // 将 Properties 属性保存在 Map 中
         for (String key : properties.stringPropertyNames()) {

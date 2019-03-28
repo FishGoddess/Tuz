@@ -37,10 +37,11 @@ public class TuzSimpleDemo {
         // API: use(String key, String namespace)
         // 其中上面的代码中 number 是资源名字，test 是命名空间
 
-        Tuz.use("number", "test"); // ===> 返回 16
+        String number = Tuz.use("number", "test"); // ===> 返回 16
+        System.out.println(number);
 
         // 同样，您可以不指定命名空间，但是这不被推荐
         // 具体原因请看 cn.com.fishin.core.Tuz.use(java.lang.String)
-        //Tuz.use("number"); // ===> 返回 16
+        //String number = Tuz.use("number"); // ===> 返回 16
     }
 }
