@@ -1,37 +1,42 @@
-# Tuz
+# Tuz 轻量资源（配置、对象）管理器
 
-#### 介绍
-轻量资源（配置、对象）管理器
+### 介绍
+Tuz 轻量资源（配置、对象）管理器，用于管理您的资源，
 
-#### 软件架构
-软件架构说明
+比如 .properties 文件，一次加载，随处可用，并且使用非常简单！
 
-
-#### 安装教程
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 使用说明
-
-1. xxxx
-2. xxxx
-3. xxxx
-
-#### 参与贡献
-
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+不仅如此，您还可以轻松扩展功能，只需要简单地实现一些接口即可！
 
 
-#### 码云特技
+### 使用说明
+```java
+// 参考 test 文件夹下的 cn.com.fishin.demo.TuzSimpleDemo
+public class TuzSimpleDemo {
 
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+    public static void main(String[] args) throws IOException {
+
+        // 加载资源文件
+        // API: load(String namespace, Loadable resource) throws IOException
+        // test 是命名空间，后面一个是资源加载器
+        // "test.properties" 文件中有一个属性：number=16
+        
+        Tuz.load("test", new ClasspathPropertiesLoader("test.properties"));
+
+        // 当然，你也可以不指定命名空间，内部会自动生成一个命名空间
+        // 不过，为了性能和正确性，还是建议您使用自定义的命名空间
+        //Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
+
+        // 下面就是激动人心的时刻了！您可以在任意地方使用您的资源！
+        // 上面提到，初始化的资源文件中有一个属性：number=16
+        // 您可以在任意地方使用这个资源，像这样：
+        // API: use(String key, String namespace)
+        // 其中上面的代码中 number 是资源名字，test 是命名空间
+        
+        Tuz.use("number", "test"); // ===> 返回 16
+
+        // 同样，您可以不指定命名空间，但是这不被推荐
+        // 具体原因请看 cn.com.fishin.core.Tuz.use(java.lang.String)
+        //Tuz.use("number"); // ===> 返回 16
+    }
+}
+```
