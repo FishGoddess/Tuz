@@ -1,14 +1,14 @@
 # Tuz 轻量资源（配置、对象）管理器
 
-### 介绍
-Tuz 轻量资源（配置、对象）管理器，用于管理您的资源，
+## 介绍
+    Tuz 轻量资源（配置、对象）管理器，用于管理您的资源，
 
-比如 .properties 文件，一次加载，随处可用，并且使用非常简单！
+    比如 .properties 文件，一次加载，随处可用，并且使用非常简单！
 
-不仅如此，您还可以轻松扩展功能，只需要简单地实现一些接口即可！
+    不仅如此，您还可以轻松扩展功能，只需要简单地实现一些接口即可！
 
-
-### 使用说明
+## 使用说明
+#### 1. 简单的资源管理，这里主要使用 .properties 文件
 ```java
 // 参考 test 文件夹下的 cn.com.fishin.demo.TuzSimpleDemo
 public class TuzSimpleDemo {
@@ -41,6 +41,31 @@ public class TuzSimpleDemo {
         // 同样，您可以不指定命名空间，但是这不被推荐
         // 具体原因请看 cn.com.fishin.core.Tuz.use(java.lang.String)
         //String number = Tuz.use("number"); // ===> 返回 16
+    }
+}
+```
+
+#### 2. 简单的依赖注入管理
+```java
+// 参考 test 文件夹下的 cn.com.fishin.demo.TuzSimpleDemo2
+public class TuzSimpleDemo2 {
+
+    public static void main(String[] args) throws IOException {
+
+        // 传统的方式使用接口：
+        //xxxService service = new xxxServiceImpl();
+        // 这种方式并没有真正解耦，使用 Spring 这类框架可以达到解耦效果，但是需要引入大量框架
+        // 而使用 Tuz 可以轻松做到解耦，请看下面：
+        Tuz.load("test", new ClasspathPropertiesLoader("test.properties"));
+
+        // 直接获取实现类，而不用注入实现类的细节
+        xxxService service = Tuz.useInstance("xxxService", "test", xxxService.class);
+        service.say("Hello, Tuz!");
+
+        // 同样的，你可以不指定命名空间，但是，真的不推荐！！！
+        //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
+        //xxxService service = Tuz.useInstance("xxxService", xxxService.class);
+        //service.say("Hello, Tuz!");
     }
 }
 ```
