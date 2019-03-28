@@ -22,6 +22,9 @@ public class TuzSimpleDemo {
         
         Tuz.load("test", new ClasspathPropertiesLoader("test.properties"));
 
+        // 或者，您也可以使用另外一个加载器去加载文件系统中的资源文件
+        //Tuz.load("test", new FileSystemPropertiesLoader("Z:/test.properties"));
+
         // 当然，你也可以不指定命名空间，内部会自动生成一个命名空间
         // 不过，为了性能和正确性，还是建议您使用自定义的命名空间
         //Tuz.load(new ClasspathPropertiesLoader("test2.properties"));

@@ -1,6 +1,7 @@
 package cn.com.fishin.core;
 
 import cn.com.fishin.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.loader.FileSystemPropertiesLoader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +22,8 @@ public class TuzTest {
         try {
             // 加载配置文件
             Tuz.load("test", new ClasspathPropertiesLoader("test.properties"));
-            Tuz.load("test2", new ClasspathPropertiesLoader("test2.properties"));
+            //Tuz.load("test2", new ClasspathPropertiesLoader("test2.properties"));
+            Tuz.load("test2", new FileSystemPropertiesLoader("E:/JavaProject/Tuz/src/test/resources/test2.properties"));
             //Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
         } catch (IOException e) {
             e.printStackTrace();

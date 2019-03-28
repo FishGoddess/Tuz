@@ -28,6 +28,9 @@ public class TuzSimpleDemo {
         // 不过，为了性能和正确性，还是建议您使用自定义的命名空间
         //Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
 
+        // 或者，您也可以使用另外一个加载器去加载文件系统中的资源文件
+        //Tuz.load("test", new FileSystemPropertiesLoader("Z:/test.properties"));
+
         // 下面就是激动人心的时刻了！您可以在任意地方使用您的资源！
         // 上面提到，初始化的资源文件中有一个属性：number=16
         // 您可以在任意地方使用这个资源，像这样：

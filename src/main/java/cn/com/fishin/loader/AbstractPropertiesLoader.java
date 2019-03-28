@@ -30,6 +30,8 @@ public abstract class AbstractPropertiesLoader implements Loadable {
      */
     protected abstract Properties loadProperties() throws IOException;
 
+    protected AbstractPropertiesLoader() {}
+
     @Override
     public Map<String, Object> load() throws IOException {
         return properties2Map(loadProperties());
