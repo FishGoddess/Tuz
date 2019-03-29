@@ -7,6 +7,10 @@
 
     不仅如此，您还可以轻松扩展功能，只需要简单地实现一些接口即可！
 
+官网：[Tuz 官方网站](https://www.fishin.com.cn/Tuz) (正在建立。。。)
+
+联系方式：fishinlove@163.com
+
 ## 使用说明
 #### 1. 简单的资源管理，这里主要使用 .properties 文件
 ```java
@@ -70,3 +74,15 @@ public class TuzSimpleDemo2 {
     }
 }
 ```
+
+#### 3. 更多用法开发中，你也可以轻松定制自己的插件
+内置插件位于 `cn.com.fishin.tuz.plugin` 包下，常用的有 `DiPlugin` 依赖注入插件
+
+您可以参考这个插件的实现来定制自己的插件！
+
+## 更新日志
+#### *2019-3-29:*
+    1. 加入了依赖注入插件，参考 cn.com.fishin.tuz.plugin.DiPlugin
+    2. 实现了文件系统资源加载器，可以从文件系统中加载资源文件了
+    3. 修改 cn.com.fishin.tuz.core.Loadable 接口，使得它具有命名空间的功能
+

@@ -6,10 +6,10 @@
 
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.3.0-BETA</version>
+    <version>0.3.1-BETA</version>
 
     <name>Tuz</name>
-    <url>http://www.fishin.com.cn/Tuz</url>
+    <url>https://www.fishin.com.cn/Tuz</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
