@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 测试 tuz 类
@@ -22,6 +23,7 @@ public class TuzTest {
         try {
             // 加载配置文件
             Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+            //Tuz.load(new ClasspathPropertiesLoader("test.properties", "test", StandardCharsets.UTF_8));
             //Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
             Tuz.load(new FileSystemPropertiesLoader("E:/JavaProject/tuz/src/test/resources/test2.properties", "test2"));
             //Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
@@ -38,6 +40,11 @@ public class TuzTest {
         Assert.assertEquals(Tuz.use("instance"), "cn.com.fishin.tuz.core.Loadable");
         Assert.assertEquals(Tuz.use("str", "test2"), "world");
         Assert.assertEquals(Tuz.use("str"), "world");
+        Assert.assertEquals(Tuz.use("country", "test"), "中国");
+        Assert.assertEquals(Tuz.use("country"), "中国");
+        Assert.assertEquals(Tuz.use("键值"), "属性");
+        Assert.assertEquals(Tuz.use("键值", "test"), "属性");
+        Assert.assertNull(Tuz.use("键值", "wrong"));
         Assert.assertNull(Tuz.use("str", "test"));
         Assert.assertNull(Tuz.use("instance", "test2"));
         Assert.assertNull(Tuz.use("hello", "test"));

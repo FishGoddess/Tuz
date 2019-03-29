@@ -176,6 +176,11 @@ public class TuzSpringBootDemo  {
 您可以参考这个插件的实现来定制自己的插件！
 
 ## 更新日志
+#### *2019-3-30:*
+    1. 修复了上一个版本中资源文件非英文字符集乱码的问题
+    2. 新增加了带有指定字符集的资源加载器，可以在加载资源时指定字符集
+    3. 废弃了 cn.com.fishin.tuz.loader.InputStreamPropertiesLoader 加载器
+
 #### *2019-3-29:*
     1. 加入了依赖注入插件，参考 cn.com.fishin.tuz.plugin.DiPlugin
     2. 实现了文件系统资源加载器，可以从文件系统中加载资源文件了

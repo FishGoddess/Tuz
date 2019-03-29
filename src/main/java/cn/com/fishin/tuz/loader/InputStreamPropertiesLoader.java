@@ -8,20 +8,25 @@ import java.util.Properties;
 
 /**
  * <p>Properties 配置文件加载器</p>
+ * <p>有可能造成字符乱码问题！！已废弃！！</p>
  * <p>
  *     这个加载器适用于使用 InputStream 加载资源文件的加载器，
  *     子类必须实现 getInputStream(String resourceFileName) 方法
  * </p>
  * <p>Properties file loader</p>
+ * <p>It may cause charset problem!! Deprecated!!</p>
  * <p>
  *     This loader uses inputStream to load resource,
  *     subclass must implement method getInputStream(String resourceFileName)
  * </p>
  *
+ * @see cn.com.fishin.tuz.loader.ReaderPropertiesLoader
+ *
  * @author Fish
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/28 20:35:59</p>
  */
+@Deprecated
 public abstract class InputStreamPropertiesLoader extends AbstractPropertiesLoader {
 
     // 资源文件输入流

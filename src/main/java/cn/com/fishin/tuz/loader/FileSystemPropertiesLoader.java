@@ -1,9 +1,11 @@
 package cn.com.fishin.tuz.loader;
 
+import cn.com.fishin.tuz.helper.IOHelper;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * <p>Properties 配置文件加载器</p>
@@ -15,7 +17,7 @@ import java.nio.file.Paths;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/28 20:11:03</p>
  */
-public class FileSystemPropertiesLoader extends InputStreamPropertiesLoader {
+public class FileSystemPropertiesLoader extends ReaderPropertiesLoader {
 
     /**
      * <p>根据资源文件名称构建</p>
@@ -25,7 +27,7 @@ public class FileSystemPropertiesLoader extends InputStreamPropertiesLoader {
      *                         <p>resource file</p>
      */
     public FileSystemPropertiesLoader(String resourceFileName) {
-        super(resourceFileName);
+        super(resourceFileName, resourceFileName, StandardCharsets.UTF_8);
     }
 
     /**
@@ -38,11 +40,26 @@ public class FileSystemPropertiesLoader extends InputStreamPropertiesLoader {
      *                  <p>Appointed namespace</p>
      */
     public FileSystemPropertiesLoader(String resourceFileName, String namespace) {
-        super(resourceFileName, namespace);
+        super(resourceFileName, namespace, StandardCharsets.UTF_8);
+    }
+
+    /**
+     * <p>根据资源文件名称构建</p>
+     * <p>Construct with resource file</p>
+     *
+     * @param resourceFileName <p>资源文件名称</p>
+     *                         <p>resource file</p>
+     * @param namespace        <p>指定的命名空间</p>
+     *                         <p>Appointed namespace</p>
+     * @param charset          <p>读取资源的字符集</p>
+     *                         <p>The charset of this resource</p>
+     */
+    public FileSystemPropertiesLoader(String resourceFileName, String namespace, Charset charset) {
+        super(resourceFileName, namespace, charset);
     }
 
     @Override
-    protected InputStream getInputStream(String resourceFileName) throws IOException {
-        return Files.newInputStream(Paths.get(resourceFileName));
+    protected Reader getReader(String resourceFileName, Charset charset) throws IOException {
+        return IOHelper.newReaderToFileSystem(resourceFileName, charset);
     }
 }
