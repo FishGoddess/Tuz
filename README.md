@@ -52,7 +52,7 @@ public class TuzSimpleDemo {
 
 #### 2. 简单的依赖注入管理
 ```java
-// 参考 test 文件夹下的 cn.com.fishin.demo.TuzSimplcn.com.fishin.tuz.demos TuzSimpleDemo2 {
+// 参考 test 文件夹下的 cn.com.fishin.demo.TuzSimpleDemo
 public class TuzSimpleDemo2 {
 
     public static void main(String[] args) throws IOException {
@@ -75,7 +75,53 @@ public class TuzSimpleDemo2 {
 }
 ```
 
-#### 3. 更多用法开发中，你也可以轻松定制自己的插件
+#### 3. 配置设置
+```java
+// 参考 test 文件夹下的 cn.com.fishin.tuz.demo.TuzConfigDemo
+public class TuzConfigDemo {
+
+    public static void main(String[] args) throws IOException {
+
+        // 我们先以 cn.com.fishin.tuz.demo.TuzSimpleDemo2 作为切入点
+        // 先看原本的例子：
+        Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+        //xxxService service = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        //service.say("Hello, Tuz!");
+
+        // 默认情况下，创建的对象是单例模式的
+        // 参考 cn.com.fishin.tuz.core.TuzConfig
+        xxxService service1 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        xxxService service2 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        System.out.println(service1 == service2); // 返回 ===> true
+
+        // 由于 Tuz 有一个默认的配置，里面有一个属性
+        // 获取类的实例形式，默认是 true，也就是单例模式
+        //private boolean singleton = true;
+        // 你可以直接设置 Tuz 中的默认配置，但是不被推荐
+        Tuz.getConfig().setSingleton(false);
+
+        // 这样获得的对象就是多例模式的
+        xxxService service3 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        xxxService service4 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        System.out.println(service3 == service4); // 返回 ===> false
+
+        // 上面说过，你可以直接设置 Tuz 中的默认配置，但是不被推荐
+        // 正确的做法是新创建一个配置对象
+        TuzConfig newConfig = new TuzConfig();
+        newConfig.setSingleton(true); // 设置为单例模式
+
+        // 设置配置
+        Tuz.setConfig(newConfig);
+
+        // 这样获得的对象又是单例模式啦！
+        xxxService service5 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        xxxService service6 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        System.out.println(service5 == service6); // 返回 ===> true
+    }
+}
+```
+
+#### 4. 更多用法开发中，你也可以轻松定制自己的插件
 内置插件位于 `cn.com.fishin.tuz.plugin` 包下，常用的有 `DiPlugin` 依赖注入插件
 
 您可以参考这个插件的实现来定制自己的插件！

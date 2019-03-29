@@ -31,6 +31,6 @@ public class TuzSimpleDemo2 {
         // 同样的，你可以不指定命名空间，但是，真的不推荐！！！
         //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
         //xxxService service = DiPlugin.useInstance("xxxService", xxxService.class);
-        //service.say("Hello, tuz!");
+        //service.say("Hello, Tuz!");
     }
 }
