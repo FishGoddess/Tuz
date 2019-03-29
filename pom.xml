@@ -6,7 +6,7 @@
 
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.4.1-BETA</version>
+    <version>0.4.2-BETA</version>
 
     <name>Tuz</name>
     <url>https://www.fishin.com.cn/Tuz</url>
@@ -23,9 +23,17 @@
     <dependencies>
         <!-- 日志模块 -->
         <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.26</version>
+        </dependency>
+
+        <!-- 开发时使用 logback 作为日志实现 -->
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback.version}</version>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
