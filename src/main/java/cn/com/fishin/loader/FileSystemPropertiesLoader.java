@@ -28,6 +28,19 @@ public class FileSystemPropertiesLoader extends InputStreamPropertiesLoader {
         super(resourceFileName);
     }
 
+    /**
+     * <p>根据资源文件名称构建</p>
+     * <p>Construct with resource file</p>
+     *
+     * @param resourceFileName <p>资源文件名称</p>
+     *                         <p>resource file</p>
+     * @param namespace <p>指定的命名空间</p>
+     *                  <p>Appointed namespace</p>
+     */
+    public FileSystemPropertiesLoader(String resourceFileName, String namespace) {
+        super(resourceFileName, namespace);
+    }
+
     @Override
     protected InputStream getInputStream(String resourceFileName) throws IOException {
         return Files.newInputStream(Paths.get(resourceFileName));

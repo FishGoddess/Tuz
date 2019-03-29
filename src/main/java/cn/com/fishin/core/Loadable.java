@@ -16,6 +16,14 @@ import java.util.Map;
 public interface Loadable extends Tuzable {
 
     /**
+     * <p>获取这个加载资源的命名空间</p>
+     * <p>Get the namespace</p>
+     *
+     * @return <p>这个资源的命名空间</p><p>The namespace of this resource</p>
+     */
+    String namespace();
+
+    /**
      * <p>加载资源，主要是配置文件</p>
      * <p>返回一个 Map 集合，键值就是 key，而 value 就是键值对应的属性值</p>
      * <p>Load resources</p>

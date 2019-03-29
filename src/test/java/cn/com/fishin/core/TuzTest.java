@@ -21,9 +21,9 @@ public class TuzTest {
     public void testLoad() {
         try {
             // 加载配置文件
-            Tuz.load("test", new ClasspathPropertiesLoader("test.properties"));
-            //Tuz.load("test2", new ClasspathPropertiesLoader("test2.properties"));
-            Tuz.load("test2", new FileSystemPropertiesLoader("E:/JavaProject/Tuz/src/test/resources/test2.properties"));
+            Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+            //Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
+            Tuz.load(new FileSystemPropertiesLoader("E:/JavaProject/Tuz/src/test/resources/test2.properties", "test2"));
             //Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
         } catch (IOException e) {
             e.printStackTrace();

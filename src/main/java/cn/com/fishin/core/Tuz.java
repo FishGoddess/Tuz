@@ -122,31 +122,16 @@ public class Tuz {
      * <p>加载一个资源文件</p>
      * <p>Load a resource</p>
      *
-     * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
-     *                  <p>Appointed namespace to different resource</p>
-     * @param resource  <p>要被加载的资源文件</p>
-     *                  <p>The resource to be loaded</p>
-     * @throws IOException <p>找不到资源文件就会抛出这个异常</p>
-     *                     <p>The resource is not found</p>
-     */
-    public static void load(String namespace, Loadable resource) throws IOException {
-        resources.put(namespace, resource.load());
-
-        // 日志输出
-        LogHelper.debug("Namespace [" + namespace + "] loaded resource ===> " + resources);
-    }
-
-    /**
-     * <p>加载一个资源文件</p>
-     * <p>Load a resource</p>
-     *
      * @param resource <p>要被加载的资源文件</p>
      *                 <p>The resource to be loaded</p>
      * @throws IOException <p>找不到资源文件就会抛出这个异常</p>
      *                     <p>The resource is not found</p>
      */
     public static void load(Loadable resource) throws IOException {
-        load(NamespaceHelper.generateNamespace(), resource);
+        resources.put(resource.namespace(), resource.load());
+
+        // 日志输出
+        LogHelper.debug("Namespace [" + resource.namespace() + "] loaded resource added!");
     }
 
     /**

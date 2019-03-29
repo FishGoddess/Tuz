@@ -27,6 +27,7 @@ public abstract class InputStreamPropertiesLoader extends AbstractPropertiesLoad
     // 资源文件输入流
     // the inputStream of resource
     private InputStream resourceInputStream = null;
+    private String namespace = null;
 
     /**
      * <p>根据资源文件名称构建</p>
@@ -37,13 +38,41 @@ public abstract class InputStreamPropertiesLoader extends AbstractPropertiesLoad
      */
     protected InputStreamPropertiesLoader(String resourceFileName) {
         try {
+            this.namespace = resourceFileName;
             this.resourceInputStream = getInputStream(resourceFileName);
 
             // 日志输出
-            LogHelper.debug("Resource inputStream ===> " + resourceInputStream);
+            LogHelper.debug("Namespace [" + namespace + "] resource inputStream ===> " + resourceInputStream);
         } catch (IOException e) {
             LogHelper.error("ResourceInputStream create error!", e);
         }
+    }
+
+    /**
+     * <p>根据资源文件名称构建</p>
+     * <p>Construct with resource file</p>
+     *
+     * @param resourceFileName <p>资源文件名称</p>
+     *                         <p>resource file</p>
+     *
+     * @param namespace <p>指定的命名空间</p>
+     *                  <p>Appointed namespace</p>
+     */
+    protected InputStreamPropertiesLoader(String resourceFileName, String namespace) {
+        try {
+            this.namespace = namespace;
+            this.resourceInputStream = getInputStream(resourceFileName);
+
+            // 日志输出
+            LogHelper.debug("Namespace [" + namespace + "] resource inputStream ===> " + resourceInputStream);
+        } catch (IOException e) {
+            LogHelper.error("ResourceInputStream create error!", e);
+        }
+    }
+
+    @Override
+    public String namespace() {
+        return this.namespace;
     }
 
     @Override

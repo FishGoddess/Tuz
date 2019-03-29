@@ -21,7 +21,7 @@ public class TuzSimpleDemo2 {
         //xxxService service = new xxxServiceImpl();
         // 这种方式并没有真正解耦，使用 Spring 这类框架可以达到解耦效果，但是需要引入大量框架
         // 而使用 Tuz 可以轻松做到解耦，请看下面：
-        Tuz.load("test", new ClasspathPropertiesLoader("test.properties"));
+        Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 直接获取实现类，而不用注入实现类的细节
         xxxService service = Tuz.useInstance("xxxService", "test", xxxService.class);
