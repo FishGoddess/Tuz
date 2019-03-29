@@ -1,4 +1,4 @@
-package cn.com.fishin.loader;
+package cn.com.fishin.tuz.loader;
 
 import java.io.IOException;
 import java.io.InputStream;

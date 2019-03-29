@@ -1,4 +1,4 @@
-package cn.com.fishin.core;
+package cn.com.fishin.tuz.core;
 
 /**
  * <p>核心接口，但是没有任何作用</p>

@@ -1,7 +1,7 @@
-package cn.com.fishin.core;
+package cn.com.fishin.tuz.core;
 
-import cn.com.fishin.loader.ClasspathPropertiesLoader;
-import cn.com.fishin.loader.FileSystemPropertiesLoader;
+import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.loader.FileSystemPropertiesLoader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 /**
- * 测试 Tuz 类
+ * 测试 tuz 类
  *
  * @author Fish
  * ------> 1149062639@qq.com
@@ -23,7 +23,7 @@ public class TuzTest {
             // 加载配置文件
             Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
             //Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
-            Tuz.load(new FileSystemPropertiesLoader("E:/JavaProject/Tuz/src/test/resources/test2.properties", "test2"));
+            Tuz.load(new FileSystemPropertiesLoader("E:/JavaProject/tuz/src/test/resources/test2.properties", "test2"));
             //Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,8 +34,8 @@ public class TuzTest {
     public void testUse() {
         Assert.assertEquals(Tuz.use("number", "test"), "16");
         Assert.assertEquals(Tuz.use("number"), "16");
-        Assert.assertEquals(Tuz.use("instance", "test"), "cn.com.fishin.core.Loadable");
-        Assert.assertEquals(Tuz.use("instance"), "cn.com.fishin.core.Loadable");
+        Assert.assertEquals(Tuz.use("instance", "test"), "cn.com.fishin.tuz.core.Loadable");
+        Assert.assertEquals(Tuz.use("instance"), "cn.com.fishin.tuz.core.Loadable");
         Assert.assertEquals(Tuz.use("str", "test2"), "world");
         Assert.assertEquals(Tuz.use("str"), "world");
         Assert.assertNull(Tuz.use("str", "test"));

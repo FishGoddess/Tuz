@@ -1,13 +1,13 @@
-package cn.com.fishin.core;
+package cn.com.fishin.tuz.core;
 
 import java.io.IOException;
 import java.util.Map;
 
 /**
  * <p>可加载的接口</p>
- * <p>实现接口中的加载方法，以获得成为 Tuz 插件的资格</p>
+ * <p>实现接口中的加载方法，以获得成为 tuz 插件的资格</p>
  * <p>Loadable interface</p>
- * <p>You can obtain the power of being a loader of Tuz by implementing this interface</p>
+ * <p>You can obtain the power of being a loader of tuz by implementing this interface</p>
  *
  * @author Fish
  * ------> 1149062639@qq.com

@@ -1,4 +1,4 @@
-package cn.com.fishin.helper;
+package cn.com.fishin.tuz.helper;
 
 import java.util.UUID;
 

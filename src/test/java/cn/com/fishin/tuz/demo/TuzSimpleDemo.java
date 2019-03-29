@@ -1,7 +1,7 @@
-package cn.com.fishin.demo;
+package cn.com.fishin.tuz.demo;
 
-import cn.com.fishin.core.Tuz;
-import cn.com.fishin.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.core.Tuz;
+import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
 
 import java.io.IOException;
 
@@ -43,7 +43,7 @@ public class TuzSimpleDemo {
         System.out.println(number);
 
         // 同样，您可以不指定命名空间，但是这不被推荐
-        // 具体原因请看 cn.com.fishin.core.Tuz.use(java.lang.String)
+        // 具体原因请看 cn.com.fishin.tuz.core.Tuz.use(java.lang.String)
         //String number = Tuz.use("number"); // ===> 返回 16
     }
 }

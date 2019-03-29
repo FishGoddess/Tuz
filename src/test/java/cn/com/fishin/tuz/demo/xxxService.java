@@ -1,4 +1,4 @@
-package cn.com.fishin.demo;
+package cn.com.fishin.tuz.demo;
 
 /**
  * 测试的某业务接口

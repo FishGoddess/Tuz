@@ -1,8 +1,7 @@
-package cn.com.fishin.core;
+package cn.com.fishin.tuz.core;
 
-import cn.com.fishin.helper.ClassHelper;
-import cn.com.fishin.helper.LogHelper;
-import cn.com.fishin.helper.NamespaceHelper;
+import cn.com.fishin.tuz.helper.ClassHelper;
+import cn.com.fishin.tuz.helper.LogHelper;
 
 import java.io.IOException;
 import java.util.Map;
@@ -17,22 +16,27 @@ import java.util.concurrent.locks.ReentrantLock;
  * <p><strong>Example 1: </strong></p>
  * <p>
  * 加载资源文件
- * API: load(String namespace, Loadable resource) throws IOException
+ * API: load(Loadable resource) throws IOException
  * test 是命名空间，后面一个是资源加载器
  * "test.properties" 文件中有一个属性：number=16
  * </p>
  *
  * <pre>
- * Tuz.load("test", new ClasspathPropertiesLoader("test.properties"));
+ * Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
  * </pre>
  *
  * <p>
  * 当然，你也可以不指定命名空间，内部会自动生成一个命名空间
  * 不过，为了性能和正确性，还是建议您使用自定义的命名空间
+ * 当你不指定命名空间时，就会使用文件名作为命名空间
+ * </p>
  * Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
+ *
  * <p>
  * 或者，您也可以使用另外一个加载器去加载文件系统中的资源文件
- * Tuz.load("test", new FileSystemPropertiesLoader("Z:/test.properties"));
+ * Tuz.load(new FileSystemPropertiesLoader("Z:/test.properties", "test"));
+ * </p>
+ *
  * <p>
  * 下面就是激动人心的时刻了！您可以在任意地方使用您的资源！
  * 上面提到，初始化的资源文件中有一个属性：number=16
@@ -48,7 +52,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * <p>
  * 同样，您可以不指定命名空间，但是这不被推荐
- * 具体原因请看 cn.com.fishin.core.Tuz.use(java.lang.String)
+ * 具体原因请看 cn.com.fishin.tuz.core.Tuz.use(java.lang.String)
  * String number = Tuz.use("number"); // ===> 返回 16
  * </p>
  *
@@ -61,7 +65,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * </p>
  *
  * <pre>
- * Tuz.load("test", new ClasspathPropertiesLoader("test.properties"));
+ * Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
  *
  * // 直接获取实现类，而不用注入实现类的细节
  * xxxService service = Tuz.useInstance("xxxService", "test", xxxService.class);

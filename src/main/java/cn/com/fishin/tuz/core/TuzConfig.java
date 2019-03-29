@@ -1,10 +1,10 @@
-package cn.com.fishin.core;
+package cn.com.fishin.tuz.core;
 
 /**
  * <p>全局配置</p>
- * <p>所有设置都可以通过这个类去设置，Tuz 中会从这个配置类中获取配置信息</p>
+ * <p>所有设置都可以通过这个类去设置，tuz 中会从这个配置类中获取配置信息</p>
  * <p>Global config</p>
- * <p>This class includes all settings, and Tuz will fetch setting from it</p>
+ * <p>This class includes all settings, and tuz will fetch setting from it</p>
  *
  * @author Fish
  * ------> 1149062639@qq.com

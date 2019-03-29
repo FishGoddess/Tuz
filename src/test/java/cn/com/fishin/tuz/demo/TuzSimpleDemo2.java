@@ -1,7 +1,7 @@
-package cn.com.fishin.demo;
+package cn.com.fishin.tuz.demo;
 
-import cn.com.fishin.core.Tuz;
-import cn.com.fishin.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.core.Tuz;
+import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
 
 import java.io.IOException;
 
@@ -25,11 +25,11 @@ public class TuzSimpleDemo2 {
 
         // 直接获取实现类，而不用注入实现类的细节
         xxxService service = Tuz.useInstance("xxxService", "test", xxxService.class);
-        service.say("Hello, Tuz!");
+        service.say("Hello, tuz!");
 
         // 同样的，你可以不指定命名空间，但是，真的不推荐！！！
         //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
         //xxxService service = Tuz.useInstance("xxxService", xxxService.class);
-        //service.say("Hello, Tuz!");
+        //service.say("Hello, tuz!");
     }
 }

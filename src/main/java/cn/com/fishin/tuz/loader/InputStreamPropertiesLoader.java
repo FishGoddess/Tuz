@@ -1,6 +1,6 @@
-package cn.com.fishin.loader;
+package cn.com.fishin.tuz.loader;
 
-import cn.com.fishin.helper.LogHelper;
+import cn.com.fishin.tuz.helper.LogHelper;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,4 @@
-package cn.com.fishin.helper;
+package cn.com.fishin.tuz.helper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

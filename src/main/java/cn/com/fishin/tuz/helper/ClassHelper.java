@@ -1,4 +1,4 @@
-package cn.com.fishin.helper;
+package cn.com.fishin.tuz.helper;
 
 /**
  * <p>类帮助器</p>
