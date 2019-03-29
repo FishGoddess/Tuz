@@ -19,8 +19,8 @@ import java.util.Properties;
  * </p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 20:35:59
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 20:35:59</p>
  */
 public abstract class InputStreamPropertiesLoader extends AbstractPropertiesLoader {
 

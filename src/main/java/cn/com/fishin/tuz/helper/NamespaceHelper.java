@@ -7,8 +7,8 @@ import java.util.UUID;
  * <p>To help making a namespace</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 17:18:51
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 17:18:51</p>
  */
 public class NamespaceHelper {
 

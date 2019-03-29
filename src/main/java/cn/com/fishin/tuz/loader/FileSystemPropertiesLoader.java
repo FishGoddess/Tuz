@@ -12,8 +12,8 @@ import java.nio.file.Paths;
  * <p>This loader is used to load .properties file in file System</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 20:11:03
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 20:11:03</p>
  */
 public class FileSystemPropertiesLoader extends InputStreamPropertiesLoader {
 

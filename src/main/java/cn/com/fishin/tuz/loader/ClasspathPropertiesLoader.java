@@ -10,8 +10,8 @@ import java.io.InputStream;
  * <p>This loader is used to load .properties file in classpath</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 15:31:03
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 15:31:03</p>
  */
 public class ClasspathPropertiesLoader extends InputStreamPropertiesLoader {
 

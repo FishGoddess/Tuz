@@ -12,8 +12,8 @@ import java.io.IOException;
  * 测试 tuz 类
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 16:11:12
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 16:11:12</p>
  */
 public class TuzTest {
 

@@ -10,8 +10,8 @@ import java.util.Map;
  * <p>You can obtain the power of being a loader of tuz by implementing this interface</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 14:25:12
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 14:25:12</p>
  */
 public interface Loadable extends Tuzable {
 

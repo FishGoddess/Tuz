@@ -1,13 +1,10 @@
 package cn.com.fishin.tuz.core;
 
-import cn.com.fishin.tuz.helper.ClassHelper;
 import cn.com.fishin.tuz.helper.LogHelper;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * <p>整个项目的核心类</p>
@@ -46,14 +43,14 @@ import java.util.concurrent.locks.ReentrantLock;
  * </p>
  *
  * <pre>
- * String number = Tuz.use("number", "test"); // ===> 返回 16
+ * String number = Tuz.use("number", "test"); // ===&gt; 返回 16
  * System.out.println(number);
  * </pre>
  *
  * <p>
  * 同样，您可以不指定命名空间，但是这不被推荐
  * 具体原因请看 cn.com.fishin.tuz.core.Tuz.use(java.lang.String)
- * String number = Tuz.use("number"); // ===> 返回 16
+ * String number = Tuz.use("number"); // ===&gt; 返回 16
  * </p>
  *
  * <p>Example 2: </p>
@@ -80,8 +77,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * </p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 14:20:32
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 14:20:32</p>
  */
 public class Tuz {
 
@@ -165,7 +162,7 @@ public class Tuz {
     /**
      * <p>获取指定 key 的属性值</p>
      * <p>
-     * <string>强烈注意：</string>
+     * <strong>强烈注意：</strong>
      * 如果不指定命名空间，当多个配置文件中的 key 值一样的时候，
      * 这个方法无法保证返回你需要的那个 key 值对应的 value！！
      * 由于哈希算法存在随机性，所以有可能返回另外一个值！！
@@ -193,7 +190,7 @@ public class Tuz {
     /**
      * <p>获取指定 key 的属性值</p>
      * <p>
-     * <string>强烈注意：</string>
+     * <strong>强烈注意：</strong>
      * 如果不指定命名空间，当多个配置文件中的 key 值一样的时候，
      * 这个方法无法保证返回你需要的那个 key 值对应的 value！！
      * 由于哈希算法存在随机性，所以有可能返回另外一个值！！
@@ -211,6 +208,8 @@ public class Tuz {
      *
      * @param key <p>指定的 key</p>
      *            <p>The key of the value</p>
+     * @param defaultValue <p>找不到返回这个值</p>
+     *                     <p>Return this value if not found</p>
      * @return <p>返回获取到的属性值，找不到返回 null</p>
      * <p>Return the value of the key, null if not found</p>
      */

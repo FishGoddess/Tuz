@@ -4,8 +4,8 @@ package cn.com.fishin.tuz.demo;
  * 测试的某业务接口实现类
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/29 00:08:24
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/29 00:08:24</p>
  */
 public class xxxServiceImpl implements xxxService {
 

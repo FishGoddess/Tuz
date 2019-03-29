@@ -22,7 +22,7 @@ package cn.com.fishin.tuz.core;
  * <pre>
  * xxxService service1 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
  * xxxService service2 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
- * System.out.println(service1 == service2); // 返回 ===> true
+ * System.out.println(service1 == service2); // 返回 ===&gt; true
  * </pre>
  *
  * <p>
@@ -39,7 +39,7 @@ package cn.com.fishin.tuz.core;
  * <pre>
  * xxxService service3 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
  * xxxService service4 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
- * System.out.println(service3 == service4); // 返回 ===> false
+ * System.out.println(service3 == service4); // 返回 ===&gt; false
  * </pre>
  *
  * <p>
@@ -59,12 +59,12 @@ package cn.com.fishin.tuz.core;
  * <pre>
  * xxxService service5 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
  * xxxService service6 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
- * System.out.println(service5 == service6); // 返回 ===> true
+ * System.out.println(service5 == service6); // 返回 ===&gt; true
  * </pre>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 22:01:35
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 22:01:35</p>
  */
 public class TuzConfig {
 

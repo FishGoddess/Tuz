@@ -12,8 +12,8 @@ import java.io.IOException;
  * <p>Global config demo</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/29 17:19:38
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/29 17:19:38</p>
  */
 public class TuzConfigDemo {
 

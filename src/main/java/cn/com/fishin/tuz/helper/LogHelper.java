@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
  * <p>Log Helper</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 16:29:20
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 16:29:20</p>
  */
 public class LogHelper {
 

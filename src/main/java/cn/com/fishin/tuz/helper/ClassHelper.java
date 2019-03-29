@@ -7,8 +7,8 @@ package cn.com.fishin.tuz.helper;
  * <p>Some methods that used to operate class</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 22:31:45
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 22:31:45</p>
  */
 public class ClassHelper {
 
@@ -45,6 +45,8 @@ public class ClassHelper {
      *
      * @param classType <p>类的实际类型，用于类型转换</p>
      *                  <p>The type of class, used to cast</p>
+     * @param <T> <p>实际类型</p>
+     *            <p>Real type</p>
      * @return <p>返回这个被加载类的实例对象</p>
      * <p>Return the instance of loaded class</p>
      */

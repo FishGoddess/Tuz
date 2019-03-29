@@ -11,8 +11,8 @@ import java.io.IOException;
  * <p>Simple demo 2</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/29 00:09:38
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/29 00:09:38</p>
  */
 public class TuzSimpleDemo2 {
 

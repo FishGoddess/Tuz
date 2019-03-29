@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
  * <p>Subclass should override loadProperties() method</p>
  *
  * @author Fish
- * ------> 1149062639@qq.com
- * created by 2019/03/28 15:35:30
+ * <p>Email: fishinlove@163.com</p>
+ * <p>created by 2019/03/28 15:35:30</p>
  */
 public abstract class AbstractPropertiesLoader implements Loadable {
 
@@ -27,6 +27,8 @@ public abstract class AbstractPropertiesLoader implements Loadable {
      *
      * @return <p>返回一个 Properties 对象</p>
      *         <p>Return a Properties instance</p>
+     * @throws IOException <p>如果加载过程出错，比如文件找不到，流创建失败等都有可能导致这个异常</p>
+     * <p>If loading has error or file not found, even inputStream created failed causes this exception</p>
      */
     protected abstract Properties loadProperties() throws IOException;
 
