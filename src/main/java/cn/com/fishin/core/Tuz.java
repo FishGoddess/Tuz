@@ -298,13 +298,13 @@ public class Tuz {
                 // 没有生成过，生成并缓存
                 T t = ClassHelper.newInstance(className, classType);
                 instances.put(classType.getName(), t);
-
-                // 日志输出
-                LogHelper.info("Instance created ===> " + classType.getName());
             }
         } finally {
             newInstanceLock.unlock();
         }
+
+        // 日志输出
+        LogHelper.info("Instance created ===> " + classType.getName());
 
         // 直接返回，因为上面已经保证生成过了
         return (T) instances.get(classType.getName());
