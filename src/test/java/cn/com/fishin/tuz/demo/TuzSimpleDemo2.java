@@ -25,12 +25,19 @@ public class TuzSimpleDemo2 {
         Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 直接获取实现类，而不用注入实现类的细节
-        xxxService service = DiPlugin.useInstance("xxxService", "test", xxxService.class);
-        service.say("Hello, tuz!");
+        xxxService service1 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        service1.say("Hello, tuz!");
 
-        // 同样的，你可以不指定命名空间，但是，真的不推荐！！！
+        // 你也许会觉得上面的方法有些参数多余了
+        // 对没错，就是 xxxService 和 xxxService.class
+        // 当我的 key 和类的名字一样的时候，其实这个 key 值是可以省略的
+        // 注意这里的 xxxService 在配置文件中的 key 就是 xxxService
+        xxxService service2 = DiPlugin.useInstance(xxxService.class);
+        service2.say("Hello, tuz!");
+
+        // 同样的，你可以不指定命名空间，但是，这样会导致多一次的查找！
         //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
-        //xxxService service = DiPlugin.useInstance("xxxService", xxxService.class);
-        //service.say("Hello, Tuz!");
+        //xxxService service3 = DiPlugin.useInstance("xxxService", xxxService.class);
+        //service3.say("Hello, Tuz!");
     }
 }

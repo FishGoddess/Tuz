@@ -9,8 +9,8 @@ package cn.com.fishin.tuz.core;
  * <p>
  * 我们先以 cn.com.fishin.tuz.demo.TuzSimpleDemo2 作为切入点
  * 先看原本的例子：
- * //Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
- * //xxxService service = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+ * //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
+ * //xxxService service = DiPlugin.useInstance(xxxService.class);
  * //service.say("Hello, Tuz!");
  * </p>
  *
@@ -20,8 +20,8 @@ package cn.com.fishin.tuz.core;
  * </p>
  *
  * <pre>
- * xxxService service1 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
- * xxxService service2 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+ * xxxService service1 = DiPlugin.useInstance(xxxService.class);
+ * xxxService service2 = DiPlugin.useInstance(xxxService.class);
  * System.out.println(service1 == service2); // 返回 ===&gt; true
  * </pre>
  *
@@ -37,8 +37,8 @@ package cn.com.fishin.tuz.core;
  * <p>这样获得的对象就是多例模式的</p>
  *
  * <pre>
- * xxxService service3 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
- * xxxService service4 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+ * xxxService service3 = DiPlugin.useInstance(xxxService.class);
+ * xxxService service4 = DiPlugin.useInstance(xxxService.class);
  * System.out.println(service3 == service4); // 返回 ===&gt; false
  * </pre>
  *
@@ -57,8 +57,8 @@ package cn.com.fishin.tuz.core;
  *
  * <p>这样获得的对象又是单例模式啦！</p>
  * <pre>
- * xxxService service5 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
- * xxxService service6 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+ * xxxService service5 = DiPlugin.useInstance(xxxService.class);
+ * xxxService service6 = DiPlugin.useInstance(xxxService.class);
  * System.out.println(service5 == service6); // 返回 ===&gt; true
  * </pre>
  *

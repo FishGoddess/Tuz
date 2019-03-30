@@ -71,8 +71,9 @@ import java.util.concurrent.ConcurrentHashMap;
  *
  * <p>
  * 同样的，你可以不指定命名空间，但是，真的不推荐！！！
+ * 注意这里的 xxxService 在配置文件中的 key 就是 xxxService
  * //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
- * //xxxService service = DiPlugin.useInstance("xxxService", xxxService.class);
+ * //xxxService service = DiPlugin.useInstance(xxxService.class);
  * //service.say("Hello, Tuz!");
  * </p>
  *

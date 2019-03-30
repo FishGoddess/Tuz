@@ -48,6 +48,6 @@ public class TuzSpringBootDemo  {
         // 直接返回 xxxService 即可
         // 这样，你只需在 test.properties 中更改这个类的实现即可
         // 不需要更改代码，也不需要写多余的代码
-        return DiPlugin.useInstance("xxxService", xxxService.class);
+        return DiPlugin.useInstance(xxxService.class);
     }
 }

@@ -44,6 +44,7 @@ public class TuzSimpleDemo {
 
         // 同样，您可以不指定命名空间，但是这不被推荐
         // 具体原因请看 cn.com.fishin.tuz.core.Tuz.use(java.lang.String)
+        // 关于用不用命名空间，完全取决于你对运行效率和开发效率的权衡
         //String number = Tuz.use("number"); // ===> 返回 16
     }
 }

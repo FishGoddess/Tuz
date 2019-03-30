@@ -75,15 +75,7 @@ public class DiPlugin {
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
     public static <T> T useInstance(String key, Class<T> classType) {
-
-        // 首先判断配置，是单例模式还是多例模式
-        if (Tuz.getConfig().isSingleton()) {
-            // 单例模式
-            return singletonInstance(Tuz.useGracefully(key, ""), classType);
-        }
-
-        // 多例模式，直接每一次都新构造一个对象
-        return ClassHelper.newInstance(Tuz.useGracefully(key, ""), classType);
+        return useInstanceInternal(Tuz.useGracefully(key, ""), classType);
     }
 
     /**
@@ -103,15 +95,23 @@ public class DiPlugin {
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
     public static <T> T useInstance(String key, String namespace, Class<T> classType) {
+        return useInstanceInternal(Tuz.useGracefully(key, namespace, ""), classType);
+    }
 
-        // 首先判断配置，是单例模式还是多例模式
-        if (Tuz.getConfig().isSingleton()) {
-            // 单例模式
-            return singletonInstance(Tuz.useGracefully(key, namespace, ""), classType);
-        }
-
-        // 多例模式，直接每一次都新构造一个对象
-        return ClassHelper.newInstance(Tuz.useGracefully(key, namespace, ""), classType);
+    /**
+     * <p>得到类实例</p>
+     * <p>这里会根据 classType 的 getSimpleName() 去获取 key，并且利用反射生成实例对象</p>
+     * <p>Get class instance</p>
+     * <p>Use reflect to instance a new object with given classType's simpleName</p>
+     *
+     * @param classType <p>类对象的实际类类型</p>
+     *                  <p>The real type of class instance</p>
+     * @param <T>       <p>实际类型</p>
+     *                  <p>Real type</p>
+     * @return <p>返回得到的类实例</p><p>Return class instance</p>
+     */
+    public static <T> T useInstance(Class<T> classType) {
+        return useInstance(classType.getSimpleName(), classType);
     }
 
     // 单例模式生成类实例，并缓存起来
@@ -124,16 +124,34 @@ public class DiPlugin {
 
                 // 没有生成过，生成并缓存
                 T t = ClassHelper.newInstance(className, classType);
+
+                // 日志输出
+                LogHelper.info("Instance created ===> " + classType.getName());
+
+                // 缓存这个实例
                 instances.put(classType.getName(), t);
             }
         } finally {
             newInstanceLock.unlock();
         }
 
+        // 直接返回，因为上面已经保证生成过了
+        return (T) instances.get(classType.getName());
+    }
+
+    // 生成类实例的方法
+    // Init the instance
+    private static <T> T useInstanceInternal(String className, Class<T> classType) {
+        // 首先判断配置，是单例模式还是多例模式
+        if (Tuz.getConfig().isSingleton()) {
+            // 单例模式
+            return singletonInstance(className, classType);
+        }
+
         // 日志输出
         LogHelper.info("Instance created ===> " + classType.getName());
 
-        // 直接返回，因为上面已经保证生成过了
-        return (T) instances.get(classType.getName());
+        // 多例模式，直接每一次都新构造一个对象
+        return ClassHelper.newInstance(className, classType);
     }
 }

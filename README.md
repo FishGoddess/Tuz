@@ -45,6 +45,7 @@ public class TuzSimpleDemo {
 
         // 同样，您可以不指定命名空间，但是这不被推荐
         // 具体原因请看 cn.com.fishin.tuz.core.Tuz.use(java.lang.String)
+        // 关于用不用命名空间，完全取决于你对运行效率和开发效率的权衡
         //String number = Tuz.use("number"); // ===> 返回 16
     }
 }
@@ -64,13 +65,20 @@ public class TuzSimpleDemo2 {
         Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 直接获取实现类，而不用注入实现类的细节
-        xxxService service = DiPlugin.useInstance("xxxService", "test", xxxService.class);
-        service.say("Hello, tuz!");
+        xxxService service1 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        service1.say("Hello, tuz!");
 
-        // 同样的，你可以不指定命名空间，但是，真的不推荐！！！
+        // 你也许会觉得上面的方法有些参数多余了
+        // 对没错，就是 xxxService 和 xxxService.class
+        // 当我的 key 和类的名字一样的时候，其实这个 key 值是可以省略的
+        // 注意这里的 xxxService 在配置文件中的 key 就是 xxxService
+        xxxService service2 = DiPlugin.useInstance(xxxService.class);
+        service2.say("Hello, tuz!");
+
+        // 同样的，你可以不指定命名空间，但是，这样会导致多一次的查找！
         //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
-        //xxxService service = DiPlugin.useInstance("xxxService", xxxService.class);
-        //service.say("Hello, tuz!");
+        //xxxService service3 = DiPlugin.useInstance("xxxService", xxxService.class);
+        //service3.say("Hello, Tuz!");
     }
 }
 ```
@@ -84,14 +92,14 @@ public class TuzConfigDemo {
 
         // 我们先以 cn.com.fishin.tuz.demo.TuzSimpleDemo2 作为切入点
         // 先看原本的例子：
-        Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
-        //xxxService service = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        Tuz.load(new ClasspathPropertiesLoader("test.properties"));
+        //xxxService service = DiPlugin.useInstance(xxxService.class);
         //service.say("Hello, Tuz!");
 
         // 默认情况下，创建的对象是单例模式的
         // 参考 cn.com.fishin.tuz.core.TuzConfig
-        xxxService service1 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
-        xxxService service2 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        xxxService service1 = DiPlugin.useInstance(xxxService.class);
+        xxxService service2 = DiPlugin.useInstance(xxxService.class);
         System.out.println(service1 == service2); // 返回 ===> true
 
         // 由于 Tuz 有一个默认的配置，里面有一个属性
@@ -101,8 +109,8 @@ public class TuzConfigDemo {
         Tuz.getConfig().setSingleton(false);
 
         // 这样获得的对象就是多例模式的
-        xxxService service3 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
-        xxxService service4 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        xxxService service3 = DiPlugin.useInstance(xxxService.class);
+        xxxService service4 = DiPlugin.useInstance(xxxService.class);
         System.out.println(service3 == service4); // 返回 ===> false
 
         // 上面说过，你可以直接设置 Tuz 中的默认配置，但是不被推荐
@@ -114,8 +122,8 @@ public class TuzConfigDemo {
         Tuz.setConfig(newConfig);
 
         // 这样获得的对象又是单例模式啦！
-        xxxService service5 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
-        xxxService service6 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
+        xxxService service5 = DiPlugin.useInstance(xxxService.class);
+        xxxService service6 = DiPlugin.useInstance(xxxService.class);
         System.out.println(service5 == service6); // 返回 ===> true
     }
 }
@@ -165,7 +173,7 @@ public class TuzSpringBootDemo  {
         // 直接返回 xxxService 即可
         // 这样，你只需在 test.properties 中更改这个类的实现即可
         // 不需要更改代码，也不需要写多余的代码
-        return DiPlugin.useInstance("xxxService", xxxService.class);
+        return DiPlugin.useInstance(xxxService.class);
     }
 }
 ```
@@ -180,6 +188,8 @@ public class TuzSpringBootDemo  {
     1. 修复了上一个版本中资源文件非英文字符集乱码的问题
     2. 新增加了带有指定字符集的资源加载器，可以在加载资源时指定字符集
     3. 废弃了 cn.com.fishin.tuz.loader.InputStreamPropertiesLoader 加载器
+    4. 更改 NameSpaceHelper 的后缀生成策略
+    5. 新增 DiPlugin 一个方法，可以更简单获取实例
 
 #### *2019-3-29:*
     1. 加入了依赖注入插件，参考 cn.com.fishin.tuz.plugin.DiPlugin
