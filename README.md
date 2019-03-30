@@ -1,7 +1,7 @@
-# Tuz 轻量资源（配置、对象）管理器
+# Tuz 轻量资源管理器 [![Maven central](./maven_central.svg)](https://mvnrepository.com/) [![Maven central](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## 介绍
-    Tuz 轻量资源（配置、对象）管理器，用于管理您的资源，
+    Tuz 轻量资源管理器，用于管理您的资源，
 
     比如 .properties 文件，一次加载，随处可用，并且使用非常简单！
 
@@ -10,6 +10,8 @@
 官网：[Tuz 官方网站](https://www.fishin.com.cn/Tuz) (正在建立。。。)
 
 联系方式：fishinlove@163.com
+
+开源协议：[Apache license 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## 使用说明
 #### 1. 简单的资源管理，这里主要使用 .properties 文件
