@@ -1,6 +1,6 @@
 package cn.com.fishin.tuz.helper;
 
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>命名空间帮助器</p>
@@ -10,7 +10,7 @@ import java.util.UUID;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/28 17:18:51</p>
  */
-public class NamespaceHelper {
+public class NameSpaceHelper {
 
     // 默认命名空间，如果不指定命名空间，就使用这个默认的命名空间
     // 这里加了时间戳是为了防止和用户的命名空间重复
@@ -18,9 +18,13 @@ public class NamespaceHelper {
     // System.currentTimeMillis() is to avoid the same namespace user used
     private static final String DEFAULT_NAMESPACE_PREFIX = "Tuz_Namespace: ";
 
+    // 计数器，用来记录命名空间的个数，同时也是命名空间的后缀
+    // Namespace counter, also the suffix of namespace
+    private static final AtomicInteger counter = new AtomicInteger(0);
+
     // 生成命名空间的名字
     // Generate namespace
-    public static String generateNamespace() {
+    public static String generateNameSpace() {
         return namespacePrefix() + namespaceSuffix();
     }
 
@@ -33,6 +37,13 @@ public class NamespaceHelper {
     // 获取命名空间的后缀
     // Get the suffix of namespace
     private static String namespaceSuffix() {
-        return UUID.randomUUID().toString().replaceAll("-", "");
+
+        // 一开始使用的是 UUID 生成的命名空间，但是这样太随机的
+        // 如果用户不想使用默认的文件名作为命名空间，但是在使用的时候又不想指定命名空间
+        // 使用这个生成器生成的命名空间就必须具有一致性，比如按顺序递增
+        // 于是就改为了使用
+
+        //return UUID.randomUUID().toString().replaceAll("-", "");
+        return String.valueOf(counter.incrementAndGet());
     }
 }
