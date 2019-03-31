@@ -7,7 +7,7 @@
 
     不仅如此，您还可以轻松扩展功能，只需要简单地实现一些接口即可！
 
-官网：[Tuz 官方网站](https://www.fishin.com.cn/Tuz) (正在建立。。。)
+官网：[Tuz 官方网站](https://www.fishin.com.cn) (正在建立。。。)
 
 联系方式：fishinlove@163.com
 
