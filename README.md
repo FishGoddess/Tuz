@@ -1,19 +1,66 @@
-# Tuz 轻量资源管理器 [![Maven central](./maven_central.svg)](https://mvnrepository.com/artifact/cn.com.fishin/Tuz) [![Maven central](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+# Tuz 轻量级资源管理器 [![Maven Central](./maven_central.svg)](https://mvnrepository.com/artifact/cn.com.fishin/Tuz) [![License](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-## 介绍
-    Tuz 轻量资源管理器，用于管理您的资源，
+## 介绍 -- Introduce
+    Tuz 轻量级资源管理器，用于管理您的资源，
 
     比如 .properties 文件，一次加载，随处可用，并且使用非常简单！
 
     不仅如此，您还可以轻松扩展功能，只需要简单地实现一些接口即可！
+    
+    内置的依赖注入插件可以让你轻松将接口和实现类解耦，彻底进行优雅的开发！
+    
+    后续会加入更多资源管理的功能或插件，敬请期待！
 
-官网：[Tuz 官方网站](https://www.fishin.com.cn)
+    Tuz, a small resource manager.
+    
+    For example, you could load some .properties files, and use them everywhere!
+    
+    You could extend it by implementing some interface!
+    
+    Also, I have prepared some building plgins like DiPlugin.
+    
+    It will be perfect as time going by! 
 
-联系方式：fishinlove@163.com
+---
++ #### Tuz 官网：[https://www.fishin.com.cn](https://www.fishin.com.cn)
 
-开源协议：[Apache license 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
++ #### 联系方式：fishinlove@163.com
 
-## 使用说明
++ #### 开源协议：[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
+---
+
+## 如何使用 -- How to use
++ 如果您正在使用 Maven 工程，那么这一切都变得很简单了，你只需要在你的 pom.xml 中引入：
++ If you are using Maven project, then everything becomes easier, you only need add some lines in your pom.xml:
+```xml
+<!-- https://mvnrepository.com/artifact/cn.com.fishin/Tuz -->
+<dependency>
+    <groupId>cn.com.fishin</groupId>
+    <artifactId>Tuz</artifactId>
+    <version>0.5.2-BETA</version>
+</dependency>
+```
+---
++ 当然，你也可能使用的是 Gradle 工程，这样你只需要在相应的构建管理配置文件里面加入：
++ Also, you may use a Gradle project, do the same thing as a Maven project:
+```groovy
+// https://mvnrepository.com/artifact/cn.com.fishin/Tuz
+compile group: 'cn.com.fishin', name: 'Tuz', version: '0.5.2-BETA'
+```
+其他构建工具或者仓库请参考 `Maven 中心仓库`的写法，如果您不知道网址是啥，请点击
+上方的 `Maven Central` 图标或者点击 [这个链接](https://mvnrepository.com/artifact/cn.com.fishin/Tuz)。
+
+See more info in [this website](https://mvnrepository.com/artifact/cn.com.fishin/Tuz).
+
+---
++ 或者，您使用的是普通 Java 项目，需要手动引入 lib 框架。
+我们建议您迁移到 Maven 工程，如果不想切换，
+可以到 [Tuz - GitHub](https://github.com/FishGoddess/Tuz/releases) 下载你需要版本的 Jar 包文件以及文档和源码。
++ Or worse, you are using a traditional Java project with adding Jar manually,
+then you should change your developing way or download a Jar from [Tuz - GitHub](https://github.com/FishGoddess/Tuz/releases).
+---
+
+## 参考例子 -- Example
 #### 1. 简单的资源管理，这里主要使用 .properties 文件
 ```java
 public class TuzSimpleDemo {
@@ -24,7 +71,6 @@ public class TuzSimpleDemo {
         // API: load(Loadable resource) throws IOException
         // test 是命名空间，后面一个是资源加载器
         // "test.properties" 文件中有一个属性：number=16
-
         Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 当然，你也可以不指定命名空间，内部会自动生成一个命名空间
@@ -41,7 +87,6 @@ public class TuzSimpleDemo {
         // 您可以在任意地方使用这个资源，像这样：
         // API: use(String key, String namespace)
         // 其中上面的代码中 number 是资源名字，test 是命名空间
-
         String number = Tuz.use("number", "test"); // ===> 返回 16
         System.out.println(number);
 
@@ -185,7 +230,54 @@ public class TuzSpringBootDemo  {
 
 您可以参考这个插件的实现来定制自己的插件！
 
-## 更新日志
+## 方法说明 -- method book
+以下列举的仅仅是部分可供您使用的方法，还有一部分没有列举出来，可能需要您慢慢探索了:)
+The methods below are some of usable methods, the others need your discovery:)
++ #### core 包（核心包）
+    + Tuz (Class)：核心系统
+        + 方法列表 ↓
+        + load：加载资源，初始化 Tuz
+        + use：使用资源，可以获取到加载过的资源
+        + useGracefully：优雅地使用资源，当找不到资源时返回自定义的默认值
+    + TuzConfig (Class)：配置类
+        + 方法列表 ↓
+        + isSingleton：获得类实例生成方式，默认是单例
+        + setSingleton：设置类实例生成方式，可选单例或多例
+    + Loadable (Interface)：加载器接口
+        + 方法列表 ↓
+        + namespace：获得命名空间
+        + load：加载资源
+    + Tuzable (Interface)：这是一个信仰，没有任何方法:)
+    
++ #### helper 包（工具包）
+    + ClassHelper (Class)：类操作工具包
+        + 方法列表 ↓
+        + newInstance：生成类对象实例
+    + IOHelper (Class)：IO 操作工具包
+        + 方法列表 ↓
+        + newReader：获得一个指向某个资源的读取器
+        + newReaderToFileSystem：获得一个指向文件系统的某个资源的读取器
+        + newReaderToClasspath：获得一个指向类路径的某个资源的读取器
+        + getResourceFromFileSystem：获得一个指向文件系统的某个资源的路径
+        + getResourceFromClasspath：获得一个指向类路径的某个资源的路径
+    + LogHelper (Class)：日志操作工具包
+        + 方法列表 ↓
+        + 就常用的 debug/info/warn/error 等日志记录方法呗
+    + NameSpaceHelper (Class)：命名空间工具包
+        + 方法列表 ↓
+        + generateNameSpace：生成命名空间名字，默认从 1 开始生成
+    
++ #### plugin 包（插件包）
+    + DiPlugin (Class)：依赖注入插件
+        + 方法列表 ↓
+        + useInstance：使用一个类对象实例
+
+## 友情链接 -- as a friend
++ [Kiter 集成工具类 @ 来自王老板的奇思妙想](https://github.com/ChickenWinner/kiter)
++ [navicat - web @ 来自黄少爷的财大气粗](https://github.com/Mackyhuang/navicat-web)
++ [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
+
+## 更新日志 -- update log
 #### *2019-3-30:*
     1. 修复了上一个版本中资源文件非英文字符集乱码的问题
     2. 新增加了带有指定字符集的资源加载器，可以在加载资源时指定字符集
