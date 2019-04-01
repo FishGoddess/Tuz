@@ -1,4 +1,4 @@
-# Tuz 轻量资源管理器 [![Maven central](./maven_central.svg)](https://mvnrepository.com/) [![Maven central](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+# Tuz 轻量资源管理器 [![Maven central](./maven_central.svg)](https://mvnrepository.com/artifact/cn.com.fishin/Tuz) [![Maven central](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 ## 介绍
     Tuz 轻量资源管理器，用于管理您的资源，
