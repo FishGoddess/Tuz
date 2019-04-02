@@ -82,11 +82,11 @@ public class TuzConfig {
 
     // 登录到 FTP 服务器的用户名
     // FTP login user
-    private String ftpUser = Tuz.useGracefully("ftp.user", "You should config a user to login FTP server!");
+    private String ftpUser = Tuz.useGracefully("ftp.user", "'You should config a user to login FTP server!'");
 
     // 登录到 FTP 服务器的用户的密码
     // FTP login password
-    private String ftpPassword = Tuz.useGracefully("ftp.password", "You should config a password to login FTP server!");
+    private String ftpPassword = Tuz.useGracefully("ftp.password", "'You should config a password to login FTP server!'");
 
     // 连接通信使用的字符编码，FTPClient 默认使用的是 "ISO-8859-1"，
     // 中文的文件名可能出现乱码，所以这里将默认编码设置为 UTF-8

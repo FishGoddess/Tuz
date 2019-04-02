@@ -228,4 +228,21 @@ public class Tuz {
         // 找不到返回 null
         return defaultValue;
     }
+
+    /**
+     * <p>重新载入默认配置</p>
+     * <p>当你更改了 Tuz 的配置之后，希望回到最原始的默认配置</p>
+     * <p>另外，这里也可以解决一下一些问题，比如，在使用 NetPlugin 的时候，</p>
+     * <p>由于 config 的加载早于 load 方法执行，所以会导致默认配置有些找不到，</p>
+     * <p>当你也遇到类似的问题时，可以尝试在执行 load 方法之后，执行一下这个方法！</p>
+     * <p>Reload default config</p>
+     * <p>If change config of Tuz, and you want it back to default.</p>
+     * <p>Also, some problems happen because load method is back of initializing config.</p>
+     * <p>So, if you have some problems with this config,
+     * try to invoke this method after invoking load()</p>
+     *
+     */
+    public static void init() {
+        config = new TuzConfig();
+    }
 }
