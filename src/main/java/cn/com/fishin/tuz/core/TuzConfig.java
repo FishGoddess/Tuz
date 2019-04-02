@@ -69,7 +69,24 @@ package cn.com.fishin.tuz.core;
 public class TuzConfig {
 
     // 获取类的实例形式，默认是 true，也就是单例模式
+    // The way of creating instance, default is true
     private boolean singleton = true;
+
+    // FTP 主机地址，比如 127.0.0.1
+    // FTP host address, such as 127.0.0.1
+    private String ftpHost = Tuz.useGracefully("ftp.host", "127.0.0.1");
+
+    // FTP 使用端口，比如 21
+    // FTP port, such as 21
+    private int ftpPort = Integer.valueOf(Tuz.useGracefully("ftp.port", "21"));
+
+    // 登录到 FTP 服务器的用户名
+    // FTP login user
+    private String ftpUser = Tuz.useGracefully("ftp.user", "You should config a user to login FTP server!");
+
+    // 登录到 FTP 服务器的用户的密码
+    // FTP login password
+    private String ftpPassword = Tuz.useGracefully("ftp.password", "You should config a password to login FTP server!");
 
     /**
      * <p>获取类的实例形式，默认是 true，也就是单例模式</p>
@@ -92,10 +109,46 @@ public class TuzConfig {
         this.singleton = singleton;
     }
 
+    public String getFtpHost() {
+        return ftpHost;
+    }
+
+    public void setFtpHost(String ftpHost) {
+        this.ftpHost = ftpHost;
+    }
+
+    public int getFtpPort() {
+        return ftpPort;
+    }
+
+    public void setFtpPort(int ftpPort) {
+        this.ftpPort = ftpPort;
+    }
+
+    public String getFtpUser() {
+        return ftpUser;
+    }
+
+    public void setFtpUser(String ftpUser) {
+        this.ftpUser = ftpUser;
+    }
+
+    public String getFtpPassword() {
+        return ftpPassword;
+    }
+
+    public void setFtpPassword(String ftpPassword) {
+        this.ftpPassword = ftpPassword;
+    }
+
     @Override
     public String toString() {
         return "TuzConfig{" +
                 "singleton=" + singleton +
+                ", ftpHost='" + ftpHost + '\'' +
+                ", ftpPort=" + ftpPort +
+                ", ftpUser='" + ftpUser + '\'' +
+                ", ftpPassword='" + ftpPassword + '\'' +
                 '}';
     }
 }

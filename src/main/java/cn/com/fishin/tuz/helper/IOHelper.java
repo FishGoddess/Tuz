@@ -2,6 +2,7 @@ package cn.com.fishin.tuz.helper;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -19,6 +20,45 @@ import java.nio.file.Paths;
  * <p>created by 2019/03/30 00:24:19</p>
  */
 public class IOHelper {
+
+    /**
+     * <p>根据指定路径获取一个资源输入流</p>
+     * <p>Get a inputStream from given path</p>
+     *
+     * @param path    <p>指定的路径</p>
+     *                <p>Given path</p>
+     * @return <p>返回读取器</p><p>Return inputStream</p>
+     * @throws IOException <p>获取资源输入流异常</p><p>Get inputStream failed</p>
+     */
+    public static InputStream newInputStream(Path path) throws IOException {
+        return Files.newInputStream(path);
+    }
+
+    /**
+     * <p>根据指定路径获取一个资源输入流</p>
+     * <p>Get a inputStream from given path</p>
+     *
+     * @param path <p>指定的路径</p>
+     *             <p>Given path</p>
+     * @return <p>返回读取器</p><p>Return inputStream</p>
+     * @throws IOException <p>获取资源输入流异常</p><p>Get inputStream failed</p>
+     */
+    public static InputStream newInputStreamToFileSystem(String path) throws IOException {
+        return newInputStream(getResourceFromFileSystem(path));
+    }
+
+    /**
+     * <p>根据指定路径获取一个资源输入流</p>
+     * <p>Get a inputStream from given path</p>
+     *
+     * @param path <p>指定的路径</p>
+     *             <p>Given path</p>
+     * @return <p>返回读取器</p><p>Return inputStream</p>
+     * @throws IOException <p>获取资源输入流异常</p><p>Get inputStream failed</p>
+     */
+    public static InputStream newInputStreamToClasspath(String path) throws IOException {
+        return newInputStream(getResourceFromClasspath(path));
+    }
 
     /**
      * <p>根据指定路径获取一个资源读取器</p>

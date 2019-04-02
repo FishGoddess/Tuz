@@ -23,7 +23,7 @@ under the License.
 
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.5.2-BETA</version>
+    <version>0.5.3-BETA</version>
 
     <name>Tuz</name>
     <url>https://www.fishin.com.cn/Tuz</url>
@@ -38,6 +38,13 @@ under the License.
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.6</version>
+        </dependency>
+
         <!-- 日志模块 -->
         <dependency>
             <groupId>org.slf4j</groupId>
