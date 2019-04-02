@@ -88,6 +88,13 @@ public class TuzConfig {
     // FTP login password
     private String ftpPassword = Tuz.useGracefully("ftp.password", "You should config a password to login FTP server!");
 
+    // 连接通信使用的字符编码，FTPClient 默认使用的是 "ISO-8859-1"，
+    // 中文的文件名可能出现乱码，所以这里将默认编码设置为 UTF-8
+    // The encoding used to net transport, due to FTPClient (default is ISO-8859-1)
+    // Non-English character may wrong in this encoding, such as file name
+    // So I set it to UTF-8 in order to support this kind of file name
+    private String ftpControlEncoding = "UTF-8";
+
     /**
      * <p>获取类的实例形式，默认是 true，也就是单例模式</p>
      * <p>Get class instance form, default is singleton</p>
@@ -109,36 +116,111 @@ public class TuzConfig {
         this.singleton = singleton;
     }
 
+    /**
+     * <p>获取 FTP 服务器主机地址</p>
+     * <p>Get the host of FTP server</p>
+     *
+     * @return <p>返回 FTP 服务器主机地址</p><p>Return the host of FTP server</p>
+     */
     public String getFtpHost() {
         return ftpHost;
     }
 
+    /**
+     * <p>设置 FTP 服务器主机地址</p>
+     * <p>Set the host of FTP server</p>
+     *
+     * @param ftpHost <p>FTP 服务器主机地址</p>
+     *                <p>The host of FTP server</p>
+     */
     public void setFtpHost(String ftpHost) {
         this.ftpHost = ftpHost;
     }
 
+    /**
+     * <p>获取 FTP 服务器应用端口</p>
+     * <p>Get the port of FTP server application</p>
+     *
+     * @return <p>返回 FTP 服务器应用端口</p><p>Return the port of FTP server application</p>
+     */
     public int getFtpPort() {
         return ftpPort;
     }
 
+    /**
+     * <p>设置 FTP 服务器应用端口</p>
+     * <p>Set the port of FTP server application</p>
+     *
+     * @param ftpPort <p>FTP 服务器应用端口</p>
+     *                <p>The port of FTP server application</p>
+     */
     public void setFtpPort(int ftpPort) {
         this.ftpPort = ftpPort;
     }
 
+    /**
+     * <p>获取 FTP 服务器登录用户</p>
+     * <p>Get the port of FTP server login user</p>
+     *
+     * @return <p>返回 FTP 服务器登录用户</p><p>Return the port of FTP server login user</p>
+     */
     public String getFtpUser() {
         return ftpUser;
     }
 
+    /**
+     * <p>设置 FTP 服务器登录用户</p>
+     * <p>Set the port of FTP server login user</p>
+     *
+     * @param ftpUser <p>FTP 服务器登录用户</p>
+     *                <p>The port of FTP server login user</p>
+     */
     public void setFtpUser(String ftpUser) {
         this.ftpUser = ftpUser;
     }
 
+    /**
+     * <p>获取 FTP 服务器登录用户密码</p>
+     * <p>Get the port of FTP server login password</p>
+     *
+     * @return <p>返回 FTP 服务器登录用户密码</p><p>Return the port of FTP server login password</p>
+     */
     public String getFtpPassword() {
         return ftpPassword;
     }
 
+    /**
+     * <p>设置 FTP 服务器登录用户密码</p>
+     * <p>Set the port of FTP server login password</p>
+     *
+     * @param ftpPassword <p>FTP 服务器登录用户密码</p>
+     *                    <p>The port of FTP server login password</p>
+     */
     public void setFtpPassword(String ftpPassword) {
         this.ftpPassword = ftpPassword;
+    }
+
+    /**
+     * <p>获取 FTP 服务器网络通信使用的编码</p>
+     * <p>Get the encoding of FTP server's net transport</p>
+     * @see org.apache.commons.net.ftp.FTPClient#setControlEncoding(String)
+     *
+     * @return <p>返回 FTP 服务器网络通信使用的编码</p><p>Return the encoding of FTP server's net transport</p>
+     */
+    public String getFtpControlEncoding() {
+        return ftpControlEncoding;
+    }
+
+    /**
+     * <p>设置 FTP 服务器网络通信使用的编码</p>
+     * <p>Set the encoding of FTP server's net transport</p>
+     * @see org.apache.commons.net.ftp.FTPClient#setControlEncoding(String)
+     *
+     * @param ftpControlEncoding <p>FTP 服务器网络通信使用的编码</p>
+     *                           <p>The encoding of FTP server's net transport</p>
+     */
+    public void setFtpControlEncoding(String ftpControlEncoding) {
+        this.ftpControlEncoding = ftpControlEncoding;
     }
 
     @Override
@@ -149,6 +231,7 @@ public class TuzConfig {
                 ", ftpPort=" + ftpPort +
                 ", ftpUser='" + ftpUser + '\'' +
                 ", ftpPassword='" + ftpPassword + '\'' +
+                ", ftpControlEncoding='" + ftpControlEncoding + '\'' +
                 '}';
     }
 }

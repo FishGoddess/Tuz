@@ -278,6 +278,10 @@ The methods below are some of usable methods, the others need your discovery:)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
+#### *2019-4-2:*
+    1. 新增多个 IO 处理方法，可以直接获取输入流
+    2. 新增 FTPHelper 工具，可以上传文件到 FTP 服务器
+
 #### *2019-3-30:*
     1. 修复了上一个版本中资源文件非英文字符集乱码的问题
     2. 新增加了带有指定字符集的资源加载器，可以在加载资源时指定字符集

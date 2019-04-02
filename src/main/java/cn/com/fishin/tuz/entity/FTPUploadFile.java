@@ -12,6 +12,10 @@ import java.nio.charset.StandardCharsets;
  * and file that will be uploaded</p>
  * @see cn.com.fishin.tuz.entity.FTPUploadInfo
  *
+ * <p>推荐使用工厂类生成这个对象</p>
+ * <p>Use factory to create this class instance firstly</p>
+ * @see cn.com.fishin.tuz.factory.FTPUploadFileFactory#make(int, String, String, InputStream)
+ *
  * @author Fish
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/04/02 14:31:02</p>
@@ -38,11 +42,18 @@ public class FTPUploadFile {
     // Local file inputStream, the uploading file
     private InputStream inputStream = null;
 
-    // 文件类型
-    // File type
-    private int fileType = 0;
+    // 文件类型，默认是 org.apache.commons.net.ftp.FTP.BINARY_FILE_TYPE
+    // File type, default is org.apache.commons.net.ftp.FTP.BINARY_FILE_TYPE
+    /**
+     * @see org.apache.commons.net.ftp.FTPClient#setFileType(int)
+     * @see org.apache.commons.net.ftp.FTP#ASCII_FILE_TYPE
+     * @see org.apache.commons.net.ftp.FTP#BINARY_FILE_TYPE
+     */
+    private int fileType = 2;
 
     // 文件字符编码，如果是文本字符，这个配置会起作用
+    // The encoding of text file
+    // If this file is a plain file, this gonna be used
     private Charset charset = StandardCharsets.UTF_8;
 
     public FTPUploadFile() {}

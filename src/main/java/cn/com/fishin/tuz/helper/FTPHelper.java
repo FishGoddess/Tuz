@@ -1,5 +1,6 @@
 package cn.com.fishin.tuz.helper;
 
+
 import cn.com.fishin.tuz.entity.FTPUploadFile;
 import cn.com.fishin.tuz.entity.LoginInfo;
 import cn.com.fishin.tuz.entity.ServerAddress;
@@ -7,7 +8,6 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * <p>FTP 帮助器</p>
@@ -22,30 +22,38 @@ public class FTPHelper {
     /**
      * <p>上传一个文件到 FTP 服务器</p>
      * <p>
-     *     <strong>注意：</strong>
-     *     这个参数包含很多要被上传文件的属性以及 FTP 服务器的属性
+     * <strong>注意：</strong>
+     * 这个参数包含很多要被上传文件的属性以及 FTP 服务器的属性
      * </p>
      * <p>Upload a file to FTP server</p>
      * <p>
-     *      <strong>Notice: </strong>
-     *      This argument "file" has many attributes about the file
-     *      to be uploaded and info of FTP server
+     * <strong>Notice: </strong>
+     * This argument "file" has many attributes about the file
+     * to be uploaded and info of FTP server
      * </p>
      *
      * @param file <p>要被上传的文件，这个参数包含很多要被上传文件的属性以及 FTP 服务器的属性</p>
      *             <p>The file to be uploaded,
      *             This argument "file" has many attributes about the file
      *             to be uploaded and info of FTP server</p>
-     * @return <p>true 上传成功，flase 上传不成功</p><p>true if successful, false if not</p>
+     *
+     * @param controlEncoding <p>网络通信使用的编码</p>
+     *                        <p>The encoding of net transport</p>
+     * @see org.apache.commons.net.ftp.FTPClient#setControlEncoding(String)
+     *
+     * @return <p>true 上传成功，false 上传不成功</p><p>true if successful, false if not</p>
      * @throws IOException <p>上传遇到问题就会抛出这个异常</p><p>If occur some problems when uploading</p>
      */
-    public static boolean upload(FTPUploadFile file) throws IOException {
+    public static boolean upload(FTPUploadFile file, String controlEncoding) throws IOException {
         return new FTPTemplate(file.getServerAddress(), file.getLoginInfo()) {
             @Override
             protected boolean upload(FTPClient client) throws IOException {
 
                 // 设置上传文件类型
                 client.setFileType(file.getFileType());
+
+                // 设置默认通信编码
+                client.setControlEncoding(controlEncoding);
 
                 // 如果切换失败，说明可能没有这个目录，创建目录
                 if (!client.changeWorkingDirectory(file.getRemoteDirection())) {
@@ -59,14 +67,70 @@ public class FTPHelper {
         }.upload();
     }
 
-    public static boolean uploadAscii(FTPUploadFile file) throws IOException {
+    /**
+     * <p>上传一个文本文件到 FTP 服务器</p>
+     * <p>
+     * <strong>注意：</strong>
+     * 这个参数包含很多要被上传文件的属性以及 FTP 服务器的属性
+     * </p>
+     * <p>Upload a text file to FTP server</p>
+     * <p>
+     * <strong>Notice: </strong>
+     * This argument "file" has many attributes about the file
+     * to be uploaded and info of FTP server
+     * </p>
+     *
+     * @param file <p>要被上传的文本文件，这个参数包含很多要被上传文件的属性以及 FTP 服务器的属性</p>
+     *             <p>The text file to be uploaded,
+     *             This argument "file" has many attributes about the file
+     *             to be uploaded and info of FTP server</p>
+     *
+     * @param controlEncoding <p>网络通信使用的编码</p>
+     *                        <p>The encoding of net transport</p>
+     * @see org.apache.commons.net.ftp.FTPClient#setControlEncoding(String)
+     *
+     * @return <p>true 上传成功，false 上传不成功</p>
+     *         <p>true if successful, false if not</p>
+     *
+     * @throws IOException <p>上传遇到问题就会抛出这个异常</p>
+     *                     <p>If occur some problems when uploading</p>
+     */
+    public static boolean uploadAscii(FTPUploadFile file, String controlEncoding) throws IOException {
         file.setFileType(FTP.ASCII_FILE_TYPE);
-        return upload(file);
+        return upload(file, controlEncoding);
     }
 
-    public static boolean uploadBinary(FTPUploadFile file) throws IOException {
+    /**
+     * <p>上传一个二进制文件到 FTP 服务器</p>
+     * <p>
+     * <strong>注意：</strong>
+     * 这个参数包含很多要被上传文件的属性以及 FTP 服务器的属性
+     * </p>
+     * <p>Upload a binary file to FTP server</p>
+     * <p>
+     * <strong>Notice: </strong>
+     * This argument "file" has many attributes about the file
+     * to be uploaded and info of FTP server
+     * </p>
+     *
+     * @param file <p>要被上传的二进制文件，这个参数包含很多要被上传文件的属性以及 FTP 服务器的属性</p>
+     *             <p>The text file to be uploaded,
+     *             This argument "file" has many attributes about the file
+     *             to be uploaded and info of FTP server</p>
+     *
+     * @param controlEncoding <p>网络通信使用的编码</p>
+     *                         <p>The encoding of net transport</p>
+     * @see org.apache.commons.net.ftp.FTPClient#setControlEncoding(String)
+     *
+     * @return <p>true 上传成功，false 上传不成功</p>
+     *         <p>true if successful, false if not</p>
+     *
+     * @throws IOException <p>上传遇到问题就会抛出这个异常</p>
+     *                     <p>If occur some problems when uploading</p>
+     */
+    public static boolean uploadBinary(FTPUploadFile file, String controlEncoding) throws IOException {
         file.setFileType(FTP.BINARY_FILE_TYPE);
-        return upload(file);
+        return upload(file, controlEncoding);
     }
 
     /**
@@ -76,7 +140,7 @@ public class FTPHelper {
      * <p>Return a connection to FTP server</p>
      *
      * @param address <p>服务器地址</p><p>Server address</p>
-     * @param user <p>登录 FTP 服务器的用户</p><p>User who login the FTP server</p>
+     * @param user    <p>登录 FTP 服务器的用户</p><p>User who login the FTP server</p>
      * @return <p>返回一个 FTPClient 对象</p><p>Return a connection to FTP server</p>
      * @throws IOException <p>当连接出现异常的时候就会抛出这个异常</p><p>If connect failed</p>
      */
