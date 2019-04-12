@@ -8,6 +8,7 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * <p>FTP 帮助器</p>
@@ -56,13 +57,14 @@ public class FTPHelper {
                 client.setControlEncoding(controlEncoding);
 
                 // 如果切换失败，说明可能没有这个目录，创建目录
-                if (!client.changeWorkingDirectory(file.getRemoteDirection())) {
-                    client.makeDirectory(file.getRemoteDirection());
-                    client.changeWorkingDirectory(file.getRemoteDirection());
+                final String direction = encode(file.getRemoteDirection(), controlEncoding);
+                if (!client.changeWorkingDirectory(direction)) {
+                    client.makeDirectory(direction);
+                    client.changeWorkingDirectory(direction);
                 }
 
                 // 上传
-                return client.storeFile(file.getRemoteFileName(), file.getInputStream());
+                return client.storeFile(encode(file.getRemoteFileName(), controlEncoding), file.getInputStream());
             }
         }.upload();
     }
@@ -168,6 +170,12 @@ public class FTPHelper {
         } catch (IOException e) {
             LogHelper.error("Failed to disconnect from FTP server!" + client, e);
         }
+    }
+
+    // 为了防止中文等字符文件夹或者文件名出现乱码，使用这个进行编码
+    // To avoid encoding problems
+    private static String encode(String str, String encoding) throws UnsupportedEncodingException {
+        return new String(str.getBytes(encoding), FTP.DEFAULT_CONTROL_ENCODING);
     }
 
     // FTP 模板类

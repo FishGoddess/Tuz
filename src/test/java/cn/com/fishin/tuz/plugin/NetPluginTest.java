@@ -33,7 +33,7 @@ public class NetPluginTest {
     public void testUploadToServer() {
         String file = "测试中文.txt";
         try {
-            System.out.println(NetPlugin.uploadToServer(FTPUploadFileFactory.makeAsciiFile("", file,
+            System.out.println(NetPlugin.uploadToServer(FTPUploadFileFactory.makeAsciiFile("中文文件夹", file,
                     IOHelper.newInputStreamToFileSystem("Z:/" + file))));
         } catch (IOException e) {
             System.err.println(e.getMessage());
