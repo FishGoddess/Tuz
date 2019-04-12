@@ -230,6 +230,8 @@ public class TuzSpringBootDemo  {
 
 您可以参考这个插件的实现来定制自己的插件！
 
+更多使用演示案例，请参见 test 模块下的 cn.com.fishin.tuz.demo
+
 ## 方法说明 -- method book
 以下列举的仅仅是部分可供您使用的方法，还有一部分没有列举出来，可能需要您慢慢探索了:)
 The methods below are some of usable methods, the others need your discovery:)
@@ -278,6 +280,9 @@ The methods below are some of usable methods, the others need your discovery:)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
+#### *2019-4-7:*
+    1. FTP 功能完毕，修复了上一版本中乱码的问题
+
 #### *2019-4-2:*
     1. 新增多个 IO 处理方法，可以直接获取输入流
     2. 新增 FTPHelper 工具，可以上传文件到 FTP 服务器
