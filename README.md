@@ -37,7 +37,7 @@
 <dependency>
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.5.2-BETA</version>
+    <version>0.5.7-BETA</version>
 </dependency>
 ```
 ---
@@ -225,7 +225,32 @@ public class TuzSpringBootDemo  {
 }
 ```
 
-#### 5. 更多用法开发中，你也可以轻松定制自己的插件
+#### 5. 上传到 FTP 服务器
+```java
+public class FTPUploadDemo {
+
+    public static void main(String[] args) throws IOException {
+
+        // 加载资源
+        Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
+
+        // 注意：这个必须要在 load 方法执行之后执行，具体原因请查看
+        Tuz.init();
+
+        // 上传到 FTP 服务器
+        // 当然你可能会觉得这么使用很麻烦！
+        // 正常我们使用 FTP 上传的时候，多数是上传一个二进制文件
+        // 因此您可以直接使用 NetPlugin.
+        NetPlugin.uploadToServer(FTPUploadFileFactory.makeAsciiFile("YourDirection", "YourFile",
+                    IOHelper.newInputStreamToFileSystem("Z:/YourFile")));
+
+        // 如果您正在使用 Servlet 或者是 SpringMVC，您可以使用这个方法上传一个二进制文件
+        //NetPlugin.uploadBinaryToServer("YourDirection", "YourFile", multipartFile.getInputStream);
+    }
+}
+```
+
+#### 6. 更多用法开发中，你也可以轻松定制自己的插件
 内置插件位于 `cn.com.fishin.tuz.plugin` 包下，常用的有 `DiPlugin` 依赖注入插件
 
 您可以参考这个插件的实现来定制自己的插件！
