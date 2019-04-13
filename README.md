@@ -37,7 +37,7 @@
 <dependency>
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.5.7-BETA</version>
+    <version>0.6.0-FINAL</version>
 </dependency>
 ```
 ---
