@@ -13,4 +13,9 @@ public class xxxServiceImpl implements xxxService {
     public void say(String word) {
         System.out.println(word);
     }
+
+    @Override
+    public void hung(int man, int woman) {
+        System.out.println(man + " hung " + woman);
+    }
 }

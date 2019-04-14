@@ -10,4 +10,6 @@ package cn.com.fishin.tuz.demo;
 public interface xxxService {
 
     void say(String word);
+
+    void hung(int man, int woman);
 }

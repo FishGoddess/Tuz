@@ -4,7 +4,11 @@ import java.lang.reflect.Method;
 import java.util.Arrays;
 
 /**
- * <p>代理中的方法实体类</p>
+ * <p>拦截器中的方法实体类</p>
+ * <p>主要是包含一些拦截器中需要用到的，比如当前执行方法，被拦截方法的返回结果等等</p>
+ * <p>Entity of intercepted method</p>
+ * <p>Some attributes that interceptor will use,
+ * such as current method and invoking result</p>
  *
  * @author Fish
  * <p>Email: fishinlove@163.com</p>

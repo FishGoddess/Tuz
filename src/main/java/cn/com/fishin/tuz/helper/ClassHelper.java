@@ -66,17 +66,60 @@ public class ClassHelper {
         return null;
     }
 
-    // 获得这个对象的类的类型
+    /**
+     * <p>获得这个对象的类的类型</p>
+     * <p>实际上它就是在内部调用 obj.getClass() 来获取类的类型的</p>
+     * <p>这个方法的目的在于，提供<strong>更好的代码可读性</strong>和<strong>代码意义</strong></p>
+     * <p>Get the class of this object</p>
+     * <p>In fact, it invokes obj.getClass() to get what it needs</p>
+     * <p>This method is to get more human-being and mean of the code</p>
+     *
+     * @see java.lang.Object#getClass()
+     *
+     * @param obj <p>想获得 class 的对象</p>
+     *            <p>The target object</p>
+     *
+     * @return <p>返回这个对象的类的类型</p><p>Return the class of this object</p>
+     */
     public static Class<?> classOf(Object obj) {
         return obj.getClass();
     }
 
-    // 获得这个对象的类加载器
+    /**
+     * <p>获得这个对象的类加载器</p>
+     * <p>实际上它就是在内部调用 classOf(obj).getClassLoader() 来获取类的类加载器的</p>
+     * <p>这个方法的目的在于，提供<strong>更好的代码可读性</strong>和<strong>代码意义</strong></p>
+     * <p>Get the classloader of this object</p>
+     * <p>In fact, it invokes classOf(obj).getClassLoader() to get what it needs</p>
+     * <p>This method is to get more <strong>human-being</strong> and <strong>mean of the code</strong></p>
+     *
+     * @param obj <p>想获得类加载器的对象</p>
+     *            <p>The target object</p>
+     *
+     * @return <p>返回这个对象的类加载器</p><p>Return the classloader of this object</p>
+     *
+     * @see Class#getClassLoader()
+     * @see ClassHelper#classOf(java.lang.Object)
+     */
     public static ClassLoader classLoaderOf(Object obj) {
         return classOf(obj).getClassLoader();
     }
 
-    // 获得这个对象实现的所有接口
+    /**
+     * <p>获得这个对象实现的所有接口</p>
+     * <p>实际上它就是在内部调用 classOf(obj).getInterfaces() 来获取类的所有接口的</p>
+     * <p>这个方法的目的在于，提供<strong>更好的代码可读性</strong>和<strong>代码意义</strong></p>
+     * <p>Get the interfaces of this object</p>
+     * <p>In fact, it invokes classOf(obj).getClassLoader() to get what it needs</p>
+     * <p>This method is to get more <strong>human-being</strong> and <strong>mean of the code</strong></p>
+     *
+     * @param obj <p>想获得实现的所有接口的对象</p>
+     *            <p>The target object</p>
+     *
+     * @return <p>返回这个对象实现的所有接口</p><p>Return the interfaces of this object</p>
+     * @see Class#getInterfaces()
+     * @see ClassHelper#classOf(java.lang.Object)
+     */
     public static Class<?>[] interfacesOf(Object obj) {
         return classOf(obj).getInterfaces();
     }
