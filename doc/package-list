@@ -1,5 +1,4 @@
 cn.com.fishin.tuz.core
-cn.com.fishin.tuz.demo
 cn.com.fishin.tuz.entity
 cn.com.fishin.tuz.factory
 cn.com.fishin.tuz.handler
@@ -7,4 +6,3 @@ cn.com.fishin.tuz.helper
 cn.com.fishin.tuz.interceptor
 cn.com.fishin.tuz.loader
 cn.com.fishin.tuz.plugin
-cn.com.fishin.tuz.proxy

@@ -282,7 +282,6 @@ public class ProxySimpleDemo {
 
         // 直接获取实现类，而不用注入实现类的细节
         xxxService service = DiPlugin.useInstance(xxxService.class);
-        //service.say("Hello, tuz!");
 
         // 以上演示了最单纯的使用依赖注入的方法
         // 但是这时候你来了新需求，需要在原本的基础之上加入两个需求：
@@ -295,12 +294,17 @@ public class ProxySimpleDemo {
         // 顶级拦截器接口：cn.com.fishin.tuz.interceptor.Interceptor
         // 但是不建议直接使用这个拦截器，建议使用 cn.com.fishin.tuz.interceptor.DefaultInterceptor
         // 然后选择性地复写特定方法来达到特定业务功能
-        xxxService serviceProxy = (xxxService) ProxyFactory.wrap(service,
+        // 不推荐直接使用这个工厂类，建议使用 cn.com.fishin.tuz.plugin.ProxyPlugin 中的方法来获得代理之后的对象
+        /*xxxService serviceProxy = (xxxService) ProxyFactory.wrap(service,
                 new InterceptorInvocationHandler(service, new Interceptor[]{
                         new LogInterceptor(), // 日志拦截器
                         new CacheInterceptor() // 缓存拦截器
                 })
-        );
+        );*/
+        xxxService serviceProxy = ProxyPlugin.useInstance(xxxService.class, new Interceptor[]{
+                new LogInterceptor(), // 日志拦截器
+                new CacheInterceptor() // 缓存拦截器
+        });
 
         // 这是一个对比
         System.out.println("====================== 使用拦截器之前的业务 ===================");
@@ -341,6 +345,13 @@ public class ProxySimpleDemo {
         缓存中找到了数据！
         ====================== 使用拦截器之后的业务 ===================
         */
+
+        // 需要注意的是，由于使用的是 CGlib，所以被代理的类不能是 final 修饰的
+        // 也就是说必须要可以被继承，因为 CGlib 就是使用 ASM 产生子类和多态来达到动态代理的效果的
+        // 另外，动态代理产生的实例是不是单例的和 Tuz 的配置有关
+        // 详情请参考 cn.com.fishin.tuz.core.TuzConfig.isSingleton
+        // 默认情况下是单例模式的，也就是说不管你创建多少代理对象都是同一个
+        // 如果需要多例的模式，可以修改 Tuz 的配置，调用 cn.com.fishin.tuz.core.TuzConfig.setSingleton
     }
 }
 ```
@@ -403,7 +414,9 @@ The methods below are some of usable methods, the others need your discovery:)
 #### *2019-4-14:*
     1. 加入了动态代理工厂，你可以自己定制代理类
     2. 使用代理工厂解决业务主次解耦的问题
-    3. 目前处于测试阶段，后续可能会不推荐使用代理工厂而是使用代理插件
+    3. 加入代理插件更方便用户实现代理模式以及拦截器模式
+    4. 不推荐直接使用代理工厂，推荐使用代理插件
+    5. 代理产生的类可以是单例模式也可以是多例模式的
 
 #### *2019-4-7:*
     1. FTP 功能完毕，修复了上一版本中乱码的问题
