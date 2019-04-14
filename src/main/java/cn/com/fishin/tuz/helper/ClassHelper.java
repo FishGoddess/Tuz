@@ -65,4 +65,19 @@ public class ClassHelper {
         // 出现异常就会返回 null
         return null;
     }
+
+    // 获得这个对象的类的类型
+    public static Class<?> classOf(Object obj) {
+        return obj.getClass();
+    }
+
+    // 获得这个对象的类加载器
+    public static ClassLoader classLoaderOf(Object obj) {
+        return classOf(obj).getClassLoader();
+    }
+
+    // 获得这个对象实现的所有接口
+    public static Class<?>[] interfacesOf(Object obj) {
+        return classOf(obj).getInterfaces();
+    }
 }
