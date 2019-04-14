@@ -23,7 +23,7 @@ under the License.
 
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.6.1-BETA</version>
+    <version>0.6.2-BETA</version>
 
     <name>Tuz</name>
     <url>https://www.fishin.com.cn/Tuz</url>
@@ -34,22 +34,32 @@ under the License.
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <!-- 主要的核心依赖框架如下 -->
+        <slf4j.version>1.7.26</slf4j.version>
         <logback.version>1.2.3</logback.version>
+        <commons-net.version>3.6</commons-net.version>
+        <cglib.version>3.2.10</cglib.version>
     </properties>
 
     <dependencies>
-        <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+        <!-- 动态代理 -->
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>${cglib.version}</version>
+        </dependency>
+
+        <!-- 网络模块 -->
         <dependency>
             <groupId>commons-net</groupId>
             <artifactId>commons-net</artifactId>
-            <version>3.6</version>
+            <version>${commons-net.version}</version>
         </dependency>
 
         <!-- 日志模块 -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.26</version>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- 开发时使用 logback 作为日志实现 -->

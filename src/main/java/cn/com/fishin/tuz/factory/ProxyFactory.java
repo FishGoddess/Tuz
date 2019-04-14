@@ -1,9 +1,11 @@
 package cn.com.fishin.tuz.factory;
 
+import cn.com.fishin.tuz.handler.AbstractInvocationHandler;
+import cn.com.fishin.tuz.handler.InterceptorInvocationHandler;
 import cn.com.fishin.tuz.helper.ClassHelper;
+import net.sf.cglib.proxy.Enhancer;
+import net.sf.cglib.proxy.InvocationHandler;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 
 /**
  * <p>代理工厂</p>
@@ -17,8 +19,32 @@ import java.lang.reflect.Proxy;
  */
 public class ProxyFactory {
 
-    // 返回实际产生的动态代理类对象
+    /**
+     * <p>返回实际产生的动态代理类对象</p>
+     * <p>这里是使用 CGlib 进行动态代理，要求这个目标对象类必须是可继承的！</p>
+     * <p>Return a dynamic proxy instance</p>
+     * <p>Due to CGlib, this target must be not final!</p>
+     *
+     * @see AbstractInvocationHandler <p>抽象的调用处理器</p><p>Abstarct invocation handler</p>
+     * @see InterceptorInvocationHandler <p>拦截器使用的调用处理器</p><p>Interceptor invocation handler</p>
+     *
+     * @param target <p>要被代理的目标对象</p>
+     *               <p>Target object to proxy</p>
+     * @param handler <p>调用处理器</p>
+     * @return <p>返回实际产生的动态代理类对象</p><p>Return a dynamic proxy instance</p>
+     */
     public static Object wrap(Object target, InvocationHandler handler) {
-        return Proxy.newProxyInstance(ClassHelper.classLoaderOf(target), ClassHelper.interfacesOf(target), handler);
+        return make(target, handler).create();
+    }
+
+    // 根据目标对象和调用处理器实例化一个 Enhancer 对象
+    // Init a Enhancer object with given target and handler
+    private static Enhancer make(Object target, InvocationHandler handler) {
+
+        // 设置父类 Class，这样子类以多态的形式实现父类的功能
+        Enhancer enhancer = new Enhancer();
+        enhancer.setSuperclass(ClassHelper.classOf(target));
+        enhancer.setCallback(handler);
+        return enhancer;
     }
 }

@@ -1,7 +1,8 @@
-# Tuz 轻量级资源管理器 [![Maven Central](./maven_central.svg)](https://mvnrepository.com/artifact/cn.com.fishin/Tuz) [![License](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
+# Tuz 轻量级资源容器 [![Maven Central](./maven_central.svg)](https://mvnrepository.com/artifact/cn.com.fishin/Tuz) [![License](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
-+ 资源属性管理容器： 将资源以键值对的形式加载到内存，以备使用
-+ 轻量依赖注入容器： 将实现类直接注入到接口中，实现解耦的功能
++ 资源属性管理容器： 将资源以键值对的形式加载到内存，实现资源的轻松加载使用
++ 轻量依赖注入容器： 将对象实现类直接注入到对象引用中，实现业务的实现解耦
++ 对象方法拦截容器： 使用动态代理进行方法的拦截器，实现业务的主次解耦
 + IO 操作工具箱： 提供了常用的 IO 操作方法，操作 IO 更方便
 + 网络管理工具箱：  提供了 FTP 上传的功能，从此上传文件变得轻而易举
 
