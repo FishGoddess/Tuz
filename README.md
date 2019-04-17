@@ -411,6 +411,9 @@ The methods below are some of usable methods, the others need your discovery:)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
+#### *2019-4-17:*
+    1. 代理工厂新增一个代理拦截器的方法
+
 #### *2019-4-14:*
     1. 加入了动态代理工厂，你可以自己定制代理类
     2. 使用代理工厂解决业务主次解耦的问题

@@ -3,6 +3,7 @@ package cn.com.fishin.tuz.factory;
 import cn.com.fishin.tuz.handler.AbstractInvocationHandler;
 import cn.com.fishin.tuz.handler.InterceptorInvocationHandler;
 import cn.com.fishin.tuz.helper.ClassHelper;
+import cn.com.fishin.tuz.interceptor.Interceptor;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.InvocationHandler;
 
@@ -30,11 +31,28 @@ public class ProxyFactory {
      *
      * @param target <p>要被代理的目标对象</p>
      *               <p>Target object to proxy</p>
-     * @param handler <p>调用处理器</p>
+     * @param handler <p>调用处理器</p><p>Invocation handler</p>
      * @return <p>返回实际产生的动态代理类对象</p><p>Return a dynamic proxy instance</p>
      */
     public static Object wrap(Object target, InvocationHandler handler) {
         return make(target, handler).create();
+    }
+
+    /**
+     * <p>返回实际产生的动态代理类对象</p>
+     * <p>这里是使用 CGlib 进行动态代理，要求这个目标对象类必须是可继承的！</p>
+     * <p>Return a dynamic proxy instance</p>
+     * <p>Due to CGlib, this target must be not final!</p>
+     *
+     * @param target  <p>要被代理的目标对象</p>
+     *                <p>Target object to proxy</p>
+     * @param interceptors <p>拦截器数组</p><p>Interceptors</p>
+     * @return <p>返回实际产生的动态代理类对象</p><p>Return a dynamic proxy instance</p>
+     * @see AbstractInvocationHandler <p>抽象的调用处理器</p><p>Abstarct invocation handler</p>
+     * @see InterceptorInvocationHandler <p>拦截器使用的调用处理器</p><p>Interceptor invocation handler</p>
+     */
+    public static Object wrap(Object target, Interceptor[] interceptors) {
+        return make(target, new InterceptorInvocationHandler(target, interceptors)).create();
     }
 
     // 根据目标对象和调用处理器实例化一个 Enhancer 对象
