@@ -1,11 +1,18 @@
 package cn.com.fishin.tuz.proxy;
 
+import cn.com.fishin.tuz.core.Tuz;
 import cn.com.fishin.tuz.factory.ProxyFactory;
 import cn.com.fishin.tuz.handler.InterceptorInvocationHandler;
 import cn.com.fishin.tuz.helper.ClassHelper;
 import cn.com.fishin.tuz.interceptor.Interceptor;
+import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.plugin.ProxyPlugin;
 import net.sf.cglib.proxy.Enhancer;
+import org.junit.Before;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.lang.reflect.Modifier;
 
 /**
  * 测试 cglib 的动态代理
@@ -15,6 +22,15 @@ import org.junit.Test;
  * <p>created by 2019/04/14 18:55:52</p>
  */
 public class CglibTest {
+
+    @Before
+    public void before() {
+        try {
+            Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
 
     @Test
     public void testCglib() {
@@ -43,11 +59,11 @@ public class CglibTest {
     }
 
     @Test
-    public void testProxyFactory() {
+    public void testProxyFactoryCGlib() {
 
         SimpleClass simpleClass = new SimpleClass();
 
-        SimpleClass simpleClass1 = (SimpleClass) ProxyFactory.wrap(simpleClass,
+        SimpleClass simpleClass1 = (SimpleClass) ProxyFactory.wrapByCGlib(simpleClass,
                 new InterceptorInvocationHandler(simpleClass, new Interceptor[]{
                         new TestInterceptor(),
                         new TestInterceptor(),
@@ -55,5 +71,69 @@ public class CglibTest {
                 }));
 
         simpleClass1.test();
+    }
+
+    @Test
+    public void testProxyFactoryJDK() {
+
+        SimpleClassWithInterface simpleClass = new SimpleClassWithInterface();
+
+        SimpleInterface SimpleInterface = (SimpleInterface) ProxyFactory.wrapByJDK(simpleClass,
+                new InterceptorInvocationHandler(simpleClass, new Interceptor[]{
+                        new TestInterceptor(),
+                        new TestInterceptor(),
+                        new TestInterceptor()
+                }));
+
+        SimpleInterface.test();
+    }
+
+    @Test
+    public void testProxyFactoryWrap() {
+
+        SimpleClass simpleClass = new SimpleClass();
+
+        simpleClass = (SimpleClass) ProxyFactory.wrap(simpleClass,
+                new Interceptor[]{
+                        new TestInterceptor(),
+                        new TestInterceptor(),
+                        new TestInterceptor()
+                });
+
+        simpleClass.test();
+
+        SimpleInterface simpleInterface = (SimpleInterface) ProxyFactory.wrap(new SimpleClassWithInterface(),
+                new Interceptor[]{
+                        new TestInterceptor(),
+                        new TestInterceptor(),
+                        new TestInterceptor()
+                });
+
+        simpleInterface.test();
+
+    }
+
+    @Test
+    public void testProxyPlugin() {
+
+        SimpleClass simpleClass = ProxyPlugin.useInstance(SimpleClass.class,
+                new Interceptor[]{
+                        new TestInterceptor(),
+                        new TestInterceptor(),
+                        new TestInterceptor()
+                });
+
+        simpleClass.test();
+
+        SimpleInterface simpleInterface = (SimpleInterface) ProxyPlugin.useInstance(SimpleInterface.class,
+                new Interceptor[]{
+                        new TestInterceptor(),
+                        new TestInterceptor(),
+                        new TestInterceptor()
+                });
+
+        simpleInterface.test();
+
+        //System.out.println(Modifier.isFinal(SimpleClass.class.getModifiers()));
     }
 }

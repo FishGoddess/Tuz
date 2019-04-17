@@ -295,12 +295,15 @@ public class ProxySimpleDemo {
         // 但是不建议直接使用这个拦截器，建议使用 cn.com.fishin.tuz.interceptor.DefaultInterceptor
         // 然后选择性地复写特定方法来达到特定业务功能
         // 不推荐直接使用这个工厂类，建议使用 cn.com.fishin.tuz.plugin.ProxyPlugin 中的方法来获得代理之后的对象
-        /*xxxService serviceProxy = (xxxService) ProxyFactory.wrap(service,
-                new InterceptorInvocationHandler(service, new Interceptor[]{
-                        new LogInterceptor(), // 日志拦截器
-                        new CacheInterceptor() // 缓存拦截器
-                })
-        );*/
+        /*
+        xxxService xxxService = ProxyPlugin.useInstance(xxxService.class,
+                new Interceptor[]{
+                        new CacheInterceptor(),
+                        new LogInterceptor()
+        });
+        */
+        // 注意：当这个类可以被继承时，使用 CGlib 来实现动态代理
+        // 如果不可以被继承，就使用 JDK 来动态代理，这时要求该类必须实现接口，而且使用接口来接收
         xxxService serviceProxy = ProxyPlugin.useInstance(xxxService.class, new Interceptor[]{
                 new LogInterceptor(), // 日志拦截器
                 new CacheInterceptor() // 缓存拦截器
@@ -413,6 +416,8 @@ The methods below are some of usable methods, the others need your discovery:)
 ## 更新日志 -- update log
 #### *2019-4-17:*
     1. 代理工厂新增一个代理拦截器的方法
+    2. 当这个类可以被继承时，使用 CGlib 来实现动态代理
+    3. 如果不可以被继承，就使用 JDK 来动态代理，这时要求该类必须实现接口，而且使用接口来接收
 
 #### *2019-4-14:*
     1. 加入了动态代理工厂，你可以自己定制代理类

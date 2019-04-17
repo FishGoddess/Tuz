@@ -5,6 +5,7 @@ import cn.com.fishin.tuz.factory.ProxyFactory;
 import cn.com.fishin.tuz.handler.InterceptorInvocationHandler;
 import cn.com.fishin.tuz.helper.LogHelper;
 import cn.com.fishin.tuz.interceptor.Interceptor;
+import net.sf.cglib.proxy.InvocationHandler;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -35,7 +36,9 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  *
  * @see cn.com.fishin.tuz.core.TuzConfig#setSingleton
- * @see ProxyFactory#wrap(java.lang.Object, net.sf.cglib.proxy.InvocationHandler)
+ * @see ProxyFactory#wrapByCGlib(Object, InvocationHandler)
+ * @see ProxyFactory#wrapByJDK(Object, java.lang.reflect.InvocationHandler)
+ * @see ProxyFactory#wrap(Object, Interceptor[])
  *
  * @author Fish
  * <p>Email: fishinlove@163.com</p>
@@ -120,7 +123,7 @@ public class ProxyPlugin {
             if (!proxyInstances.containsKey(classType.getName())) {
 
                 // 没有代理过，代理并缓存
-                T t = (T) ProxyFactory.wrap(target, new InterceptorInvocationHandler(target, interceptors));
+                T t = (T) ProxyFactory.wrap(target, interceptors);
 
                 // 日志输出
                 LogHelper.info("Proxy instance created ===> " + classType.getName());
@@ -151,6 +154,6 @@ public class ProxyPlugin {
         LogHelper.info("Proxy instance created ===> " + classType.getName());
 
         // 不是单例模式就直接代理就好了
-        return (T) ProxyFactory.wrap(target, new InterceptorInvocationHandler(target, interceptors));
+        return (T) ProxyFactory.wrap(target, interceptors);
     }
 }

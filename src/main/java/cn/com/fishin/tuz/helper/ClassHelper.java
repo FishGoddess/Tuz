@@ -1,5 +1,7 @@
 package cn.com.fishin.tuz.helper;
 
+import java.lang.reflect.Modifier;
+
 /**
  * <p>类帮助器</p>
  * <p>一些操作类的方法</p>
@@ -122,5 +124,21 @@ public class ClassHelper {
      */
     public static Class<?>[] interfacesOf(Object obj) {
         return classOf(obj).getInterfaces();
+    }
+
+    /**
+     * <p>判断一个对象是否有实现接口</p>
+     * <p>If target object has interface, return true</p>
+     *
+     * @param obj <p>被判断的对象</p><p>The target object</p>
+     * @return <p>true 如果有实现接口，反之 false</p><p>true if target has interfaces, false if not</p>
+     */
+    public static boolean hasInterface(Object obj) {
+        return interfacesOf(obj).length > 0;
+    }
+
+    // 判断一个类是否是 final 修饰的，也就是否可以被继承
+    public static boolean isFinal(Object obj) {
+        return Modifier.isFinal(classOf(obj).getModifiers());
     }
 }

@@ -1,7 +1,5 @@
 package cn.com.fishin.tuz.handler;
 
-import net.sf.cglib.proxy.InvocationHandler;
-
 /**
  * <p>抽象的调用处理器</p>
  * <p>主要是为了动态代理模式准备的模板处理器</p>
@@ -19,7 +17,7 @@ import net.sf.cglib.proxy.InvocationHandler;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/04/14 15:41:47</p>
  */
-public abstract class AbstractInvocationHandler implements InvocationHandler {
+public abstract class AbstractInvocationHandler implements net.sf.cglib.proxy.InvocationHandler, java.lang.reflect.InvocationHandler {
 
     // 被代理的目标对象
     // Proxy target
