@@ -23,7 +23,7 @@ under the License.
 
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.6.7-FINAL</version>
+    <version>0.6.8-BETA</version>
 
     <name>Tuz</name>
     <url>https://www.fishin.com.cn/Tuz</url>
@@ -38,9 +38,17 @@ under the License.
         <logback.version>1.2.3</logback.version>
         <commons-net.version>3.6</commons-net.version>
         <cglib.version>3.2.10</cglib.version>
+        <fastjson.version>1.2.57</fastjson.version>
     </properties>
 
     <dependencies>
+        <!-- JSON 解析模块 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+
         <!-- 动态代理 -->
         <dependency>
             <groupId>cglib</groupId>
