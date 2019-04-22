@@ -38,7 +38,7 @@ public class ClasspathJSONLoader extends ReaderJSONLoader {
      *                         <p>Appointed namespace</p>
      */
     public ClasspathJSONLoader(String resourceFileName, String namespace) {
-        this(resourceFileName, resourceFileName, StandardCharsets.UTF_8);
+        this(resourceFileName, namespace, StandardCharsets.UTF_8);
     }
 
     /**

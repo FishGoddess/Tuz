@@ -9,7 +9,7 @@
 ## 介绍 -- Introduce
     Tuz 轻量级资源管理器，用于管理您的资源，
 
-    比如 .properties 文件，一次加载，随处可用，并且使用非常简单！
+    比如 .properties 和 JSON 文件，一次加载，随处可用，并且使用非常简单！
 
     不仅如此，您还可以轻松扩展功能，只需要简单地实现一些接口即可！
     
@@ -141,7 +141,81 @@ public class TuzSimpleDemo2 {
 }
 ```
 
-#### 3. 配置自定义的设置
+#### 3. 简单的资源管理，这里主要使用 JSON 文件
+```java
+public class TuzSimpleDemo3 {
+
+    public static void main(String[] args) throws IOException {
+
+        // 加载这个 JSON 文件
+        // 加载一次之后，你就可以在全局中随意使用啦
+        Tuz.load(new ClasspathJSONLoader("test.json"));
+
+        // 建议给这个文件起一个命名空间，如果没有手动指定，Tuz 在内部会使用文件名作为命名空间
+        // Tuz.load(new ClasspathJSONLoader("test.json", "test"));
+
+        // 当然，除了加载类路径下的资源文件，还可以加载文件系统中的资源
+        //Tuz.load(new FileSystemJSONLoader("E:\\JavaProject\\Tuz\\src\\test\\resources\\test.json"));
+
+        // 由于默认使用 UTF8 的字符编码，所以如果你的文件不是 UTF8 编码，就会出现乱码问题
+        // 这时候需要自己手动指定这个文件的字符编码
+        //Tuz.load(new ClasspathJSONLoader("test.json", StandardCharsets.ISO_8859_1));
+
+        /*
+        {
+            "status": 0,
+            "message": "success",
+            "ok": true,
+            "data": {
+                "title": {
+                    "id": "001",
+                    "name": "test",
+                    "null": {}
+                },
+                "content": [
+                    {
+                        "id": "001",
+                        "value": "hello 001",
+                        "arr": [1, "非你莫属尽快发你说的", true]
+                    },
+                    {
+                        "id": "002",
+                        "value": "hello 002"
+                    }
+                ]
+             }
+         }
+         */
+
+        // 如果你需要引用这个 JSON 中的值，就像下面这样引用即可
+        // 是不是很方便？哈哈哈 ^_^
+        System.out.println(Tuz.use("status")); // ===> 0
+        System.out.println(Tuz.use("message")); // ===> success
+        System.out.println(Tuz.use("ok")); // ===> true
+        System.out.println(Tuz.use("data")); // ===> {"title":{"null":{},"name":"test","id":"001"},"content":[{"arr":[1,"bfdjhsb",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]}
+        System.out.println(Tuz.use("data.title")); // ===> {"null":{},"name":"test","id":"001"}
+        System.out.println(Tuz.use("data.title.id")); // ===> 001
+        System.out.println(Tuz.use("data.title.name")); // ===> test
+        System.out.println(Tuz.use("data.title.null")); // ===> {}
+        System.out.println(Tuz.use("data.content")); // ===> [{"arr":[1,"bfdjhsb",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]
+        System.out.println(Tuz.use("data.content[0].id")); // ===> 001
+        System.out.println(Tuz.use("data.content[0].value")); // ===> hello 001
+        System.out.println(Tuz.use("data.content[0].arr")); // ===> [1,"bfdjhsb",true]
+        System.out.println(Tuz.use("data.content[0].arr[0]")); // ===> 1
+        System.out.println(Tuz.use("data.content[0].arr[1]")); // ===> bfdjhsb
+        System.out.println(Tuz.use("data.content[0].arr[2]")); // ===> true
+        System.out.println(Tuz.use("data.content[1].id")); // ===> 002
+        System.out.println(Tuz.use("data.content[1].value")); // ===> hello 002
+
+        // 当然，如果你有多个 JSON 文件都有同样的键值，就需要加上命名空间了
+        // 这里的 test 就是命名空间，在调用 Tuz.load 时就需要指定
+        //Tuz.load(new ClasspathJSONLoader("test.json", "test"));
+        //System.out.println(Tuz.use("status", "test")); // ===> 0
+    }
+}
+```
+
+#### 4. 配置自定义的设置
 ```java
 // 参考 test 文件夹下的 cn.com.fishin.tuz.demo.TuzConfigDemo
 public class TuzConfigDemo {
@@ -187,7 +261,7 @@ public class TuzConfigDemo {
 }
 ```
 
-#### 4. 配合 Spring/SpringBoot 来使用
+#### 5. 配合 Spring/SpringBoot 来使用
 ```java
 //@SpringBootApplication
 public class TuzSpringBootDemo  {
@@ -236,7 +310,7 @@ public class TuzSpringBootDemo  {
 }
 ```
 
-#### 5. 上传到 FTP 服务器
+#### 6. 上传到 FTP 服务器
 ```java
 public class FTPUploadDemo {
 
@@ -261,7 +335,7 @@ public class FTPUploadDemo {
 }
 ```
 
-#### 6. 使用拦截器拦截方法达到业务主次解耦
+#### 7. 使用拦截器拦截方法达到业务主次解耦
 ```java
 public class ProxySimpleDemo {
 
@@ -364,10 +438,12 @@ public class ProxySimpleDemo {
 }
 ```
 
-#### 7. 更多用法开发中，你也可以轻松定制自己的插件
+#### 8. 更多用法开发中，你也可以轻松定制自己的插件
 内置插件位于 `cn.com.fishin.tuz.plugin` 包下，常用的有 `DiPlugin` 依赖注入插件
 
 您可以参考这个插件的实现来定制自己的插件！
+
+目前内置两种资源加载器，你可以自定义自己的加载器，只需要简单实现 `cn.com.fishin.tuz.core.Loadable` 接口即可
 
 更多使用演示案例，请参见 test 模块下的 cn.com.fishin.tuz.demo
 
@@ -420,6 +496,7 @@ The methods below are some of usable methods, the others need your discovery:)
 
 ## 更新日志 -- update log
 #### *2019-4-22:*
+    1. 新增 JSON 资源加载器，现在 JSON 文件也可以很简单的加载并使用了
     1. 新增 DiPlugin 的三个方法，可以临时指定单例模式或者多例模式
     2. 新增 ProxyPlugin 的三个方法，可以临时指定单例模式或者多例模式
     3. 以上两点改动可以做到不修改配置，灵活生成类的实例

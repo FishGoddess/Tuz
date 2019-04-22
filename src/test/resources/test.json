@@ -1,0 +1,23 @@
+{
+  "status": 0,
+  "message": "success",
+  "ok": true,
+  "data": {
+    "title": {
+      "id": "001",
+      "name": "test",
+      "null": {}
+    },
+    "content": [
+      {
+        "id": "001",
+        "value": "hello 001",
+        "arr": [1, "非你莫属尽快发你说的", true]
+      },
+      {
+        "id": "002",
+        "value": "hello 002"
+      }
+    ]
+  }
+}

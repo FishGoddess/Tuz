@@ -38,7 +38,7 @@ public class FileSystemJSONLoader extends ReaderJSONLoader {
      *                         <p>Appointed namespace</p>
      */
     public FileSystemJSONLoader(String resourceFileName, String namespace) {
-        this(resourceFileName, resourceFileName, StandardCharsets.UTF_8);
+        this(resourceFileName, namespace, StandardCharsets.UTF_8);
     }
 
     /**

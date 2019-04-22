@@ -1,6 +1,7 @@
 package cn.com.fishin.tuz.loader;
 
 import cn.com.fishin.tuz.core.Loadable;
+import cn.com.fishin.tuz.helper.LogHelper;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -25,6 +26,8 @@ public abstract class AbstractJSONLoader implements Loadable {
 
     @Override
     public Map<String, String> load() throws IOException {
+        // 日志输出
+        LogHelper.info("Load resource ===> " + jsonMap);
         return jsonMap;
     }
 
@@ -50,14 +53,18 @@ public abstract class AbstractJSONLoader implements Loadable {
     // Parse one JSON object for me, not for you :)
     private void parseJSONObjectInternal(Object key, Object object) {
 
+        // 首先填充结果
+        filledJsonMap(key, object);
+
         // 如果是 JSONObject 对象，以 JSONObject 对象解析方式解析
         if (JSONObject.class.equals(object.getClass())) {
             JSONObject jsonObject = (JSONObject) object;
-            if (jsonObject.isEmpty()) {
+            filledJsonMap(key, object);
+            /*if (jsonObject.isEmpty()) {
                 // 如果这个对象为空，直接填充
                 filledJsonMap(key, object);
                 return;
-            }
+            }*/
 
             // 否则将每个对象成员都进行解析
             for (Map.Entry entry : jsonObject.entrySet()) {
@@ -81,11 +88,7 @@ public abstract class AbstractJSONLoader implements Loadable {
                 }
                 parseJSONObjectInternal(k, jsonArray.get(i));
             }
-            return;
         }
-
-        // 如果只是普通对象，直接填充即可
-        filledJsonMap(key, object);
     }
 
     // 填充 JSON 结果容器
