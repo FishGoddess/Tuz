@@ -58,6 +58,19 @@ public class FileSystemPropertiesLoader extends ReaderPropertiesLoader {
         super(resourceFileName, namespace, charset);
     }
 
+    /**
+     * <p>根据资源文件名称构建</p>
+     * <p>Construct with resource file</p>
+     *
+     * @param resourceFileName <p>资源文件名称</p>
+     *                         <p>resource file</p>
+     * @param charset          <p>读取资源的字符集</p>
+     *                         <p>The charset of this resource</p>
+     */
+    public FileSystemPropertiesLoader(String resourceFileName, Charset charset) {
+        super(resourceFileName, resourceFileName, charset);
+    }
+
     @Override
     protected Reader getReader(String resourceFileName, Charset charset) throws IOException {
         return IOHelper.newReaderToFileSystem(resourceFileName, charset);

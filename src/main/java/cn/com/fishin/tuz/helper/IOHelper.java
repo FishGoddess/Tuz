@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
 /**
  * <p>路径帮助器</p>
@@ -145,5 +146,27 @@ public class IOHelper {
      */
     public static Path getResourceFromFileSystem(String resource) {
         return Paths.get(resource);
+    }
+
+    /**
+     * <p>读取指定路径下的一个文件全部字符</p>
+     * <p>当这个文件非常大的时候，有可能导致效率很低，耗费时间较多</p>
+     * <p>Collect all lines of this file in path</p>
+     * <p>If this file is huge enough, the speed will be slow enough</p>
+     *
+     * @param resource <p>要被读取的文件路径</p>
+     *                 <p>The path of this file</p>
+     * @param charset <p>读取使用的字符集</p>
+     *                <p>The charset of this file</p>
+     * @return <p>返回这个文件的全部字符</p><p>Return all chars in this file</p>
+     */
+    public static String linesOf(Path resource, Charset charset) {
+        try {
+            // 使用读取流和收集器完成字符串合并工作
+            return Files.lines(resource, charset).collect(Collectors.joining());
+        } catch (IOException e) {
+            LogHelper.error(e.getMessage(), e);
+        }
+        return "{}";
     }
 }

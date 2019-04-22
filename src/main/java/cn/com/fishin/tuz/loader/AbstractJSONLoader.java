@@ -17,7 +17,7 @@ import java.util.Map;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/04/22 15:29:40</p>
  */
-public abstract class AbstractJsonLoader implements Loadable {
+public abstract class AbstractJSONLoader implements Loadable {
 
     // 存储一个 JSON 对象的容器
     // A container stores this json object
@@ -35,7 +35,7 @@ public abstract class AbstractJsonLoader implements Loadable {
      * @param jsonString <p>JSON 字符串</p>
      *                   <p>The json string</p>
      */
-    protected AbstractJsonLoader(String jsonString) {
+    protected AbstractJSONLoader(String jsonString) {
         // 解析 JSON 字符串，填充进结果容器
         parseJSONObject(JSON.parseObject(jsonString));
     }
