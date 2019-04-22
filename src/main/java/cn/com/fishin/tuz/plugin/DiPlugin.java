@@ -62,9 +62,69 @@ public class DiPlugin {
 
     /**
      * <p>得到类实例</p>
+     * <p>这里会根据 classType 的 getSimpleName() 去获取 key，并且利用反射生成实例对象</p>
+     * <p>Get class instance</p>
+     * <p>Use reflect to instance a new object with given classType's simpleName</p>
+     *
+     * @param classType <p>类对象的实际类类型</p>
+     *                  <p>The real type of class instance</p>
+     * @param singleton <p>是否以单例模式创建对象实例</p>
+     *                  <p>Use singleton mode to create instance or not</p>
+     * @param <T>       <p>实际类型</p>
+     *                  <p>Real type</p>
+     * @return <p>返回得到的类实例</p><p>Return class instance</p>
+     */
+    public static <T> T useInstance(Class<T> classType, boolean singleton) {
+        return useInstance(classType.getSimpleName(), classType, singleton);
+    }
+
+    /**
+     * <p>得到类实例</p>
+     * <p>这里会根据 classType 的 getSimpleName() 去获取 key，并且利用反射生成实例对象</p>
+     * <p>注意这里的实例模式是根据 Tuz.getConfig().isSingleton() 中的设置来决定的</p>
+     * <p>Get class instance</p>
+     * <p>Use reflect to instance a new object with given classType's simpleName</p>
+     * <p>Notice that the mode creates the instance depends on Tuz.getConfig().isSingleton()</p>
+     *
+     * @param classType <p>类对象的实际类类型</p>
+     *                  <p>The real type of class instance</p>
+     * @param <T>       <p>实际类型</p>
+     *                  <p>Real type</p>
+     * @return <p>返回得到的类实例</p><p>Return class instance</p>
+     * @see cn.com.fishin.tuz.core.Tuz#getConfig()
+     * @see cn.com.fishin.tuz.core.TuzConfig#isSingleton()
+     */
+    public static <T> T useInstance(Class<T> classType) {
+        return useInstance(classType, Tuz.getConfig().isSingleton());
+    }
+
+    /**
+     * <p>得到类实例</p>
      * <p>这里会根据 key 值获取 value，并且利用反射生成实例对象</p>
      * <p>Get class instance</p>
      * <p>Use reflect to instance a new object with given value of key</p>
+     *
+     * @param key       <p>根据这个 key 找到类的全名</p>
+     *                  <p>Find the class by this key</p>
+     * @param classType <p>类对象的实际类类型</p>
+     *                  <p>The real type of class instance</p>
+     * @param singleton <p>是否以单例模式创建对象实例</p>
+     *                  <p>Use singleton mode to create instance or not</p>
+     * @param <T>       <p>实际类型</p>
+     *                  <p>Real type</p>
+     * @return <p>返回得到的类实例</p><p>Return class instance</p>
+     */
+    public static <T> T useInstance(String key, Class<T> classType, boolean singleton) {
+        return useInstanceInternal(Tuz.useGracefully(key, ""), classType, singleton);
+    }
+
+    /**
+     * <p>得到类实例</p>
+     * <p>这里会根据 key 值获取 value，并且利用反射生成实例对象</p>
+     * <p>注意这里的实例模式是根据 Tuz.getConfig().isSingleton() 中的设置来决定的</p>
+     * <p>Get class instance</p>
+     * <p>Use reflect to instance a new object with given value of key</p>
+     * <p>Notice that the mode creates the instance depends on Tuz.getConfig().isSingleton()</p>
      *
      * @param key       <p>根据这个 key 找到类的全名</p>
      *                  <p>Find the class by this key</p>
@@ -75,7 +135,7 @@ public class DiPlugin {
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
     public static <T> T useInstance(String key, Class<T> classType) {
-        return useInstanceInternal(Tuz.useGracefully(key, ""), classType);
+        return useInstance(key, classType, Tuz.getConfig().isSingleton());
     }
 
     /**
@@ -90,28 +150,36 @@ public class DiPlugin {
      *                  <p>Appointed namespace to different resource</p>
      * @param classType <p>类对象的实际类类型</p>
      *                  <p>The real type of class instance</p>
+     * @param singleton <p>是否以单例模式创建对象实例</p>
+     *                  <p>Use singleton mode to create instance or not</p>
      * @param <T>       <p>实际类型</p>
      *                  <p>Real type</p>
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
-    public static <T> T useInstance(String key, String namespace, Class<T> classType) {
-        return useInstanceInternal(Tuz.useGracefully(key, namespace, ""), classType);
+    public static <T> T useInstance(String key, String namespace, Class<T> classType, boolean singleton) {
+        return useInstanceInternal(Tuz.useGracefully(key, namespace, ""), classType, singleton);
     }
 
     /**
      * <p>得到类实例</p>
-     * <p>这里会根据 classType 的 getSimpleName() 去获取 key，并且利用反射生成实例对象</p>
+     * <p>这里会根据 key 值获取 value，并且利用反射生成实例对象</p>
+     * <p>注意这里的实例模式是根据 Tuz.getConfig().isSingleton() 中的设置来决定的</p>
      * <p>Get class instance</p>
-     * <p>Use reflect to instance a new object with given classType's simpleName</p>
+     * <p>Use reflect to instance a new object with given value of key</p>
+     * <p>Notice that the mode creates the instance depends on Tuz.getConfig().isSingleton()</p>
      *
+     * @param key       <p>根据这个 key 找到类的全名</p>
+     *                  <p>Find the class by this key</p>
+     * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
+     *                  <p>Appointed namespace to different resource</p>
      * @param classType <p>类对象的实际类类型</p>
      *                  <p>The real type of class instance</p>
      * @param <T>       <p>实际类型</p>
      *                  <p>Real type</p>
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
-    public static <T> T useInstance(Class<T> classType) {
-        return useInstance(classType.getSimpleName(), classType);
+    public static <T> T useInstance(String key, String namespace, Class<T> classType) {
+        return useInstance(key, namespace, classType, Tuz.getConfig().isSingleton());
     }
 
     // 单例模式生成类实例，并缓存起来
@@ -141,9 +209,9 @@ public class DiPlugin {
 
     // 生成类实例的方法
     // Init the instance
-    private static <T> T useInstanceInternal(String className, Class<T> classType) {
+    private static <T> T useInstanceInternal(String className, Class<T> classType, boolean singleton) {
         // 首先判断配置，是单例模式还是多例模式
-        if (Tuz.getConfig().isSingleton()) {
+        if (singleton) {
             // 单例模式
             return singletonInstance(className, classType);
         }

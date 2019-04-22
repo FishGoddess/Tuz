@@ -56,6 +56,49 @@ public class ProxyPlugin {
 
     /**
      * <p>得到类被拦截器代理之后的实例</p>
+     * <p>这里会根据 classType 的 getSimpleName() 去获取 key，并且利用反射生成实例对象</p>
+     * <p>Get class instance after intercepting</p>
+     * <p>Use reflect to instance a new object with given classType's simpleName</p>
+     *
+     * @param classType    <p>类对象的实际类类型</p>
+     *                     <p>The real type of class instance</p>
+     * @param singleton    <p>是否以单例模式创建代理对象实例</p>
+     *                     <p>Use singleton mode to create proxy instance or not</p>
+     * @param <T>          <p>实际类型</p>
+     *                     <p>Real type</p>
+     * @param interceptors <p>要使用的多个拦截器</p>
+     *                     <p>All interceptor you want to use</p>
+     * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
+     */
+    public static <T> T useInstance(Class<T> classType, boolean singleton, Interceptor[] interceptors) {
+        return useInstanceInternal(DiPlugin.useInstance(classType), classType, singleton, interceptors);
+    }
+
+    /**
+     * <p>得到类被拦截器代理之后的实例</p>
+     * <p>这里会根据 classType 的 getSimpleName() 去获取 key，并且利用反射生成实例对象</p>
+     * <p>注意这里的实例模式是根据 Tuz.getConfig().isSingleton() 中的设置来决定的</p>
+     * <p>Get class instance after intercepting</p>
+     * <p>Use reflect to instance a new object with given classType's simpleName</p>
+     * <p>Notice that the mode creates the instance depends on Tuz.getConfig().isSingleton()</p>
+     *
+     * @see cn.com.fishin.tuz.core.Tuz#getConfig()
+     * @see cn.com.fishin.tuz.core.TuzConfig#isSingleton()
+     *
+     * @param classType    <p>类对象的实际类类型</p>
+     *                     <p>The real type of class instance</p>
+     * @param <T>          <p>实际类型</p>
+     *                     <p>Real type</p>
+     * @param interceptors <p>要使用的多个拦截器</p>
+     *                     <p>All interceptor you want to use</p>
+     * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
+     */
+    public static <T> T useInstance(Class<T> classType, Interceptor[] interceptors) {
+        return useInstance(classType, Tuz.getConfig().isSingleton(), interceptors);
+    }
+
+    /**
+     * <p>得到类被拦截器代理之后的实例</p>
      * <p>这里会根据 key 值获取 value，并且利用反射生成实例对象</p>
      * <p>Get class instance after intercepting</p>
      * <p>Use reflect to instance a new object with given value of key</p>
@@ -64,14 +107,41 @@ public class ProxyPlugin {
      *                  <p>Find the class by this key</p>
      * @param classType <p>类对象的实际类类型</p>
      *                  <p>The real type of class instance</p>
+     * @param singleton    <p>是否以单例模式创建代理对象实例</p>
+     *                     <p>Use singleton mode to create proxy instance or not</p>
      * @param <T>       <p>实际类型</p>
      *                  <p>Real type</p>
      * @param interceptors <p>要使用的多个拦截器</p>
      *                     <p>All interceptor you want to use</p>
      * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
      */
+    public static <T> T useInstance(String key, Class<T> classType, boolean singleton, Interceptor[] interceptors) {
+        return useInstanceInternal(DiPlugin.useInstance(key, classType), classType, singleton, interceptors);
+    }
+
+    /**
+     * <p>得到类被拦截器代理之后的实例</p>
+     * <p>这里会根据 key 值获取 value，并且利用反射生成实例对象</p>
+     * <p>注意这里的实例模式是根据 Tuz.getConfig().isSingleton() 中的设置来决定的</p>
+     * <p>Get class instance after intercepting</p>
+     * <p>Use reflect to instance a new object with given value of key</p>
+     * <p>Notice that the mode creates the instance depends on Tuz.getConfig().isSingleton()</p>
+     *
+     * @see cn.com.fishin.tuz.core.Tuz#getConfig()
+     * @see cn.com.fishin.tuz.core.TuzConfig#isSingleton()
+     *
+     * @param key          <p>根据这个 key 找到类的全名</p>
+     *                     <p>Find the class by this key</p>
+     * @param classType    <p>类对象的实际类类型</p>
+     *                     <p>The real type of class instance</p>
+     * @param <T>          <p>实际类型</p>
+     *                     <p>Real type</p>
+     * @param interceptors <p>要使用的多个拦截器</p>
+     *                     <p>All interceptor you want to use</p>
+     * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
+     */
     public static <T> T useInstance(String key, Class<T> classType, Interceptor[] interceptors) {
-        return useInstanceInternal(DiPlugin.useInstance(key, classType), classType, interceptors);
+        return useInstance(key, classType, Tuz.getConfig().isSingleton(), interceptors);
     }
 
     /**
@@ -86,32 +156,43 @@ public class ProxyPlugin {
      *                  <p>Appointed namespace to different resource</p>
      * @param classType <p>类对象的实际类类型</p>
      *                  <p>The real type of class instance</p>
+     * @param singleton    <p>是否以单例模式创建代理对象实例</p>
+     *                     <p>Use singleton mode to create proxy instance or not</p>
      * @param <T>       <p>实际类型</p>
      *                  <p>Real type</p>
+     * @param interceptors <p>要使用的多个拦截器</p>
+     *                     <p>All interceptor you want to use</p>
+     * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
+     */
+    public static <T> T useInstance(String key, String namespace, Class<T> classType, boolean singleton, Interceptor[] interceptors) {
+        return useInstanceInternal(DiPlugin.useInstance(key, namespace, classType), classType, singleton, interceptors);
+    }
+
+    /**
+     * <p>得到类被拦截器代理之后的实例</p>
+     * <p>这里会根据 key 值获取 value，并且利用反射生成实例对象</p>
+     * <p>注意这里的实例模式是根据 Tuz.getConfig().isSingleton() 中的设置来决定的</p>
+     * <p>Get class instance after intercepting</p>
+     * <p>Use reflect to instance a new object with given value of key</p>
+     * <p>Notice that the mode creates the instance depends on Tuz.getConfig().isSingleton()</p>
+     *
+     * @see cn.com.fishin.tuz.core.Tuz#getConfig()
+     * @see cn.com.fishin.tuz.core.TuzConfig#isSingleton()
+     *
+     * @param key          <p>根据这个 key 找到类的全名</p>
+     *                     <p>Find the class by this key</p>
+     * @param namespace    <p>指定的命名空间，用于区分不同的资源文件</p>
+     *                     <p>Appointed namespace to different resource</p>
+     * @param classType    <p>类对象的实际类类型</p>
+     *                     <p>The real type of class instance</p>
+     * @param <T>          <p>实际类型</p>
+     *                     <p>Real type</p>
      * @param interceptors <p>要使用的多个拦截器</p>
      *                     <p>All interceptor you want to use</p>
      * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
      */
     public static <T> T useInstance(String key, String namespace, Class<T> classType, Interceptor[] interceptors) {
-        return useInstanceInternal(DiPlugin.useInstance(key, namespace, classType), classType, interceptors);
-    }
-
-    /**
-     * <p>得到类被拦截器代理之后的实例</p>
-     * <p>这里会根据 classType 的 getSimpleName() 去获取 key，并且利用反射生成实例对象</p>
-     * <p>Get class instance after intercepting</p>
-     * <p>Use reflect to instance a new object with given classType's simpleName</p>
-     *
-     * @param classType <p>类对象的实际类类型</p>
-     *                  <p>The real type of class instance</p>
-     * @param <T>       <p>实际类型</p>
-     *                  <p>Real type</p>
-     * @param interceptors <p>要使用的多个拦截器</p>
-     *                     <p>All interceptor you want to use</p>
-     * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
-     */
-    public static <T> T useInstance(Class<T> classType, Interceptor[] interceptors) {
-        return useInstanceInternal(DiPlugin.useInstance(classType), classType, interceptors);
+        return useInstance(key, namespace, classType, Tuz.getConfig().isSingleton(), interceptors);
     }
 
     // 单例模式生成类代理实例，并缓存起来
@@ -142,10 +223,10 @@ public class ProxyPlugin {
     // 内部使用的代理对象获得方法
     // It is for me, not for you:)
     @SuppressWarnings("unchecked")
-    private static <T> T useInstanceInternal(Object target, Class<T> classType, Interceptor[] interceptors) {
+    private static <T> T useInstanceInternal(Object target, Class<T> classType, boolean singleton, Interceptor[] interceptors) {
 
         // 首先判断配置，是单例模式还是多例模式
-        if (Tuz.getConfig().isSingleton()) {
+        if (singleton) {
             // 单例模式
             return singletonProxyInstance(target, classType, interceptors);
         }

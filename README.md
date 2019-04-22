@@ -414,6 +414,11 @@ The methods below are some of usable methods, the others need your discovery:)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
+#### *2019-4-22:*
+    1. 新增 DiPlugin 的三个方法，可以临时指定单例模式或者多例模式
+    2. 新增 ProxyPlugin 的三个方法，可以临时指定单例模式或者多例模式
+    3. 以上两点改动可以做到不修改配置，灵活生成类的实例
+
 #### *2019-4-17:*
     1. 代理工厂新增一个代理拦截器的方法
     2. 当这个类可以被继承时，使用 CGlib 来实现动态代理
