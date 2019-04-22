@@ -43,7 +43,7 @@
 <dependency>
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.6.6-FINAL</version>
+    <version>0.6.7-FINAL</version>
 </dependency>
 ```
 ---
@@ -51,7 +51,7 @@
 + Also, you may use a Gradle project, do the same thing as a Maven project:
 ```groovy
 // https://mvnrepository.com/artifact/cn.com.fishin/Tuz
-compile group: 'cn.com.fishin', name: 'Tuz', version: '0.6.6-FINAL'
+compile group: 'cn.com.fishin', name: 'Tuz', version: '0.6.7-FINAL'
 ```
 其他构建工具或者仓库请参考 `Maven 中心仓库`的写法，如果您不知道网址是啥，请点击
 上方的 `Maven Central` 图标或者点击 [这个链接](https://mvnrepository.com/artifact/cn.com.fishin/Tuz)。
@@ -62,8 +62,13 @@ See more info in [this website](https://mvnrepository.com/artifact/cn.com.fishin
 + 或者，您使用的是普通 Java 项目，需要手动引入 lib 框架。
 我们建议您迁移到 Maven 工程，如果不想切换，
 可以到 [Tuz - GitHub](https://github.com/FishGoddess/Tuz/releases) 下载你需要版本的 Jar 包文件以及文档和源码。
+
++ 我们提供了两种 jar 可供使用，一种是不带任何依赖的，一种是带了完整依赖的，请选择一种下载。
+
 + Or worse, you are using a traditional Java project with adding Jar manually,
 then you should change your developing way or download a Jar from [Tuz - GitHub](https://github.com/FishGoddess/Tuz/releases).
+
++ We provide two versions of jar, one is small but not completed, one is completed but not small, you should choose one of them.
 ---
 
 ## 参考例子 -- Example
@@ -418,6 +423,7 @@ The methods below are some of usable methods, the others need your discovery:)
     1. 新增 DiPlugin 的三个方法，可以临时指定单例模式或者多例模式
     2. 新增 ProxyPlugin 的三个方法，可以临时指定单例模式或者多例模式
     3. 以上两点改动可以做到不修改配置，灵活生成类的实例
+    4. 现在有两种 jar 可供使用，一种是不带任何依赖的，一种是带了完整依赖的
 
 #### *2019-4-17:*
     1. 代理工厂新增一个代理拦截器的方法

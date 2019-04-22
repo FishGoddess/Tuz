@@ -15,7 +15,7 @@
         <text x="455" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="790">maven central
         </text>
         <text x="455" y="140" transform="scale(.1)" textLength="790">maven central</text>
-        <text x="1260" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="640">0.6.6-FINAL</text>
-        <text x="1260" y="140" transform="scale(.1)" textLength="640">0.6.6-FINAL</text>
+        <text x="1260" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="640">0.6.7-FINAL</text>
+        <text x="1260" y="140" transform="scale(.1)" textLength="640">0.6.7-FINAL</text>
     </g>
 </svg>
