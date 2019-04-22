@@ -211,6 +211,17 @@ public class TuzSimpleDemo3 {
         // 这里的 test 就是命名空间，在调用 Tuz.load 时就需要指定
         //Tuz.load(new ClasspathJSONLoader("test.json", "test"));
         //System.out.println(Tuz.use("status", "test")); // ===> 0
+        
+        // 当然，如果你是在程序中使用到了一个 JSON 字符串，也可以使用 AbstractJSONLoader 加载使用
+        final String jsonString = "{\"title\":{\"null\":{},\"name\":\"test\",\"id\":\"001\"},\"content\":[{\"arr\":[1,\"非你莫属尽快发你说的\",true],\"id\":\"001\",\"value\":\"hello 001\"},{\"id\":\"002\",\"value\":\"hello 002\"}]}";
+        Tuz.load(new AbstractJSONLoader(jsonString) {
+            @Override
+            public String namespace() {
+                return "program";
+            }
+        });
+
+        System.out.println(Tuz.use("content[0].arr")); // ===> [1,"非你莫属尽快发你说的",true]
     }
 }
 ```
