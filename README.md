@@ -82,6 +82,7 @@ public class TuzSimpleDemo {
         // API: load(Loadable resource) throws IOException
         // test 是命名空间，后面一个是资源加载器
         // "test.properties" 文件中有一个属性：number=16
+        
         Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 当然，你也可以不指定命名空间，内部会自动生成一个命名空间
@@ -98,6 +99,7 @@ public class TuzSimpleDemo {
         // 您可以在任意地方使用这个资源，像这样：
         // API: use(String key, String namespace)
         // 其中上面的代码中 number 是资源名字，test 是命名空间
+
         String number = Tuz.use("number", "test"); // ===> 返回 16
         System.out.println(number);
 
@@ -105,6 +107,14 @@ public class TuzSimpleDemo {
         // 具体原因请看 cn.com.fishin.tuz.core.Tuz.use(java.lang.String)
         // 关于用不用命名空间，完全取决于你对运行效率和开发效率的权衡
         //String number = Tuz.use("number"); // ===> 返回 16
+
+        // 如果你需要更新重载这个资源文件，就调用这个方法
+        // 注意这里的 new ClasspathPropertiesLoader("test.properties", "test") 应该要和上面 load 的一致
+        //Tuz.reLoad(new ClasspathPropertiesLoader("test.properties", "test"));
+
+        // 如果你不再需要这个资源文件，就调用这个方法
+        // 注意这里的 new ClasspathPropertiesLoader("test.properties", "test") 应该要和上面 load 的一致
+        //Tuz.unLoad(new ClasspathPropertiesLoader("test.properties", "test"));
     }
 }
 ```
@@ -506,12 +516,16 @@ The methods below are some of usable methods, the others need your discovery:)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
+#### *2019-4-24:*
+    1. 新增 Tuz.unload 方法，当资源加载过多，耗费大量内存时就可以卸载掉不需要的资源了
+    2. 新增 Tuz.reload 方法，当资源被修改了需要更新时，就可以使用它更新资源
+
 #### *2019-4-22:*
     1. 新增 JSON 资源加载器，现在 JSON 文件也可以很简单的加载并使用了
-    1. 新增 DiPlugin 的三个方法，可以临时指定单例模式或者多例模式
-    2. 新增 ProxyPlugin 的三个方法，可以临时指定单例模式或者多例模式
-    3. 以上两点改动可以做到不修改配置，灵活生成类的实例
-    4. 现在有两种 jar 可供使用，一种是不带任何依赖的，一种是带了完整依赖的
+    2. 新增 DiPlugin 的三个方法，可以临时指定单例模式或者多例模式
+    3. 新增 ProxyPlugin 的三个方法，可以临时指定单例模式或者多例模式
+    4. 以上两点改动可以做到不修改配置，灵活生成类的实例
+    5. 现在有两种 jar 可供使用，一种是不带任何依赖的，一种是带了完整依赖的
 
 #### *2019-4-17:*
     1. 代理工厂新增一个代理拦截器的方法

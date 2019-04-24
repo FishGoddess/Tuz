@@ -125,7 +125,48 @@ public class Tuz {
         resources.put(resource.namespace(), resource.load());
 
         // 日志输出
-        LogHelper.debug("Namespace [" + resource.namespace() + "] loaded resource added!");
+        LogHelper.debug("Namespace [" + resource.namespace() + "] is loaded!");
+    }
+
+    /**
+     * <p>卸载一个资源文件</p>
+     * <p>unLoad a resource</p>
+     *
+     * @param resource <p>要被卸载的资源文件</p>
+     *                 <p>The resource to be unloaded</p>
+     */
+    public static void unLoad(Loadable resource) {
+        unLoad(resource.namespace());
+    }
+
+    /**
+     * <p>卸载一个命名空间</p>
+     * <p>unLoad a namespace</p>
+     *
+     * @param namespace <p>要被卸载的命名空间</p>
+     *                 <p>The namespace to be unloaded</p>
+     */
+    public static void unLoad(String namespace) {
+        resources.remove(namespace);
+
+        // 日志输出
+        LogHelper.debug("Namespace [" + namespace + "] is unloaded!");
+    }
+
+    /**
+     * <p>重新载入一个资源文件</p>
+     * <p>unLoad a resource</p>
+     *
+     * @param resource <p>要被卸载的资源文件</p>
+     *                  <p>The resource to be unloaded</p>
+     * @throws IOException <p>找不到资源文件就会抛出这个异常</p>
+     *                     <p>The resource is not found</p>
+     */
+    public static void reLoad(Loadable resource) throws IOException {
+        resources.put(resource.namespace(), resource.load());
+
+        // 日志输出
+        LogHelper.debug("Namespace [" + resource.namespace() + "] is reloaded!");
     }
 
     /**

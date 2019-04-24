@@ -50,5 +50,17 @@ public class TuzTest {
         Assert.assertNull(Tuz.use("hello", "test"));
         Assert.assertNull(Tuz.use("hello", "test2"));
         Assert.assertNull(Tuz.use("hello"));
+
+        Tuz.unLoad(new ClasspathPropertiesLoader("test.properties", "test"));
+        Assert.assertNull(Tuz.use("number", "test"));
+        Assert.assertNull(Tuz.use("number"));
+
+        try {
+            Tuz.reLoad(new ClasspathPropertiesLoader("test.properties", "test"));
+            Assert.assertEquals(Tuz.use("number", "test"), "16");
+            Assert.assertEquals(Tuz.use("number"), "16");
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
     }
 }

@@ -46,5 +46,13 @@ public class TuzSimpleDemo {
         // 具体原因请看 cn.com.fishin.tuz.core.Tuz.use(java.lang.String)
         // 关于用不用命名空间，完全取决于你对运行效率和开发效率的权衡
         //String number = Tuz.use("number"); // ===> 返回 16
+
+        // 如果你需要更新重载这个资源文件，就调用这个方法
+        // 注意这里的 new ClasspathPropertiesLoader("test.properties", "test") 应该要和上面 load 的一致
+        //Tuz.reLoad(new ClasspathPropertiesLoader("test.properties", "test"));
+
+        // 如果你不再需要这个资源文件，就调用这个方法
+        // 注意这里的 new ClasspathPropertiesLoader("test.properties", "test") 应该要和上面 load 的一致
+        //Tuz.unLoad(new ClasspathPropertiesLoader("test.properties", "test"));
     }
 }
