@@ -130,7 +130,7 @@ public class Tuz {
 
     /**
      * <p>卸载一个资源文件</p>
-     * <p>unLoad a resource</p>
+     * <p>UnLoad a resource</p>
      *
      * @param resource <p>要被卸载的资源文件</p>
      *                 <p>The resource to be unloaded</p>
@@ -141,10 +141,10 @@ public class Tuz {
 
     /**
      * <p>卸载一个命名空间</p>
-     * <p>unLoad a namespace</p>
+     * <p>UnLoad a namespace</p>
      *
      * @param namespace <p>要被卸载的命名空间</p>
-     *                 <p>The namespace to be unloaded</p>
+     *                  <p>The namespace to be unloaded</p>
      */
     public static void unLoad(String namespace) {
         resources.remove(namespace);
@@ -155,10 +155,10 @@ public class Tuz {
 
     /**
      * <p>重新载入一个资源文件</p>
-     * <p>unLoad a resource</p>
+     * <p>ReLoad a resource</p>
      *
-     * @param resource <p>要被卸载的资源文件</p>
-     *                  <p>The resource to be unloaded</p>
+     * @param resource <p>要被重新载入的资源文件</p>
+     *                 <p>The resource to be reloaded</p>
      * @throws IOException <p>找不到资源文件就会抛出这个异常</p>
      *                     <p>The resource is not found</p>
      */
@@ -170,14 +170,14 @@ public class Tuz {
     }
 
     /**
-     * <p>获取指定 key 的属性值</p>
-     * <p>fetch the value of the key</p>
+     * <p>获取指定 namespace 的资源值</p>
+     * <p>Fetch the value of the namespace's key</p>
      *
-     * @param key       <p>指定的 key</p>
+     * @param key       <p>指定资源值的 key</p>
      *                  <p>The key of the value</p>
      * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
      *                  <p>Appointed namespace to different resource</p>
-     * @return <p>返回获取到的属性值，找不到返回 null</p>
+     * @return <p>返回获取到的资源值，找不到返回 null</p>
      * <p>Return the value of the key, null if not found</p>
      */
     public static String use(String key, String namespace) {
@@ -185,8 +185,61 @@ public class Tuz {
     }
 
     /**
+     * <p>移除指定的 namespace 的资源值</p>
+     * <p>Remove the value of the namespace's key</p>
+     *
+     * @param key       <p>指定资源值的 key</p>
+     *                  <p>The key of the value</p>
+     * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
+     *                  <p>Appointed namespace to different resource</p>
+     * @return <p>返回移除前的资源值，找不到返回 null</p>
+     * <p>Return the value of the removed key, null if not found</p>
+     */
+    public static String unUse(String key, String namespace) {
+        return resources.containsKey(namespace) ? resources.get(namespace).remove(key) : null;
+    }
+
+    /**
+     * <p>往指定的 namespace 中添加新的资源值</p>
+     * <p>Add one value to the pointed namespace</p>
+     *
+     * @param resource  <p>要被添加的资源值</p>
+     *                  <p>The resource to be appended</p>
+     * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
+     *                  <p>Appointed namespace to different resource</p>
+     */
+    public static void appendResource(Map<String, String> resource, String namespace) {
+        if (resources.containsKey(namespace)) {
+            resources.get(namespace).putAll(resource);
+
+            // 日志输出
+            LogHelper.debug("Resource " + resource + " is appended to namespace [ " + namespace + " ] !");
+        }
+    }
+
+    /**
+     * <p>往指定的 namespace 中添加新的资源值</p>
+     * <p>Add one value to the pointed namespace</p>
+     *
+     * @param key  <p>要被添加的资源的 key</p>
+     *                  <p>The key of resource to be appended</p>
+     * @param value <p>要被添加的资源值</p>、
+     *              <p>The resource to be appended</p>
+     * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
+     *                  <p>Appointed namespace to different resource</p>
+     */
+    public static void appendResource(String key, String value, String namespace) {
+        if (resources.containsKey(namespace)) {
+            resources.get(namespace).put(key, value);
+
+            // 日志输出
+            LogHelper.debug("Resource {" + key + "=" + value + "} is appended to namespace [ " + namespace + " ] !");
+        }
+    }
+
+    /**
      * <p>获取指定 key 的属性值</p>
-     * <p>fetch the value of the key</p>
+     * <p>Fetch the value of the key</p>
      *
      * @param key          <p>指定的 key</p>
      *                     <p>The key of the value</p>
@@ -210,7 +263,7 @@ public class Tuz {
      * 由于哈希算法存在随机性，所以有可能返回另外一个值！！
      * 因此，不管是出于性能还是运行的正常性，强烈推荐使用自定义命名空间！:)
      * </p>
-     * <p>fetch the value of the key</p>
+     * <p>Fetch the value of the key</p>
      * <p>
      * <strong>Notice: </strong>
      * If you do not appoint a namespace, and you have some same key
@@ -238,7 +291,7 @@ public class Tuz {
      * 由于哈希算法存在随机性，所以有可能返回另外一个值！！
      * 因此，不管是出于性能还是运行的正常性，强烈推荐使用自定义命名空间！:)
      * </p>
-     * <p>fetch the value of the key</p>
+     * <p>Fetch the value of the key</p>
      * <p>
      * <strong>Notice: </strong>
      * If you do not appoint a namespace, and you have some same key
@@ -248,8 +301,8 @@ public class Tuz {
      * That's my boy:)
      * </p>
      *
-     * @param key <p>指定的 key</p>
-     *            <p>The key of the value</p>
+     * @param key          <p>指定的 key</p>
+     *                     <p>The key of the value</p>
      * @param defaultValue <p>找不到返回这个值</p>
      *                     <p>Return this value if not found</p>
      * @return <p>返回获取到的属性值，找不到返回 null</p>
@@ -281,7 +334,6 @@ public class Tuz {
      * <p>Also, some problems happen because load method is back of initializing config.</p>
      * <p>So, if you have some problems with this config,
      * try to invoke this method after invoking load()</p>
-     *
      */
     public static void init() {
         config = new TuzConfig();

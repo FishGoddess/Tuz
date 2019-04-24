@@ -519,6 +519,7 @@ The methods below are some of usable methods, the others need your discovery:)
 #### *2019-4-24:*
     1. 新增 Tuz.unload 方法，当资源加载过多，耗费大量内存时就可以卸载掉不需要的资源了
     2. 新增 Tuz.reload 方法，当资源被修改了需要更新时，就可以使用它更新资源
+    3. 新增 Tuz.appendResource 方法，更加细粒度的操作资源，可以往一个命名空间添加资源值
 
 #### *2019-4-22:*
     1. 新增 JSON 资源加载器，现在 JSON 文件也可以很简单的加载并使用了

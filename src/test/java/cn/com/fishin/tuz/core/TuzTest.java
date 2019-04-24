@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 测试 tuz 类
@@ -51,6 +53,11 @@ public class TuzTest {
         Assert.assertNull(Tuz.use("hello", "test2"));
         Assert.assertNull(Tuz.use("hello"));
 
+        // 移除指定资源
+        System.out.println(Tuz.unUse("number", "test"));
+        Assert.assertNull(Tuz.use("number", "test"));
+        Assert.assertNull(Tuz.use("number"));
+
         Tuz.unLoad(new ClasspathPropertiesLoader("test.properties", "test"));
         Assert.assertNull(Tuz.use("number", "test"));
         Assert.assertNull(Tuz.use("number"));
@@ -62,5 +69,15 @@ public class TuzTest {
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
+
+        Assert.assertNull(Tuz.use("xxx", "test"));
+        Assert.assertEquals(Tuz.use("number", "test"), "16");
+        //Map<String, String> resource = new HashMap<>(2);
+        //resource.put("xxx", "ok");
+        //Tuz.appendResource(resource, "test");
+        Tuz.appendResource("xxx", "ok", "test");
+        Assert.assertEquals(Tuz.use("xxx", "test"), "ok");
+        Assert.assertEquals(Tuz.use("xxx"), "ok");
+        Assert.assertEquals(Tuz.use("number", "test"), "16");
     }
 }
