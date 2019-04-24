@@ -78,6 +78,9 @@ public class TuzTest {
         Tuz.appendResource("xxx", "ok", "test");
         Assert.assertEquals(Tuz.use("xxx", "test"), "ok");
         Assert.assertEquals(Tuz.use("xxx"), "ok");
+
         Assert.assertEquals(Tuz.use("number", "test"), "16");
+        Tuz.unUse("number", "test");
+        Assert.assertNull(Tuz.use("number", "test"));
     }
 }
