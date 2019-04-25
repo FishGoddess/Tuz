@@ -51,15 +51,15 @@ public abstract class AbstractJSONLoader implements Loadable {
 
     // 内部使用的 JSONObject 对象解析方法
     // Parse one JSON object for me, not for you :)
-    private void parseJSONObjectInternal(Object key, Object object) {
+    private void parseJSONObjectInternal(Object key, Object value) {
 
         // 首先填充结果
-        filledJsonMap(key, object);
+        filledJsonMap(key, value);
 
         // 如果是 JSONObject 对象，以 JSONObject 对象解析方式解析
-        if (JSONObject.class.equals(object.getClass())) {
-            JSONObject jsonObject = (JSONObject) object;
-            filledJsonMap(key, object);
+        if (JSONObject.class.equals(value.getClass())) {
+            JSONObject jsonObject = (JSONObject) value;
+            //filledJsonMap(key, object);
             /*if (jsonObject.isEmpty()) {
                 // 如果这个对象为空，直接填充
                 filledJsonMap(key, object);
@@ -79,8 +79,8 @@ public abstract class AbstractJSONLoader implements Loadable {
         }
 
         // 如果是 JSONArray 对象，以 JSONArray 对象解析方式解析
-        if (JSONArray.class.equals(object.getClass())) {
-            JSONArray jsonArray = (JSONArray) object;
+        if (JSONArray.class.equals(value.getClass())) {
+            JSONArray jsonArray = (JSONArray) value;
             for (int i = 0; i < jsonArray.size(); i++) {
                 Object k = key;
                 if (k != null) {
