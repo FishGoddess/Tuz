@@ -7,7 +7,7 @@ package cn.com.fishin.tuz.template;
  * <pre>
  *     // 选择性地覆盖方法，以便在不同的代码块中运行
  *     public String lines() {
- *         return new TryBlockTemplate<String>() {
+ *         return new TryBlockTemplate&lt;String&gt;() {
  *             //@Override
  *             protected String doInTry(Object... args) {
  *                 return null;
@@ -86,6 +86,7 @@ public class TryBlockTemplate<Result> {
      * <p>在 catch 块中执行</p>
      * <p>Do in catch block</p>
      *
+     * @param t <p>抛出的异常</p><p>The threw exception</p>
      * @param args <p>可变参数，如果你需要使用到额外的参数，就通过这个参数传进来</p>
      *             <p>Extendable parameters, if you wanna to use some parameters
      *             , then use it!

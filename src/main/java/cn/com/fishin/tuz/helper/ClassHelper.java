@@ -29,6 +29,8 @@ public class ClassHelper {
      * @throws ClassNotFoundException <p>如果找不到这个类</p><p>If the class is not found</p>
      * @throws IllegalAccessException <p>如果这个类不允许访问</p><p>If the class is not allowed to access</p>
      * @throws InstantiationException <p>如果这个类没有默认构造函数</p><p>If the class do not has default constructor</p>
+     * @throws NoSuchMethodException <p>如果这个类没有默认构造函数</p><p>If the class do not has default constructor</p>
+     * @throws InvocationTargetException <p>如果这个类不允许访问</p><p>If the class is not allowed to access</p>
      */
     @SuppressWarnings("unchecked")
     public static Object newInstance(String className)

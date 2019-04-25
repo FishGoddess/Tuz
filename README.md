@@ -43,7 +43,7 @@
 <dependency>
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.7.0-FINAL</version>
+    <version>0.7.2-FINAL</version>
 </dependency>
 ```
 ---
@@ -51,7 +51,7 @@
 + Also, you may use a Gradle project, do the same thing as a Maven project:
 ```groovy
 // https://mvnrepository.com/artifact/cn.com.fishin/Tuz
-compile group: 'cn.com.fishin', name: 'Tuz', version: '0.7.0-FINAL'
+compile group: 'cn.com.fishin', name: 'Tuz', version: '0.7.2-FINAL'
 ```
 其他构建工具或者仓库请参考 `Maven 中心仓库`的写法，如果您不知道网址是啥，请点击
 上方的 `Maven Central` 图标或者点击 [这个链接](https://mvnrepository.com/artifact/cn.com.fishin/Tuz)。
@@ -512,7 +512,7 @@ The methods below are some of usable methods, the others need your discovery:)
 
 ## 友情链接 -- as a friend
 + [Kiter 集成工具类 @ 来自王老板的奇思妙想](https://github.com/ChickenWinner/kiter)
-+ [navicat - web @ 来自黄少爷的财大气粗](https://github.com/Mackyhuang/navicat-web)
++ [knapsack @ 来自黄少爷的财大气粗](https://github.com/Mackyhuang/knapsack)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
