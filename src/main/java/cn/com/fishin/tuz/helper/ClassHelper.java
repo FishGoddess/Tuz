@@ -1,5 +1,7 @@
 package cn.com.fishin.tuz.helper;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
 
 /**
@@ -28,12 +30,30 @@ public class ClassHelper {
      * @throws IllegalAccessException <p>如果这个类不允许访问</p><p>If the class is not allowed to access</p>
      * @throws InstantiationException <p>如果这个类没有默认构造函数</p><p>If the class do not has default constructor</p>
      */
+    @SuppressWarnings("unchecked")
     public static Object newInstance(String className)
-            throws ClassNotFoundException, IllegalAccessException, InstantiationException {
+            throws ClassNotFoundException, IllegalAccessException,
+            InstantiationException, NoSuchMethodException, InvocationTargetException {
 
         // 加载类
         Class clazz = Class.forName(className);
-        return clazz.newInstance();
+
+        // 这个方法在 JDK9 中不推荐使用了，改为使用构造器的 newInstance
+        //return clazz.newInstance();
+        Constructor<?> constructor = clazz.getDeclaredConstructor();
+        checkConstructor(className, constructor);
+        return constructor.newInstance();
+    }
+
+    // 检查构造器是否可用，就是是否为 null，如果不是 null，设置为可访问的
+    // Check the constructor is null or not, if not null, then set accessible to true
+    private static void checkConstructor(String className, Constructor constructor) throws NoSuchMethodException {
+        if (constructor == null) {
+            throw new NoSuchMethodException("Non-parameter constructor is not found in class " + className + " !");
+        }
+
+        // 设置为可以访问的
+        constructor.setAccessible(true);
     }
 
     /**
@@ -57,11 +77,11 @@ public class ClassHelper {
         try {
             return (T) newInstance(className);
         } catch (ClassNotFoundException e) {
-            LogHelper.error("The class is not found", e);
-        } catch (IllegalAccessException e) {
-            LogHelper.error("the class is not allowed to access", e);
-        } catch (InstantiationException e) {
-            LogHelper.error("the class do not has default constructor", e);
+            LogHelper.error("The class [" + className + "] is not found!", e);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            LogHelper.error("The class [" + className + "] is not allowed to access!", e);
+        } catch (InstantiationException | NoSuchMethodException e) {
+            LogHelper.error("Non-parameter constructor is not found in class [" + className + "]!", e);
         }
 
         // 出现异常就会返回 null

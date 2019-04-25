@@ -91,14 +91,15 @@ public class InterceptorHelper {
         boolean intercept(Invokable invokable) {
 
             // 如果有一个拦截器返回 false，就不会继续往下执行了
+            boolean result = true;
             for (Interceptor interceptor : interceptors) {
                 if (!invokable.invoke(interceptor)) {
-                    return false;
+                    result = false;
                 }
             }
 
             // 返回 true 意味着这个拦截方法全部执行成功
-            return true;
+            return result;
         }
     }
 }

@@ -516,6 +516,10 @@ The methods below are some of usable methods, the others need your discovery:)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
+#### *2019-4-25:*
+    1. 微调拦截器的执行顺序，同一级别的拦截器都会执行
+    2. 为 JDK9 以上版本做兼容，替换 Class.newInstance 方法为构造的 newInstance 方法
+
 #### *2019-4-24:*
     1. 新增 Tuz.unload 方法，当资源加载过多，耗费大量内存时就可以卸载掉不需要的资源了
     2. 新增 Tuz.reload 方法，当资源被修改了需要更新时，就可以使用它更新资源
