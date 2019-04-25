@@ -1,6 +1,7 @@
 # Tuz 轻量级资源容器 [![Maven Central](./maven_central.svg)](https://mvnrepository.com/artifact/cn.com.fishin/Tuz) [![License](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 + 资源属性管理容器： 将资源以键值对的形式加载到内存，实现资源的轻松加载使用
++ 资源透明化容器：同样的使用方式，不一样的加载器，可以达到资源使用的透明化
 + 轻量依赖注入容器： 将对象实现类直接注入到对象引用中，实现业务的实现解耦
 + 对象方法拦截容器： 使用动态代理进行方法的拦截器，实现业务的主次解耦
 + IO 操作工具箱： 提供了常用的 IO 操作方法，操作 IO 更方便
@@ -520,6 +521,7 @@ The methods below are some of usable methods, the others need your discovery:)
     1. 微调拦截器的执行顺序，同一级别的拦截器都会执行
     2. 为 JDK9 以上版本做兼容，替换 Class.newInstance 方法为构造的 newInstance 方法
     3. 更改为读写锁来保证线程安全，由于多个操作需要保证原子性，所以使用 HashMap 替代 ConcurrentHashMap
+    4. 为 redis 资源加载器做准备 ^_^
 
 #### *2019-4-24:*
     1. 新增 Tuz.unload 方法，当资源加载过多，耗费大量内存时就可以卸载掉不需要的资源了
