@@ -3,8 +3,11 @@ package cn.com.fishin.tuz.core;
 import cn.com.fishin.tuz.helper.LogHelper;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * <p>整个项目的核心类</p>
@@ -85,7 +88,16 @@ public class Tuz {
 
     // 存储所有资源文件，每一个元素都是一个资源文件
     // Store all resources, every element is a resource
-    private static final Map<String, Map<String, String>> resources = new ConcurrentHashMap<>();
+    private static final Map<String, Map<String, String>> resources = new HashMap<>();
+
+    // 原本使用 java.util.ConcurrentHashMap 来保证存储资源空间的线程安全
+    // 但是下面的操作有多步，而且需要保证原子性，所以需要加锁，这时候使用 HashMap 性能会更高
+    // At first, java.util.ConcurrentHashMap is used to provide thread safe
+    // However, more than one step need atomicity, so lock is needing
+    // This time HashMap is faster than ConcurrentHashMap
+    private static final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    private static final Lock readLock = readWriteLock.readLock();
+    private static final Lock writeLock = readWriteLock.writeLock();
 
     // 全局配置信息，拥有一个默认配置
     // Global Config, it has a default config
@@ -122,7 +134,12 @@ public class Tuz {
      *                     <p>The resource is not found</p>
      */
     public static void load(Loadable resource) throws IOException {
-        resources.put(resource.namespace(), resource.load());
+        writeLock.lock();
+        try {
+            resources.put(resource.namespace(), resource.load());
+        } finally {
+            writeLock.unlock();
+        }
 
         // 日志输出
         LogHelper.debug("Namespace [" + resource.namespace() + "] is loaded!");
@@ -147,7 +164,12 @@ public class Tuz {
      *                  <p>The namespace to be unloaded</p>
      */
     public static void unLoad(String namespace) {
-        resources.remove(namespace);
+        writeLock.lock();
+        try {
+            resources.remove(namespace);
+        } finally {
+            writeLock.unlock();
+        }
 
         // 日志输出
         LogHelper.debug("Namespace [" + namespace + "] is unloaded!");
@@ -163,7 +185,12 @@ public class Tuz {
      *                     <p>The resource is not found</p>
      */
     public static void reLoad(Loadable resource) throws IOException {
-        resources.put(resource.namespace(), resource.load());
+        writeLock.lock();
+        try {
+            resources.put(resource.namespace(), resource.load());
+        } finally {
+            writeLock.unlock();
+        }
 
         // 日志输出
         LogHelper.debug("Namespace [" + resource.namespace() + "] is reloaded!");
@@ -196,7 +223,12 @@ public class Tuz {
      * <p>Return the value of the removed key, null if not found</p>
      */
     public static String unUse(String key, String namespace) {
-        return resources.containsKey(namespace) ? resources.get(namespace).remove(key) : null;
+        writeLock.lock();
+        try {
+            return resources.containsKey(namespace) ? resources.get(namespace).remove(key) : null;
+        } finally {
+            writeLock.unlock();
+        }
     }
 
     /**
@@ -209,11 +241,16 @@ public class Tuz {
      *                  <p>Appointed namespace to different resource</p>
      */
     public static void appendResource(Map<String, String> resource, String namespace) {
-        if (resources.containsKey(namespace)) {
-            resources.get(namespace).putAll(resource);
+        writeLock.lock();
+        try {
+            if (resources.containsKey(namespace)) {
+                resources.get(namespace).putAll(resource);
 
-            // 日志输出
-            LogHelper.debug("Resource " + resource + " is appended to namespace [ " + namespace + " ] !");
+                // 日志输出
+                LogHelper.debug("Resource " + resource + " is appended to namespace [ " + namespace + " ] !");
+            }
+        } finally {
+            writeLock.unlock();
         }
     }
 
@@ -229,11 +266,16 @@ public class Tuz {
      *                  <p>Appointed namespace to different resource</p>
      */
     public static void appendResource(String key, String value, String namespace) {
-        if (resources.containsKey(namespace)) {
-            resources.get(namespace).put(key, value);
+        writeLock.lock();
+        try {
+            if (resources.containsKey(namespace)) {
+                resources.get(namespace).put(key, value);
 
-            // 日志输出
-            LogHelper.debug("Resource {" + key + "=" + value + "} is appended to namespace [ " + namespace + " ] !");
+                // 日志输出
+                LogHelper.debug("Resource {" + key + "=" + value + "} is appended to namespace [ " + namespace + " ] !");
+            }
+        } finally {
+            writeLock.unlock();
         }
     }
 
@@ -251,7 +293,12 @@ public class Tuz {
      * <p>Return the value of the key, null if not found</p>
      */
     public static String useGracefully(String key, String namespace, String defaultValue) {
-        return resources.containsKey(namespace) ? resources.get(namespace).get(key) : defaultValue;
+        readLock.lock();
+        try {
+            return resources.containsKey(namespace) ? resources.get(namespace).get(key) : defaultValue;
+        } finally {
+            readLock.unlock();
+        }
     }
 
     /**
@@ -310,17 +357,22 @@ public class Tuz {
      */
     public static String useGracefully(String key, String defaultValue) {
 
-        // 由于没有指定命名空间，所以需要遍历所有命名空间
-        for (String namespace : resources.keySet()) {
+        readLock.lock();
+        try {
+            // 由于没有指定命名空间，所以需要遍历所有命名空间
+            for (String namespace : resources.keySet()) {
 
-            Map<String, String> resource = resources.get(namespace);
-            if (resource.containsKey(key)) {
-                return resource.get(key);
+                Map<String, String> resource = resources.get(namespace);
+                if (resource.containsKey(key)) {
+                    return resource.get(key);
+                }
             }
-        }
 
-        // 找不到返回 null
-        return defaultValue;
+            // 找不到返回 null
+            return defaultValue;
+        } finally {
+            readLock.unlock();
+        }
     }
 
     /**
@@ -336,6 +388,11 @@ public class Tuz {
      * try to invoke this method after invoking load()</p>
      */
     public static void init() {
-        config = new TuzConfig();
+        writeLock.lock();
+        try {
+            config = new TuzConfig();
+        } finally {
+            writeLock.unlock();
+        }
     }
 }

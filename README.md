@@ -519,6 +519,7 @@ The methods below are some of usable methods, the others need your discovery:)
 #### *2019-4-25:*
     1. 微调拦截器的执行顺序，同一级别的拦截器都会执行
     2. 为 JDK9 以上版本做兼容，替换 Class.newInstance 方法为构造的 newInstance 方法
+    3. 更改为读写锁来保证线程安全，由于多个操作需要保证原子性，所以使用 HashMap 替代 ConcurrentHashMap
 
 #### *2019-4-24:*
     1. 新增 Tuz.unload 方法，当资源加载过多，耗费大量内存时就可以卸载掉不需要的资源了
