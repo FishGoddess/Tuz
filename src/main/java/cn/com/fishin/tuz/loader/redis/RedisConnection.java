@@ -68,4 +68,10 @@ public interface RedisConnection<K, V> {
      * @return <p>返回这个被移除的值</p><p>Return the removed value</p>
      */
     V remove(K key);
+
+    /**
+     * <p>断开连接</p>
+     * <p>Close the connection</p>
+     */
+    void close();
 }

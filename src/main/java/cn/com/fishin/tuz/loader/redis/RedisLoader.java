@@ -10,6 +10,8 @@ import java.util.Map;
 
 /**
  * <p>Redis 资源加载器</p>
+ * <p>这个加载器并不会把 redis 上的资源拷贝到本机内存，</p>
+ * <p>而是采用延迟加载的形式，就是每一次使用都去加载</p>
  * <p>Redis resource loader</p>
  *
  * @author Fish

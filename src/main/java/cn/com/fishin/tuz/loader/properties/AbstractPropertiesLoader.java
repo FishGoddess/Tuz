@@ -4,9 +4,9 @@ import cn.com.fishin.tuz.core.Loadable;
 import cn.com.fishin.tuz.helper.LogHelper;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * <p>这个抽象类用于加载 .properties 文件</p>
@@ -45,12 +45,18 @@ public abstract class AbstractPropertiesLoader implements Loadable {
         return properties.stringPropertyNames().size();
     }
 
+    private int defaultSizeOfMap(Properties properties) {
+        return sizeOfPropertiesKey(properties) >= 32 ? 64 : 32;
+    }
+
     // 将一个 Properties 转换成 Map
     // you give it a Properties, and it returns a Map
     private Map<String, String> properties2Map(Properties properties) {
 
-        // 这里选择使用 java.helper.concurrent.ConcurrentHashMap 来保证并发性能和安全性
-        Map<String, String> result = new ConcurrentHashMap<>(sizeOfPropertiesKey(properties) * 2);
+        // 这里原本选择使用 java.helper.concurrent.ConcurrentHashMap 来保证并发性能和安全性
+        // 由于在 Tuz 中已经对操作加了读写锁，所以这里就不用 ConcurrentHashMap 了
+        // 因为加了锁就没必要再多余使用 CAS 的操作了
+        Map<String, String> result = new HashMap<>(defaultSizeOfMap(properties));
 
         // 将 Properties 属性保存在 Map 中
         for (String key : properties.stringPropertyNames()) {

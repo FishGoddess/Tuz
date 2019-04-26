@@ -27,8 +27,8 @@ public class FTPUploadDemo {
         // 当然你可能会觉得这么使用很麻烦！
         // 正常我们使用 FTP 上传的时候，多数是上传一个二进制文件
         // 因此您可以直接使用 NetPlugin.
-        NetPlugin.uploadToServer(FTPUploadFileFactory.makeAsciiFile("YourDirection", "YourFile",
-                    IOHelper.newInputStreamToFileSystem("Z:/YourFile")));
+        NetPlugin.uploadToServer(FTPUploadFileFactory.makeAsciiFile("YourDirection", "YourFile.txt",
+                    IOHelper.newInputStreamToClasspath("YourFile.txt")));
 
         // 如果您正在使用 Servlet 或者是 SpringMVC，您可以使用这个方法上传一个二进制文件
         //NetPlugin.uploadBinaryToServer("YourDirection", "YourFile", multipartFile.getInputStream);

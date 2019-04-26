@@ -168,7 +168,10 @@ public class Tuz {
      */
     public static void unLoad(String namespace) throws Throwable {
         new LockTemplate<Void>().lockWith(writeLock, () -> {
-            resources.remove(namespace);
+            if (resources.containsKey(namespace)) {
+                resources.get(namespace).clear(); // 清除数据，方便 GC 回收
+                resources.remove(namespace); // 然后再移除资源库
+            }
             return null;
         });
 
@@ -187,6 +190,9 @@ public class Tuz {
      */
     public static void reLoad(Loadable resource) throws Throwable {
         new LockTemplate<Void>().lockWith(writeLock, () -> {
+            if (resources.containsKey(resource.namespace())) {
+                resources.get(resource.namespace()).clear(); // 清除数据，方便 GC 回收
+            }
             resources.put(resource.namespace(), resource.load());
             return null;
         });
@@ -395,6 +401,25 @@ public class Tuz {
         try {
             new LockTemplate<Void>().lockWith(writeLock, () -> {
                 config = new TuzConfig();
+                return null;
+            });
+        } catch (Throwable t) {
+            LogHelper.error(t.getMessage(), t);
+        }
+    }
+
+    /**
+     * <p>清除一切已经加载的资源</p>
+     * <p>建议在程序关闭时调用！！！</p>
+     * <p>Clear all resources</p>
+     * <p>You should invoke this method before closing program</p>
+     */
+    public static void destroy() {
+        try {
+            new LockTemplate<Void>().lockWith(writeLock, () -> {
+                for (String namespace : resources.keySet()) {
+                    resources.get(namespace).clear();
+                }
                 return null;
             });
         } catch (Throwable t) {

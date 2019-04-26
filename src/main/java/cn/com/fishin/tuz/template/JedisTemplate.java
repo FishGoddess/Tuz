@@ -23,8 +23,14 @@ public class JedisTemplate<Result> {
      */
     public Result execute(JedisPool pool, RedisBlock<Result> block) {
         // 释放资源，回收到 pool
-        try (Jedis jedis = pool.getResource()) {
+        Jedis jedis = null;
+        try {
+            jedis = pool.getResource();
             return block.doInRedis(jedis);
+        } finally {
+            if (jedis != null) {
+                jedis.close();
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package cn.com.fishin.tuz.loader.redis;
 
+import cn.com.fishin.tuz.helper.LogHelper;
 import cn.com.fishin.tuz.template.JedisTemplate;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Pipeline;
@@ -52,7 +53,7 @@ public class DefaultRedisConnection implements RedisConnection<String, String> {
                 pipeline.set(entry.getKey(), entry.getValue());
             }
 
-            pipeline.exec(); // 执行批量插入
+            pipeline.sync(); // 执行批量插入
             pipeline.close(); // 关闭管道
             return null;
         });
@@ -60,6 +61,19 @@ public class DefaultRedisConnection implements RedisConnection<String, String> {
 
     @Override
     public String remove(String key) {
-        return new JedisTemplate<String>().execute(pool, jedis -> String.valueOf(jedis.del(key)));
+        return new JedisTemplate<String>().execute(pool, jedis -> {
+            jedis.del(key);
+            return null;
+        });
+    }
+
+    @Override
+    public void close() {
+        if (pool != null) {
+            pool.close();
+
+            // 日志记录
+            LogHelper.debug("JedisPool is closed ? " + pool.isClosed());
+        }
     }
 }

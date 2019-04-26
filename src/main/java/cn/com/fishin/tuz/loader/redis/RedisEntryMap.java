@@ -20,7 +20,13 @@ import java.util.*;
  */
 public class RedisEntryMap implements Map<String, String> {
 
+    // Redis 连接
     private RedisConnection<String, String> connection = null;
+
+    // TODO 加入一级缓存，将得到的值暂时缓存，可以大幅度提高短时间大量读取的性能
+    // 缓存策略为：
+    // 1. 当执行写操作时清空对应的 key 缓存
+    // 2. 每隔一定的时间清除不常用的 key 缓存
 
     /**
      * <p>使用一个 redis 连接构建这个 map</p>
@@ -58,6 +64,12 @@ public class RedisEntryMap implements Map<String, String> {
         connection.putAll(map);
     }
 
+    @Override
+    public void clear() {
+        // 回收资源，这个方法会在资源被卸载时使用
+        connection.close();
+    }
+
     // 以上是有使用到的方法
     // #######################################################
     // 以下是没有使用到的方法
@@ -76,9 +88,6 @@ public class RedisEntryMap implements Map<String, String> {
     public boolean containsValue(Object value) {
         return false;
     }
-
-    @Override
-    public void clear() {}
 
     @Override
     public Set<String> keySet() {
