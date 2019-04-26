@@ -31,7 +31,7 @@
     It will be perfect as time going by! 
 
 ---
-+ #### Tuz 官网：[https://www.fishin.com.cn](https://www.fishin.com.cn)
++ #### Tuz 文档：[https://www.fishin.com.cn/Tuz](https://www.fishin.com.cn/Tuz)
 
 + #### 联系方式：fishinlove@163.com
 
