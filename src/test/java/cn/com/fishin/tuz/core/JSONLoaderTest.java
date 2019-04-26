@@ -1,11 +1,10 @@
 package cn.com.fishin.tuz.core;
 
-import cn.com.fishin.tuz.loader.ClasspathJSONLoader;
+import cn.com.fishin.tuz.loader.json.ClasspathJSONLoader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**

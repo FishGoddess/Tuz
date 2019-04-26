@@ -30,6 +30,7 @@ package cn.com.fishin.tuz.template;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/04/25 15:09:39</p>
  */
+@Deprecated
 public class TryBlockTemplate<Result> {
 
     /**

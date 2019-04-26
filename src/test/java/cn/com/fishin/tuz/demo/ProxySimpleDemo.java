@@ -1,14 +1,10 @@
 package cn.com.fishin.tuz.demo;
 
 import cn.com.fishin.tuz.core.Tuz;
-import cn.com.fishin.tuz.factory.ProxyFactory;
-import cn.com.fishin.tuz.handler.InterceptorInvocationHandler;
 import cn.com.fishin.tuz.interceptor.Interceptor;
-import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.loader.properties.ClasspathPropertiesLoader;
 import cn.com.fishin.tuz.plugin.DiPlugin;
 import cn.com.fishin.tuz.plugin.ProxyPlugin;
-
-import java.io.IOException;
 
 /**
  * 动态代理演示案例

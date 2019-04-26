@@ -562,7 +562,7 @@ The methods below are some of usable methods, the others need your discovery:)
 #### *2019-3-30:*
     1. 修复了上一个版本中资源文件非英文字符集乱码的问题
     2. 新增加了带有指定字符集的资源加载器，可以在加载资源时指定字符集
-    3. 废弃了 cn.com.fishin.tuz.loader.InputStreamPropertiesLoader 加载器
+    3. 废弃了 cn.com.fishin.tuz.loader.properties.InputStreamPropertiesLoader 加载器
     4. 更改 NameSpaceHelper 的后缀生成策略
     5. 新增 DiPlugin 一个方法，可以更简单获取实例
 

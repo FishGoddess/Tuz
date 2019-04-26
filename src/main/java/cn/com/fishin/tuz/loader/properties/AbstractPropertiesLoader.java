@@ -1,4 +1,4 @@
-package cn.com.fishin.tuz.loader;
+package cn.com.fishin.tuz.loader.properties;
 
 import cn.com.fishin.tuz.core.Loadable;
 import cn.com.fishin.tuz.helper.LogHelper;

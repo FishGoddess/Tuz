@@ -1,6 +1,8 @@
-package cn.com.fishin.tuz.loader;
+package cn.com.fishin.tuz.loader.properties;
 
 import cn.com.fishin.tuz.helper.LogHelper;
+import cn.com.fishin.tuz.loader.properties.AbstractPropertiesLoader;
+import cn.com.fishin.tuz.loader.properties.ReaderPropertiesLoader;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +22,7 @@ import java.util.Properties;
  *     subclass must implement method getInputStream(String resourceFileName)
  * </p>
  *
- * @see cn.com.fishin.tuz.loader.ReaderPropertiesLoader
+ * @see ReaderPropertiesLoader
  *
  * @author Fish
  * <p>Email: fishinlove@163.com</p>

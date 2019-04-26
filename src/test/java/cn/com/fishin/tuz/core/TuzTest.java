@@ -1,15 +1,10 @@
 package cn.com.fishin.tuz.core;
 
-import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
-import cn.com.fishin.tuz.loader.FileSystemPropertiesLoader;
+import cn.com.fishin.tuz.loader.properties.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.loader.properties.FileSystemPropertiesLoader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 测试 tuz 类

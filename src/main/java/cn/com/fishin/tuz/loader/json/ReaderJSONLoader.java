@@ -1,4 +1,4 @@
-package cn.com.fishin.tuz.loader;
+package cn.com.fishin.tuz.loader.json;
 
 import cn.com.fishin.tuz.helper.IOHelper;
 import cn.com.fishin.tuz.helper.LogHelper;

@@ -1,18 +1,16 @@
-package cn.com.fishin.tuz.loader;
+package cn.com.fishin.tuz.loader.properties;
 
 import cn.com.fishin.tuz.helper.LogHelper;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 /**
  * <p>Properties 配置文件加载器</p>
  * <p>
- * 这个相比 cn.com.fishin.tuz.loader.InputStreamPropertiesLoader
+ * 这个相比 cn.com.fishin.tuz.loader.properties.InputStreamPropertiesLoader
  * 多了一个字符集属性，可以避免非英文字符出现乱码问题，默认使用 UTF8 字符集
  *
  * </p>
@@ -27,7 +25,7 @@ import java.util.Properties;
  * </p>
  * <p>
  *
- * @see cn.com.fishin.tuz.loader.InputStreamPropertiesLoader
+ * @see InputStreamPropertiesLoader
  *
  * @author Fish
  * <p>Email: fishinlove@163.com</p>

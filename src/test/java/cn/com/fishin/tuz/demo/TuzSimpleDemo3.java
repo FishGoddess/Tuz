@@ -1,12 +1,8 @@
 package cn.com.fishin.tuz.demo;
 
 import cn.com.fishin.tuz.core.Tuz;
-import cn.com.fishin.tuz.loader.AbstractJSONLoader;
-import cn.com.fishin.tuz.loader.ClasspathJSONLoader;
-import cn.com.fishin.tuz.loader.FileSystemJSONLoader;
-
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import cn.com.fishin.tuz.loader.json.AbstractJSONLoader;
+import cn.com.fishin.tuz.loader.json.ClasspathJSONLoader;
 
 /**
  * Tuz JSON 资源加载器

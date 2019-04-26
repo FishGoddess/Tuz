@@ -2,10 +2,8 @@ package cn.com.fishin.tuz.demo;
 
 import cn.com.fishin.tuz.core.Tuz;
 import cn.com.fishin.tuz.core.TuzConfig;
-import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.loader.properties.ClasspathPropertiesLoader;
 import cn.com.fishin.tuz.plugin.DiPlugin;
-
-import java.io.IOException;
 
 /**
  * <p>全局配置例子</p>

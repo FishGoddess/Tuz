@@ -3,7 +3,7 @@ package cn.com.fishin.tuz.plugin;
 import cn.com.fishin.tuz.core.Tuz;
 import cn.com.fishin.tuz.factory.FTPUploadFileFactory;
 import cn.com.fishin.tuz.helper.IOHelper;
-import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.loader.properties.ClasspathPropertiesLoader;
 import org.junit.Before;
 import org.junit.Test;
 

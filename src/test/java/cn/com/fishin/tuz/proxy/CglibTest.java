@@ -5,14 +5,11 @@ import cn.com.fishin.tuz.factory.ProxyFactory;
 import cn.com.fishin.tuz.handler.InterceptorInvocationHandler;
 import cn.com.fishin.tuz.helper.ClassHelper;
 import cn.com.fishin.tuz.interceptor.Interceptor;
-import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.loader.properties.ClasspathPropertiesLoader;
 import cn.com.fishin.tuz.plugin.ProxyPlugin;
 import net.sf.cglib.proxy.Enhancer;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.IOException;
-import java.lang.reflect.Modifier;
 
 /**
  * 测试 cglib 的动态代理

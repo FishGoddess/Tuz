@@ -3,10 +3,8 @@ package cn.com.fishin.tuz.demo;
 import cn.com.fishin.tuz.core.Tuz;
 import cn.com.fishin.tuz.factory.FTPUploadFileFactory;
 import cn.com.fishin.tuz.helper.IOHelper;
-import cn.com.fishin.tuz.loader.ClasspathPropertiesLoader;
+import cn.com.fishin.tuz.loader.properties.ClasspathPropertiesLoader;
 import cn.com.fishin.tuz.plugin.NetPlugin;
-
-import java.io.IOException;
 
 /**
  * 演示 FTP 上传插件
