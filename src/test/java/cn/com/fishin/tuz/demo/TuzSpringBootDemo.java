@@ -25,9 +25,9 @@ public class TuzSpringBootDemo  {
     static {
         try {
             Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
-        } catch (IOException e) {
+        } catch (Throwable t) {
             // Do something...
-            System.err.println(e.getMessage());
+            System.err.println(t.getMessage());
         }
     }
 

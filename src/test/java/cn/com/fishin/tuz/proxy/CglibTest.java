@@ -27,8 +27,8 @@ public class CglibTest {
     public void before() {
         try {
             Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        } catch (Throwable t) {
+            System.err.println(t.getMessage());
         }
     }
 

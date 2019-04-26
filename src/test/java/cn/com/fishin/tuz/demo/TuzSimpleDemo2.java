@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class TuzSimpleDemo2 {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 传统的方式使用接口：
         //xxxService service = new xxxServiceImpl();

@@ -24,7 +24,7 @@ public class NetPluginTest {
             // 加载资源
             Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
             Tuz.init();
-        } catch (IOException e) {
+        } catch (Throwable e) {
             System.err.println(e.getMessage());
         }
     }

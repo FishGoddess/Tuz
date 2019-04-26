@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class TuzConfigDemo {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 我们先以 cn.com.fishin.tuz.demo.TuzSimpleDemo2 作为切入点
         // 先看原本的例子：

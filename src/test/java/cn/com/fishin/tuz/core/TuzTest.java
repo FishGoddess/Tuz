@@ -29,8 +29,8 @@ public class TuzTest {
             //Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
             Tuz.load(new FileSystemPropertiesLoader("E:/JavaProject/tuz/src/test/resources/test2.properties", "test2"));
             //Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
     }
 
@@ -54,11 +54,19 @@ public class TuzTest {
         Assert.assertNull(Tuz.use("hello"));
 
         // 移除指定资源
-        System.out.println(Tuz.unUse("number", "test"));
+        try {
+            System.out.println(Tuz.unUse("number", "test"));
+        } catch (Throwable t) {
+            System.err.println(t.getMessage());
+        }
         Assert.assertNull(Tuz.use("number", "test"));
         Assert.assertNull(Tuz.use("number"));
 
-        Tuz.unLoad(new ClasspathPropertiesLoader("test.properties", "test"));
+        try {
+            Tuz.unLoad(new ClasspathPropertiesLoader("test.properties", "test"));
+        } catch (Throwable throwable) {
+            System.err.println(throwable.getMessage());
+        }
         Assert.assertNull(Tuz.use("number", "test"));
         Assert.assertNull(Tuz.use("number"));
 
@@ -66,8 +74,8 @@ public class TuzTest {
             Tuz.reLoad(new ClasspathPropertiesLoader("test.properties", "test"));
             Assert.assertEquals(Tuz.use("number", "test"), "16");
             Assert.assertEquals(Tuz.use("number"), "16");
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        } catch (Throwable t) {
+            System.err.println(t.getMessage());
         }
 
         Assert.assertNull(Tuz.use("xxx", "test"));
@@ -75,12 +83,20 @@ public class TuzTest {
         //Map<String, String> resource = new HashMap<>(2);
         //resource.put("xxx", "ok");
         //Tuz.appendResource(resource, "test");
-        Tuz.appendResource("xxx", "ok", "test");
+        try {
+            Tuz.appendResource("xxx", "ok", "test");
+        } catch (Throwable t) {
+            System.err.println(t.getMessage());
+        }
         Assert.assertEquals(Tuz.use("xxx", "test"), "ok");
         Assert.assertEquals(Tuz.use("xxx"), "ok");
 
         Assert.assertEquals(Tuz.use("number", "test"), "16");
-        Tuz.unUse("number", "test");
+        try {
+            Tuz.unUse("number", "test");
+        } catch (Throwable t) {
+            System.err.println(t.getMessage());
+        }
         Assert.assertNull(Tuz.use("number", "test"));
     }
 }

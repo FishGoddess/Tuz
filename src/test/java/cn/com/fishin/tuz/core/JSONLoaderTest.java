@@ -21,8 +21,8 @@ public class JSONLoaderTest {
     public void before() {
         try {
             Tuz.load(new ClasspathJSONLoader("test.json", "test", StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+        } catch (Throwable t) {
+            System.err.println(t.getMessage());
         }
     }
 

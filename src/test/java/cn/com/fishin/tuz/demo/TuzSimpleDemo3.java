@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class TuzSimpleDemo3 {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 加载这个 JSON 文件
         // 加载一次之后，你就可以在全局中随意使用啦

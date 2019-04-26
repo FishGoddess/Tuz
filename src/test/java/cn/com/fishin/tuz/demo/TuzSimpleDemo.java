@@ -15,7 +15,7 @@ import java.io.IOException;
  */
 public class TuzSimpleDemo {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 加载资源文件
         // API: load(Loadable resource) throws IOException

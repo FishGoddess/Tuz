@@ -77,13 +77,13 @@ then you should change your developing way or download a Jar from [Tuz - GitHub]
 ```java
 public class TuzSimpleDemo {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 加载资源文件
         // API: load(Loadable resource) throws IOException
         // test 是命名空间，后面一个是资源加载器
         // "test.properties" 文件中有一个属性：number=16
-        
+
         Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 当然，你也可以不指定命名空间，内部会自动生成一个命名空间
@@ -125,7 +125,7 @@ public class TuzSimpleDemo {
 // 参考 test 文件夹下的 cn.com.fishin.demo.TuzSimpleDemo
 public class TuzSimpleDemo2 {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 传统的方式使用接口：
         //xxxService service = new xxxServiceImpl();
@@ -156,7 +156,7 @@ public class TuzSimpleDemo2 {
 ```java
 public class TuzSimpleDemo3 {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 加载这个 JSON 文件
         // 加载一次之后，你就可以在全局中随意使用啦
@@ -203,12 +203,12 @@ public class TuzSimpleDemo3 {
         System.out.println(Tuz.use("status")); // ===> 0
         System.out.println(Tuz.use("message")); // ===> success
         System.out.println(Tuz.use("ok")); // ===> true
-        System.out.println(Tuz.use("data")); // ===> {"title":{"null":{},"name":"test","id":"001"},"content":[{"arr":[1,"bfdjhsb",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]}
+        System.out.println(Tuz.use("data")); // ===> {"title":{"null":{},"name":"test","id":"001"},"content":[{"arr":[1,"非你莫属尽快发你说的",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]}
         System.out.println(Tuz.use("data.title")); // ===> {"null":{},"name":"test","id":"001"}
         System.out.println(Tuz.use("data.title.id")); // ===> 001
         System.out.println(Tuz.use("data.title.name")); // ===> test
         System.out.println(Tuz.use("data.title.null")); // ===> {}
-        System.out.println(Tuz.use("data.content")); // ===> [{"arr":[1,"bfdjhsb",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]
+        System.out.println(Tuz.use("data.content")); // ===> [{"arr":[1,"非你莫属尽快发你说的",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]
         System.out.println(Tuz.use("data.content[0].id")); // ===> 001
         System.out.println(Tuz.use("data.content[0].value")); // ===> hello 001
         System.out.println(Tuz.use("data.content[0].arr")); // ===> [1,"bfdjhsb",true]
@@ -222,7 +222,7 @@ public class TuzSimpleDemo3 {
         // 这里的 test 就是命名空间，在调用 Tuz.load 时就需要指定
         //Tuz.load(new ClasspathJSONLoader("test.json", "test"));
         //System.out.println(Tuz.use("status", "test")); // ===> 0
-        
+
         // 当然，如果你是在程序中使用到了一个 JSON 字符串，也可以使用 AbstractJSONLoader 加载使用
         final String jsonString = "{\"title\":{\"null\":{},\"name\":\"test\",\"id\":\"001\"},\"content\":[{\"arr\":[1,\"非你莫属尽快发你说的\",true],\"id\":\"001\",\"value\":\"hello 001\"},{\"id\":\"002\",\"value\":\"hello 002\"}]}";
         Tuz.load(new AbstractJSONLoader(jsonString) {
@@ -242,7 +242,7 @@ public class TuzSimpleDemo3 {
 // 参考 test 文件夹下的 cn.com.fishin.tuz.demo.TuzConfigDemo
 public class TuzConfigDemo {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 我们先以 cn.com.fishin.tuz.demo.TuzSimpleDemo2 作为切入点
         // 先看原本的例子：
@@ -304,9 +304,9 @@ public class TuzSpringBootDemo  {
     static {
         try {
             Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
-        } catch (IOException e) {
+        } catch (Throwable t) {
             // Do something...
-            System.err.println(e.getMessage());
+            System.err.println(t.getMessage());
         }
     }
 
@@ -336,7 +336,7 @@ public class TuzSpringBootDemo  {
 ```java
 public class FTPUploadDemo {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 加载资源
         Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
@@ -376,7 +376,7 @@ public class ProxySimpleDemo {
         simpleClass1.test();
     */
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 同样的，先加载资源文件，这样可以获取到具体的实现类
         Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
@@ -517,6 +517,10 @@ The methods below are some of usable methods, the others need your discovery:)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
+#### *2019-4-26:*
+    1. 重新设计 LockTemplate 模板类，使用更加简洁
+    2. Tuz 类在写入资源的操作中抛出的异常变为 Throwable，注意注意！！！
+
 #### *2019-4-25:*
     1. 微调拦截器的执行顺序，同一级别的拦截器都会执行
     2. 为 JDK9 以上版本做兼容，替换 Class.newInstance 方法为构造的 newInstance 方法

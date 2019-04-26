@@ -34,7 +34,7 @@ public class ProxySimpleDemo {
         simpleClass1.test();
     */
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 同样的，先加载资源文件，这样可以获取到具体的实现类
         Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));

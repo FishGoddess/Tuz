@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class FTPUploadDemo {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Throwable {
 
         // 加载资源
         Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
