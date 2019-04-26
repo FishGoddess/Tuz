@@ -578,7 +578,7 @@ The methods below are some of usable methods, the others need your discovery:)
 #### *2019-4-26:*
     1. 重新设计 LockTemplate 模板类，使用更加简洁
     2. Tuz 类在写入资源的操作中抛出的异常变为 Throwable，注意注意！！！
-    3. 加入 Redis 资源加载器，目前处于测试阶段
+    3. 加入 Redis 资源加载器，可以非常简单透明地操作 redis 资源
 
 #### *2019-4-25:*
     1. 微调拦截器的执行顺序，同一级别的拦截器都会执行
