@@ -1,5 +1,7 @@
 package cn.com.fishin.tuz.loader.redis;
 
+import cn.com.fishin.tuz.entity.SimpleLruCache;
+
 import java.util.*;
 
 /**
@@ -23,10 +25,12 @@ public class RedisEntryMap implements Map<String, String> {
     // Redis 连接
     private RedisConnection<String, String> connection = null;
 
-    // TODO 加入一级缓存，将得到的值暂时缓存，可以大幅度提高短时间大量读取的性能
+    // 加入一级缓存，将得到的值暂时缓存，可以大幅度提高短时间大量读取的性能
     // 缓存策略为：
     // 1. 当执行写操作时清空对应的 key 缓存
     // 2. 每隔一定的时间清除不常用的 key 缓存
+    // 默认缓存维持的是访问顺序，但由于加入了缓存，所以下面所有方法都会是弱一致性的，也就是不能保证百分百的实时准确
+    private final Map<String, String> CACHE = new SimpleLruCache<>();
 
     /**
      * <p>使用一个 redis 连接构建这个 map</p>

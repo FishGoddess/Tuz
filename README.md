@@ -46,7 +46,7 @@
 <dependency>
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.7.4-FINAL</version>
+    <version>0.7.8-BETA</version>
 </dependency>
 ```
 ---
@@ -54,7 +54,7 @@
 + Also, you may use a Gradle project, do the same thing as a Maven project:
 ```groovy
 // https://mvnrepository.com/artifact/cn.com.fishin/Tuz
-compile group: 'cn.com.fishin', name: 'Tuz', version: '0.7.4-FINAL'
+compile group: 'cn.com.fishin', name: 'Tuz', version: '0.7.8-BETA'
 ```
 其他构建工具或者仓库请参考 `Maven 中心仓库`的写法，如果您不知道网址是啥，请点击
 上方的 `Maven Central` 图标或者点击 [这个链接](https://mvnrepository.com/artifact/cn.com.fishin/Tuz)。
@@ -575,6 +575,9 @@ The methods below are some of usable methods, the others need your discovery:)
 + [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
 
 ## 更新日志 -- update log
+#### *2019-4-28:*
+    1. 设计简单的 LRU 缓存，给 redis 加载器使用
+
 #### *2019-4-26:*
     1. 重新设计 LockTemplate 模板类，使用更加简洁
     2. Tuz 类在写入资源的操作中抛出的异常变为 Throwable，注意注意！！！
