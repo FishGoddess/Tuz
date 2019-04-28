@@ -20,7 +20,7 @@ import java.util.concurrent.locks.Lock;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/04/25 15:48:21</p>
  */
-public class LockTemplate<Result> {
+public final class LockTemplate<Result> {
 
     /**
      * <p>使用给定的 lock 来执行线程安全的操作</p>

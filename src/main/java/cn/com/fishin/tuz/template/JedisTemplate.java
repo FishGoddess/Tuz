@@ -11,7 +11,7 @@ import redis.clients.jedis.JedisPool;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/04/26 12:53:16</p>
  */
-public class JedisTemplate<Result> {
+public final class JedisTemplate<Result> {
 
     /**
      * <p>执行 Redis 操作</p>

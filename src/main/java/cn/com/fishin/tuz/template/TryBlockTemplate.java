@@ -58,7 +58,7 @@ public class TryBlockTemplate<Result> {
      *             </p>
      * @return <p>返回执行结果</p><p>Return result</p>
      */
-    public Result tryWith(Object... args) {
+    public final Result tryWith(Object... args) {
         try {
             return doInTry(args);
         } catch (Throwable t) {
