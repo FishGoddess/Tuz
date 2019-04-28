@@ -44,33 +44,45 @@ public class RedisEntryMap implements Map<String, String> {
 
     @Override
     public boolean containsKey(Object key) {
-        return connection.containsKey((String) key);
+        return CACHE.containsKey(key) || connection.containsKey((String) key);
     }
 
     @Override
     public String get(Object key) {
-        return connection.get((String) key);
+        // 先查询缓存
+        if (!CACHE.containsKey(key)) {
+            String result = connection.get((String) key);
+            CACHE.put((String) key, result); // 缓存数据
+            return result;
+        }
+
+        return CACHE.get(key);
     }
 
     @Override
     public String put(String key, String value) {
-        return connection.put(key, value);
+        String result = connection.put(key, value);
+        CACHE.put(key, value); // 缓存数据
+        return result;
     }
 
     @Override
     public String remove(Object key) {
+        CACHE.remove(key); // 缓存也要清除这个数据
         return connection.remove((String) key);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public void putAll(Map map) {
+        CACHE.putAll(map); // 缓存数据
         connection.putAll(map);
     }
 
     @Override
     public void clear() {
         // 回收资源，这个方法会在资源被卸载时使用
+        CACHE.clear();
         connection.close();
     }
 
@@ -80,17 +92,17 @@ public class RedisEntryMap implements Map<String, String> {
 
     @Override
     public int size() {
-        return 0;
+        return CACHE.size();
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return CACHE.isEmpty();
     }
 
     @Override
     public boolean containsValue(Object value) {
-        return false;
+        return CACHE.containsValue(value);
     }
 
     @Override
