@@ -577,7 +577,8 @@ The methods below are some of usable methods, the others need your discovery:)
 ## 更新日志 -- update log
 #### *2019-4-28:*
     1. 设计简单的 LRU 缓存，给 redis 加载器使用
-    2. redis 加载器的一级缓存设计开发完毕，等待测试
+    2. redis 加载器的一级缓存设计开发完毕，测试通过
+    3. 经验证，一级缓存让获取性能提升非常巨大，尤其是网络不畅的时候
 
 #### *2019-4-26:*
     1. 重新设计 LockTemplate 模板类，使用更加简洁
