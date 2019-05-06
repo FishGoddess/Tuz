@@ -46,7 +46,7 @@
 <dependency>
     <groupId>cn.com.fishin</groupId>
     <artifactId>Tuz</artifactId>
-    <version>0.7.8-BETA</version>
+    <version>0.8.0-FINAL</version>
 </dependency>
 ```
 ---
@@ -54,7 +54,7 @@
 + Also, you may use a Gradle project, do the same thing as a Maven project:
 ```groovy
 // https://mvnrepository.com/artifact/cn.com.fishin/Tuz
-compile group: 'cn.com.fishin', name: 'Tuz', version: '0.7.8-BETA'
+compile group: 'cn.com.fishin', name: 'Tuz', version: '0.8.0-FINAL'
 ```
 其他构建工具或者仓库请参考 `Maven 中心仓库`的写法，如果您不知道网址是啥，请点击
 上方的 `Maven Central` 图标或者点击 [这个链接](https://mvnrepository.com/artifact/cn.com.fishin/Tuz)。
