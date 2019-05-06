@@ -570,9 +570,9 @@ The methods below are some of usable methods, the others need your discovery:)
         + useInstance：使用一个类对象实例
 
 ## 友情链接 -- as a friend
-+ [Kiter 集成工具类 @ 来自王老板的奇思妙想](https://github.com/ChickenWinner/kiter)
-+ [knapsack @ 来自黄少爷的财大气粗](https://github.com/Mackyhuang/knapsack)
-+ [vue - cms @ 来自软大师的吊儿郎当](https://gitee.com/mdaovo/vue-cms)
++ [王老板的奇思妙想](https://gitee.com/HappyChicken)
++ [黄少爷的财大气粗](https://gitee.com/Mackyhuang)
++ [软大师的吊儿郎当](https://gitee.com/mdaovo)
 
 ## 更新日志 -- update log
 #### *2019-4-28:*
