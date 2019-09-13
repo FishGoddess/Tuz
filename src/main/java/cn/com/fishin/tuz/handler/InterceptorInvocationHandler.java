@@ -47,7 +47,17 @@ public class InterceptorInvocationHandler extends AbstractInvocationHandler {
     @Override
     /**
      * <p>实现这个方法来实现切面功能</p>
+     * <p>
+     *     <p>注意：</p>
+     *     <p>如果 before 层级的拦截器返回 false，那么 after 级别的拦截器是不会被执行的
+     *     但是 afterReturning 是可以被执行的</p>
+     * </p>
      * <p>Implements this method to get the power of aspect</p>
+     * <p>Attention:</p>
+     * <p>
+     *     If level before return false, then level after will not be executed,
+     *     but level afterReturning will
+     * </p>
      *
      * @see InvocationHandler#invoke(java.lang.Object, java.lang.reflect.Method, java.lang.Object[])
      */
@@ -55,17 +65,17 @@ public class InterceptorInvocationHandler extends AbstractInvocationHandler {
 
         // 这是被拦截的方法
         InterceptedMethod interceptedMethod = new InterceptedMethod(getTarget(), method, args);
-
-        // 调用前置拦截
-        if (!InterceptorHelper.before(interceptors, interceptedMethod)) {
-
-            // 还没有开始执行方法
-            // 如果你需要返回数据，就设置进 before 的 InterceptedMethod 对象中
-            // 这在实现缓存的时候经常用到
-            return interceptedMethod.getResult();
-        }
-
         try {
+
+            // 调用前置拦截
+            if (!InterceptorHelper.before(interceptors, interceptedMethod)) {
+
+                // 还没有开始执行方法
+                // 如果你需要返回数据，就设置进 before 的 InterceptedMethod 对象中
+                // 这在实现缓存的时候经常用到
+                return interceptedMethod.getResult();
+            }
+
             // 调用实际的方法，并将结果存在 interceptedMethod.result 中
             interceptedMethod.setResult(method.invoke(getTarget(), args));
 

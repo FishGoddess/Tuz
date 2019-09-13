@@ -32,7 +32,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * </p>
  *
  * <pre>
- * Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+ * Tuz.instance().load(new ClasspathPropertiesLoader("test.properties", "test"));
  *
  * // 直接获取实现类，而不用注入实现类的细节
  * xxxService service = DiPlugin.useInstance("xxxService", "test", xxxService.class);
@@ -41,7 +41,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *
  * <p>
  * 同样的，你可以不指定命名空间，但是，真的不推荐！！！
- * //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
+ * //Tuz.instance().load(new ClasspathPropertiesLoader("test.properties"));
  * //xxxService service = DiPlugin.useInstance("xxxService", xxxService.class);
  * //service.say("Hello, Tuz!");
  * </p>
@@ -95,7 +95,7 @@ public class DiPlugin {
      * @see cn.com.fishin.tuz.core.TuzConfig#isSingleton()
      */
     public static <T> T useInstance(Class<T> classType) {
-        return useInstance(classType, Tuz.getConfig().isSingleton());
+        return useInstance(classType, Tuz.instance().getConfig().isSingleton());
     }
 
     /**
@@ -115,7 +115,7 @@ public class DiPlugin {
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
     public static <T> T useInstance(String key, Class<T> classType, boolean singleton) {
-        return useInstanceInternal(Tuz.useGracefully(key, ""), classType, singleton);
+        return useInstanceInternal(Tuz.instance().useGracefully(key, ""), classType, singleton);
     }
 
     /**
@@ -135,7 +135,7 @@ public class DiPlugin {
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
     public static <T> T useInstance(String key, Class<T> classType) {
-        return useInstance(key, classType, Tuz.getConfig().isSingleton());
+        return useInstance(key, classType, Tuz.instance().getConfig().isSingleton());
     }
 
     /**
@@ -157,7 +157,7 @@ public class DiPlugin {
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
     public static <T> T useInstance(String key, String namespace, Class<T> classType, boolean singleton) {
-        return useInstanceInternal(Tuz.useGracefully(key, namespace, ""), classType, singleton);
+        return useInstanceInternal(Tuz.instance().useGracefully(key, namespace, ""), classType, singleton);
     }
 
     /**
@@ -179,7 +179,7 @@ public class DiPlugin {
      * @return <p>返回得到的类实例</p><p>Return class instance</p>
      */
     public static <T> T useInstance(String key, String namespace, Class<T> classType) {
-        return useInstance(key, namespace, classType, Tuz.getConfig().isSingleton());
+        return useInstance(key, namespace, classType, Tuz.instance().getConfig().isSingleton());
     }
 
     // 单例模式生成类实例，并缓存起来

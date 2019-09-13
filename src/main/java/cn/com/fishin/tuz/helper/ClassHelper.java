@@ -14,7 +14,7 @@ import java.lang.reflect.Modifier;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/28 22:31:45</p>
  */
-public class ClassHelper {
+public final class ClassHelper {
 
     /**
      * <p>加载一个类，并返回一个实例化对象</p>

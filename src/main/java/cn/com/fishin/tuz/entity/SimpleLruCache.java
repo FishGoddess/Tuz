@@ -17,7 +17,7 @@ public class SimpleLruCache<K, V> extends LinkedHashMap<K, V> {
 
     // 缓存最大个数
     private static final int DEFAULT_MAX_SIZE = 128;
-    private int maxSize = 0;
+    private final int maxSize;
 
     // 任务执行周期，默认一个小时执行一次
     // Default one time per hour

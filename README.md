@@ -1,11 +1,15 @@
 # Tuz 轻量级资源容器 [![Maven Central](./maven_central.svg)](https://mvnrepository.com/artifact/cn.com.fishin/Tuz) [![License](./license.svg)](https://www.apache.org/licenses/LICENSE-2.0.html)
 
+*注意：*
+
+    v1.0 和 0.8.0-FINAL 及以下的版本不兼容！！！ API 有了一些调整，删减了累赘的功能，调整了类架构设计，
+    请使用 v1.0 及以上版本！！！
+
 + 资源属性管理容器： 将资源以键值对的形式加载到内存，实现资源的轻松加载使用
 + 资源透明化容器：同样的使用方式，不一样的加载器，可以达到资源使用的透明化
 + 轻量依赖注入容器： 将对象实现类直接注入到对象引用中，实现业务的实现解耦
 + 对象方法拦截容器： 使用动态代理进行方法的拦截器，实现业务的主次解耦
 + IO 操作工具箱： 提供了常用的 IO 操作方法，操作 IO 更方便
-+ 网络管理工具箱：  提供了 FTP 上传的功能，从此上传文件变得轻而易举
 
 ## 介绍 -- Introduce
     Tuz 轻量级资源管理器，用于管理您的资源，
@@ -86,7 +90,8 @@ public class TuzSimpleDemo {
         // test 是命名空间，后面一个是资源加载器
         // "test.properties" 文件中有一个属性：number=16
 
-        Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+        Tuz tuz = Tuz.instance();
+        tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 当然，你也可以不指定命名空间，内部会自动生成一个命名空间
         // 不过，为了性能和正确性，还是建议您使用自定义的命名空间
@@ -103,7 +108,7 @@ public class TuzSimpleDemo {
         // API: use(String key, String namespace)
         // 其中上面的代码中 number 是资源名字，test 是命名空间
 
-        String number = Tuz.use("number", "test"); // ===> 返回 16
+        String number = tuz.use("number", "test"); // ===> 返回 16
         System.out.println(number);
 
         // 同样，您可以不指定命名空间，但是这不被推荐
@@ -133,7 +138,8 @@ public class TuzSimpleDemo2 {
         //xxxService service = new xxxServiceImpl();
         // 这种方式并没有真正解耦，使用 Spring 这类框架可以达到解耦效果，但是需要引入大量框架
         // 而使用 Tuz 可以轻松做到解耦，请看下面：
-        Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+        Tuz tuz = Tuz.instance();
+        tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 直接获取实现类，而不用注入实现类的细节
         xxxService service1 = DiPlugin.useInstance("xxxService", "test", xxxService.class);
@@ -147,7 +153,7 @@ public class TuzSimpleDemo2 {
         service2.say("Hello, tuz!");
 
         // 同样的，你可以不指定命名空间，但是，这样会导致多一次的查找！
-        //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
+        //tuz.load(new ClasspathPropertiesLoader("test.properties"));
         //xxxService service3 = DiPlugin.useInstance("xxxService", xxxService.class);
         //service3.say("Hello, Tuz!");
     }
@@ -162,7 +168,8 @@ public class TuzSimpleDemo3 {
 
         // 加载这个 JSON 文件
         // 加载一次之后，你就可以在全局中随意使用啦
-        Tuz.load(new ClasspathJSONLoader("test.json"));
+        Tuz tuz = Tuz.instance();
+        tuz.load(new ClasspathJSONLoader("test.json"));
 
         // 建议给这个文件起一个命名空间，如果没有手动指定，Tuz 在内部会使用文件名作为命名空间
         // Tuz.load(new ClasspathJSONLoader("test.json", "test"));
@@ -202,39 +209,39 @@ public class TuzSimpleDemo3 {
 
         // 如果你需要引用这个 JSON 中的值，就像下面这样引用即可
         // 是不是很方便？哈哈哈 ^_^
-        System.out.println(Tuz.use("status")); // ===> 0
-        System.out.println(Tuz.use("message")); // ===> success
-        System.out.println(Tuz.use("ok")); // ===> true
-        System.out.println(Tuz.use("data")); // ===> {"title":{"null":{},"name":"test","id":"001"},"content":[{"arr":[1,"非你莫属尽快发你说的",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]}
-        System.out.println(Tuz.use("data.title")); // ===> {"null":{},"name":"test","id":"001"}
-        System.out.println(Tuz.use("data.title.id")); // ===> 001
-        System.out.println(Tuz.use("data.title.name")); // ===> test
-        System.out.println(Tuz.use("data.title.null")); // ===> {}
-        System.out.println(Tuz.use("data.content")); // ===> [{"arr":[1,"非你莫属尽快发你说的",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]
-        System.out.println(Tuz.use("data.content[0].id")); // ===> 001
-        System.out.println(Tuz.use("data.content[0].value")); // ===> hello 001
-        System.out.println(Tuz.use("data.content[0].arr")); // ===> [1,"bfdjhsb",true]
-        System.out.println(Tuz.use("data.content[0].arr[0]")); // ===> 1
-        System.out.println(Tuz.use("data.content[0].arr[1]")); // ===> bfdjhsb
-        System.out.println(Tuz.use("data.content[0].arr[2]")); // ===> true
-        System.out.println(Tuz.use("data.content[1].id")); // ===> 002
-        System.out.println(Tuz.use("data.content[1].value")); // ===> hello 002
+        System.out.println(tuz.use("status")); // ===> 0
+        System.out.println(tuz.use("message")); // ===> success
+        System.out.println(tuz.use("ok")); // ===> true
+        System.out.println(tuz.use("data")); // ===> {"title":{"null":{},"name":"test","id":"001"},"content":[{"arr":[1,"非你莫属尽快发你说的",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]}
+        System.out.println(tuz.use("data.title")); // ===> {"null":{},"name":"test","id":"001"}
+        System.out.println(tuz.use("data.title.id")); // ===> 001
+        System.out.println(tuz.use("data.title.name")); // ===> test
+        System.out.println(tuz.use("data.title.null")); // ===> {}
+        System.out.println(tuz.use("data.content")); // ===> [{"arr":[1,"非你莫属尽快发你说的",true],"id":"001","value":"hello 001"},{"id":"002","value":"hello 002"}]
+        System.out.println(tuz.use("data.content[0].id")); // ===> 001
+        System.out.println(tuz.use("data.content[0].value")); // ===> hello 001
+        System.out.println(tuz.use("data.content[0].arr")); // ===> [1,"bfdjhsb",true]
+        System.out.println(tuz.use("data.content[0].arr[0]")); // ===> 1
+        System.out.println(tuz.use("data.content[0].arr[1]")); // ===> bfdjhsb
+        System.out.println(tuz.use("data.content[0].arr[2]")); // ===> true
+        System.out.println(tuz.use("data.content[1].id")); // ===> 002
+        System.out.println(tuz.use("data.content[1].value")); // ===> hello 002
 
         // 当然，如果你有多个 JSON 文件都有同样的键值，就需要加上命名空间了
-        // 这里的 test 就是命名空间，在调用 Tuz.load 时就需要指定
-        //Tuz.load(new ClasspathJSONLoader("test.json", "test"));
-        //System.out.println(Tuz.use("status", "test")); // ===> 0
+        // 这里的 test 就是命名空间，在调用 tuz.load 时就需要指定
+        //tuz.load(new ClasspathJSONLoader("test.json", "test"));
+        //System.out.println(tuz.use("status", "test")); // ===> 0
 
         // 当然，如果你是在程序中使用到了一个 JSON 字符串，也可以使用 AbstractJSONLoader 加载使用
         final String jsonString = "{\"title\":{\"null\":{},\"name\":\"test\",\"id\":\"001\"},\"content\":[{\"arr\":[1,\"非你莫属尽快发你说的\",true],\"id\":\"001\",\"value\":\"hello 001\"},{\"id\":\"002\",\"value\":\"hello 002\"}]}";
-        Tuz.load(new AbstractJSONLoader(jsonString) {
+        tuz.load(new AbstractJSONLoader(jsonString) {
             @Override
             public String namespace() {
                 return "program";
             }
         });
 
-        System.out.println(Tuz.use("content[0].arr")); // ===> [1,"非你莫属尽快发你说的",true]
+        System.out.println(tuz.use("content[0].arr")); // ===> [1,"非你莫属尽快发你说的",true]
     }
 }
 ```
@@ -248,7 +255,8 @@ public class TuzConfigDemo {
 
         // 我们先以 cn.com.fishin.tuz.demo.TuzSimpleDemo2 作为切入点
         // 先看原本的例子：
-        Tuz.load(new ClasspathPropertiesLoader("test.properties"));
+        Tuz tuz = Tuz.instance();
+        tuz.load(new ClasspathPropertiesLoader("test.properties"));
         //xxxService service = DiPlugin.useInstance(xxxService.class);
         //service.say("Hello, Tuz!");
 
@@ -262,7 +270,7 @@ public class TuzConfigDemo {
         // 获取类的实例形式，默认是 true，也就是单例模式
         //private boolean singleton = true;
         // 你可以直接设置 Tuz 中的默认配置，但是不被推荐
-        Tuz.getConfig().setSingleton(false);
+        tuz.getConfig().setSingleton(false);
 
         // 这样获得的对象就是多例模式的
         xxxService service3 = DiPlugin.useInstance(xxxService.class);
@@ -275,7 +283,7 @@ public class TuzConfigDemo {
         newConfig.setSingleton(true); // 设置为单例模式
 
         // 设置配置
-        Tuz.setConfig(newConfig);
+        tuz.setConfig(newConfig);
 
         // 这样获得的对象又是单例模式啦！
         xxxService service5 = DiPlugin.useInstance(xxxService.class);
@@ -305,7 +313,8 @@ public class TuzSpringBootDemo  {
     // 当然你也可以选择在 main 方法中初始化
     static {
         try {
-            Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+            Tuz tuz = Tuz.instance();
+            tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
         } catch (Throwable t) {
             // Do something...
             System.err.println(t.getMessage());
@@ -334,32 +343,7 @@ public class TuzSpringBootDemo  {
 }
 ```
 
-#### 6. 上传到 FTP 服务器
-```java
-public class FTPUploadDemo {
-
-    public static void main(String[] args) throws Throwable {
-
-        // 加载资源
-        Tuz.load(new ClasspathPropertiesLoader("test2.properties", "test2"));
-
-        // 注意：这个必须要在 load 方法执行之后执行，具体原因请查看
-        Tuz.init();
-
-        // 上传到 FTP 服务器
-        // 当然你可能会觉得这么使用很麻烦！
-        // 正常我们使用 FTP 上传的时候，多数是上传一个二进制文件
-        // 因此您可以直接使用 NetPlugin.
-        NetPlugin.uploadToServer(FTPUploadFileFactory.makeAsciiFile("YourDirection", "YourFile",
-                    IOHelper.newInputStreamToFileSystem("Z:/YourFile")));
-
-        // 如果您正在使用 Servlet 或者是 SpringMVC，您可以使用这个方法上传一个二进制文件
-        //NetPlugin.uploadBinaryToServer("YourDirection", "YourFile", multipartFile.getInputStream);
-    }
-}
-```
-
-#### 7. 使用拦截器拦截方法达到业务主次解耦
+#### 6. 使用拦截器拦截方法达到业务主次解耦
 ```java
 public class ProxySimpleDemo {
 
@@ -381,7 +365,8 @@ public class ProxySimpleDemo {
     public static void main(String[] args) throws Throwable {
 
         // 同样的，先加载资源文件，这样可以获取到具体的实现类
-        Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+        Tuz tuz = Tuz.instance();
+        tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 直接获取实现类，而不用注入实现类的细节
         xxxService service = DiPlugin.useInstance(xxxService.class);
@@ -408,8 +393,8 @@ public class ProxySimpleDemo {
         // 注意：当这个类可以被继承时，使用 CGlib 来实现动态代理
         // 如果不可以被继承，就使用 JDK 来动态代理，这时要求该类必须实现接口，而且使用接口来接收
         xxxService serviceProxy = ProxyPlugin.useInstance(xxxService.class, new Interceptor[]{
+                new CacheInterceptor(), // 缓存拦截器
                 new LogInterceptor(), // 日志拦截器
-                new CacheInterceptor() // 缓存拦截器
         });
 
         // 这是一个对比
@@ -462,7 +447,7 @@ public class ProxySimpleDemo {
 }
 ```
 
-#### 8. Redis 资源加载器
+#### 7. Redis 资源加载器
 ```java
 public class TuzSimpleDemo4 {
 
@@ -471,40 +456,38 @@ public class TuzSimpleDemo4 {
         // 使用 RedisLoader 来加载 Redis 上的资源
         // 注意这个加载操作其实并不是真的加载
         // 而只是创建一个连接池，每一次获取数据都从网络中获取
-        // 后面会考虑加入缓存，将得到的值暂时缓存，可以大幅度提高短时间大量读取的性能
-        // 注意：这里没有指定命名空间，默认使用 192.168.32.129:6379
-        // 如果你指定了数据库编号，那就默认为 192.168.32.129:6379[0]
-        final String namespace = "192.168.32.129:6379";
-        Tuz.load(new RedisLoader("192.168.32.129", 6379));
+        // 现在加入了缓存，将得到的值暂时缓存，可以大幅度提高短时间大量读取的性能
+        final String namespace = "192.168.32.131:6379";
+
+        Tuz tuz = Tuz.instance();
+
+        // 注意：
+        // 这里的 JedisRedisConnection 是需要您去实现的，由于每个人所使用的 redis 客户端不一样
+        // 所以这里没有去使用特定的一种客户端，让用户自己去实现，其实实现起来也很简单，就只需要实现特定的几个方法，
+        // 可以参考这里例子的 JedisRedisConnection 类
+        Loader redisLoader = new RedisLoader(namespace,
+                new JedisRedisConnection(new Jedis("192.168.32.131", 6379)));
+        tuz.load(redisLoader);
 
         // 下面你就可以像使用普通资源一样使用 redis 上的资源了
         // 你可以向资源池加入新资源
         // 也就是向 redis 中存储数据，比如你可以添加一对数据
         // 注意：这里指定命名空间为 192.168.32.129:6379
-        Tuz.appendResource("key", "哈哈哈", namespace);
+        tuz.appendResource(redisLoader, "key", "哈哈哈");
 
         // 当然，你可能想添加一堆数据
         // 这里可以使用批量添加，内部使用 pipeline 管道来批量新增，
         // 所以不用担心批量新增会造成大量网络堵塞
-        Tuz.appendResource(manyEntries(), namespace);
+        tuz.appendResource(redisLoader, manyEntries());
 
         // 当你确保已经存在数据时，就可以正常使用了
-        System.out.println("key ===> " + Tuz.use("key"));
-        System.out.println("key1 ===> " + Tuz.use("key1"));
-        System.out.println("key2 ===> " + Tuz.use("key2"));
-
-        // 当然，对于资源的管理，处理使用之外，还有写操作
-        // 比如，这个资源已经不需要了，就可以移除掉
-        System.out.println("key3 ===> " + Tuz.use("key3"));
-        System.out.println(Tuz.unUse("key3", namespace));
-        System.out.println("key3 ===> " + Tuz.use("key3"));
+        System.out.println("key ===> " + tuz.use("key"));
+        System.out.println("key1 ===> " + tuz.use("key1"));
+        System.out.println("key2 ===> " + tuz.use("key2"));
 
         // 如果你已经不需要使用这个资源库，就可以考虑卸载这个资源库了
-        Tuz.unLoad(namespace);
-        System.out.println("key ===> " + Tuz.use("key"));
-
-        // 释放资源
-        Tuz.destroy();
+        tuz.unLoad(redisLoader);
+        System.out.println("key ===> " + tuz.use("key"));
     }
 
     // 准备一堆数据
@@ -518,56 +501,14 @@ public class TuzSimpleDemo4 {
 }
 ```
 
-#### 9. 更多用法开发中，你也可以轻松定制自己的插件
+#### 8. 更多用法开发中，你也可以轻松定制自己的插件
 内置插件位于 `cn.com.fishin.tuz.plugin` 包下，常用的有 `DiPlugin` 依赖注入插件
 
 您可以参考这个插件的实现来定制自己的插件！
 
-目前内置两种资源加载器，你可以自定义自己的加载器，只需要简单实现 `cn.com.fishin.tuz.core.Loadable` 接口即可
+你可以自定义自己的加载器，只需要简单实现 `cn.com.fishin.tuz.core.Loader` 接口即可
 
 更多使用演示案例，请参见 test 模块下的 cn.com.fishin.tuz.demo
-
-## 方法说明 -- method book
-以下列举的仅仅是部分可供您使用的方法，还有一部分没有列举出来，可能需要您慢慢探索了:)
-The methods below are some of usable methods, the others need your discovery:)
-+ #### core 包（核心包）
-    + Tuz (Class)：核心系统
-        + 方法列表 ↓
-        + load：加载资源，初始化 Tuz
-        + use：使用资源，可以获取到加载过的资源
-        + useGracefully：优雅地使用资源，当找不到资源时返回自定义的默认值
-    + TuzConfig (Class)：配置类
-        + 方法列表 ↓
-        + isSingleton：获得类实例生成方式，默认是单例
-        + setSingleton：设置类实例生成方式，可选单例或多例
-    + Loadable (Interface)：加载器接口
-        + 方法列表 ↓
-        + namespace：获得命名空间
-        + load：加载资源
-    + Tuzable (Interface)：这是一个信仰，没有任何方法:)
-    
-+ #### helper 包（工具包）
-    + ClassHelper (Class)：类操作工具包
-        + 方法列表 ↓
-        + newInstance：生成类对象实例
-    + IOHelper (Class)：IO 操作工具包
-        + 方法列表 ↓
-        + newReader：获得一个指向某个资源的读取器
-        + newReaderToFileSystem：获得一个指向文件系统的某个资源的读取器
-        + newReaderToClasspath：获得一个指向类路径的某个资源的读取器
-        + getResourceFromFileSystem：获得一个指向文件系统的某个资源的路径
-        + getResourceFromClasspath：获得一个指向类路径的某个资源的路径
-    + LogHelper (Class)：日志操作工具包
-        + 方法列表 ↓
-        + 就常用的 debug/info/warn/error 等日志记录方法呗
-    + NameSpaceHelper (Class)：命名空间工具包
-        + 方法列表 ↓
-        + generateNameSpace：生成命名空间名字，默认从 1 开始生成
-    
-+ #### plugin 包（插件包）
-    + DiPlugin (Class)：依赖注入插件
-        + 方法列表 ↓
-        + useInstance：使用一个类对象实例
 
 ## 友情链接 -- as a friend
 + [王老板的奇思妙想](https://gitee.com/HappyChicken)
@@ -575,6 +516,12 @@ The methods below are some of usable methods, the others need your discovery:)
 + [软大师的吊儿郎当](https://gitee.com/mdaovo)
 
 ## 更新日志 -- update log
+#### *2019-9-13:*
+    1. 进行大幅度地简化和重构！！！
+    2. 移除 FTP 上传的功能，这个功能非常累赘，因为它，我都不想用这个库了
+    3. 将 Tuz 设置为不允许继承的，删除了大量无用的方法
+    4. 将 Redis 连接彻底抽离出去，需要用户自己实现一个连接适配器，但好处是避免了多余的依赖
+
 #### *2019-4-28:*
     1. 设计简单的 LRU 缓存，给 redis 加载器使用
     2. redis 加载器的一级缓存设计开发完毕，测试通过
@@ -633,5 +580,5 @@ The methods below are some of usable methods, the others need your discovery:)
 #### *2019-3-29:*
     1. 加入了依赖注入插件，参考 cn.com.fishin.tuz.plugin.DiPlugin
     2. 实现了文件系统资源加载器，可以从文件系统中加载资源文件了
-    3. 修改 cn.com.fishin.tuz.core.Loadable 接口，使得它具有命名空间的功能
+    3. 修改 cn.com.fishin.tuz.core.Loader 接口，使得它具有命名空间的功能
     4. 增加了 API 文档和多个代码演示例子，还调整了包结构

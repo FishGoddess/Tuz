@@ -1,6 +1,5 @@
 package cn.com.fishin.tuz.core;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -13,7 +12,7 @@ import java.util.Map;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/28 14:25:12</p>
  */
-public interface Loadable extends Tuzable {
+public interface Loader {
 
     /**
      * <p>获取这个加载资源的命名空间</p>
@@ -30,10 +29,9 @@ public interface Loadable extends Tuzable {
      * <p>Return a Map Collection, the key is the key, and the value is the attribute of the key</p>
      *
      * @return <p>注意这个集合的泛型是 &lt;String, Object&gt; 的</p>
-     *         <p>Notice: The map is String and Object</p>
-     *
-     * @throws IOException <p>找不到资源文件就会抛出这个异常</p>
+     * <p>Notice: The map is String and Object</p>
+     * @throws Throwable <p>找不到资源文件就会抛出这个异常</p>
      *                     <p>The resource is not found</p>
      */
-    Map<String, String> load() throws IOException;
+    Map<String, String> load() throws Throwable;
 }

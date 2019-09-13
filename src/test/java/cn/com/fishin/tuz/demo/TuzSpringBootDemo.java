@@ -22,7 +22,8 @@ public class TuzSpringBootDemo  {
     // 当然你也可以选择在 main 方法中初始化
     static {
         try {
-            Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+            Tuz tuz = Tuz.instance();
+            tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
         } catch (Throwable t) {
             // Do something...
             System.err.println(t.getMessage());

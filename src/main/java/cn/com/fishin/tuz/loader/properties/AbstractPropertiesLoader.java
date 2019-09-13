@@ -1,6 +1,6 @@
 package cn.com.fishin.tuz.loader.properties;
 
-import cn.com.fishin.tuz.core.Loadable;
+import cn.com.fishin.tuz.core.Loader;
 import cn.com.fishin.tuz.helper.LogHelper;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.util.Properties;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/28 15:35:30</p>
  */
-public abstract class AbstractPropertiesLoader implements Loadable {
+public abstract class AbstractPropertiesLoader implements Loader {
 
     /**
      * <p>这个方法留给子类实现</p>
@@ -35,7 +35,7 @@ public abstract class AbstractPropertiesLoader implements Loadable {
     protected AbstractPropertiesLoader() {}
 
     @Override
-    public Map<String, String> load() throws IOException {
+    public Map<String, String> load() throws Throwable {
         return properties2Map(loadProperties());
     }
 

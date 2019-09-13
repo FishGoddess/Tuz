@@ -1,12 +1,11 @@
 package cn.com.fishin.tuz.loader.json;
 
-import cn.com.fishin.tuz.core.Loadable;
+import cn.com.fishin.tuz.core.Loader;
 import cn.com.fishin.tuz.helper.LogHelper;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,14 +17,14 @@ import java.util.Map;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/04/22 15:29:40</p>
  */
-public abstract class AbstractJSONLoader implements Loadable {
+public abstract class AbstractJSONLoader implements Loader {
 
     // 存储一个 JSON 对象的容器
     // A container stores this json object
     private Map<String, String> jsonMap = new HashMap<>();
 
     @Override
-    public Map<String, String> load() throws IOException {
+    public Map<String, String> load() throws Throwable {
         // 日志输出
         LogHelper.info("Load resource ===> " + jsonMap);
         return jsonMap;

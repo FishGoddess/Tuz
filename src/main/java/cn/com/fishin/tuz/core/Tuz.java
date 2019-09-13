@@ -1,9 +1,8 @@
 package cn.com.fishin.tuz.core;
 
 import cn.com.fishin.tuz.helper.LogHelper;
-import cn.com.fishin.tuz.template.LockTemplate;
 
-import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -23,7 +22,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * </p>
  *
  * <pre>
- * Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+ * Tuz.instance().load(new ClasspathPropertiesLoader("test.properties", "test"));
  * </pre>
  *
  * <p>
@@ -31,11 +30,11 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * 不过，为了性能和正确性，还是建议您使用自定义的命名空间
  * 当你不指定命名空间时，就会使用文件名作为命名空间
  * </p>
- * Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
+ * Tuz.instance().load(new ClasspathPropertiesLoader("test2.properties"));
  *
  * <p>
  * 或者，您也可以使用另外一个加载器去加载文件系统中的资源文件
- * Tuz.load(new FileSystemPropertiesLoader("Z:/test.properties", "test"));
+ * Tuz.instance().load(new FileSystemPropertiesLoader("Z:/test.properties", "test"));
  * </p>
  *
  * <p>
@@ -47,14 +46,14 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * </p>
  *
  * <pre>
- * String number = Tuz.use("number", "test"); // ===&gt; 返回 16
+ * String number = Tuz.instance().use("number", "test"); // ===&gt; 返回 16
  * System.out.println(number);
  * </pre>
  *
  * <p>
  * 同样，您可以不指定命名空间，但是这不被推荐
  * 具体原因请看 cn.com.fishin.tuz.core.Tuz.use(java.lang.String)
- * String number = Tuz.use("number"); // ===&gt; 返回 16
+ * String number = Tuz.instance().use("number"); // ===&gt; 返回 16
  * </p>
  *
  * <p>Example 2: </p>
@@ -66,7 +65,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * </p>
  *
  * <pre>
- * Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+ * Tuz.instance().load(new ClasspathPropertiesLoader("test.properties", "test"));
  *
  * // 直接获取实现类，而不用注入实现类的细节
  * xxxService service = DiPlugin.useInstance("xxxService", "test", xxxService.class);
@@ -76,7 +75,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * <p>
  * 同样的，你可以不指定命名空间，但是，真的不推荐！！！
  * 注意这里的 xxxService 在配置文件中的 key 就是 xxxService
- * //Tuz.load(new ClasspathPropertiesLoader("test.properties"));
+ * //Tuz.instance().load(new ClasspathPropertiesLoader("test.properties"));
  * //xxxService service = DiPlugin.useInstance(xxxService.class);
  * //service.say("Hello, Tuz!");
  * </p>
@@ -85,24 +84,45 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/28 14:20:32</p>
  */
-public class Tuz {
+public final class Tuz {
 
+    // =========================== 使用内部类作单例 =============================
+    private static final class InstanceHolder {
+        static final Tuz INSTANCE = new Tuz();
+    }
+
+    // 禁止外部实例化
+    private Tuz() {
+    }
+
+    /**
+     * <p>获取 Tuz 的实例对象，如果你需要使用 Tuz，这个方法是必须被调用的</p>
+     * <p>Obtain the instance of Tuz, this method must be invoked if you use Tuz</p>
+     *
+     * @return <p>Tuz 实例对象</p><p>The instance of Tuz</p>
+     */
+    public static Tuz instance() {
+        return InstanceHolder.INSTANCE;
+    }
+    // =======================================================================
+
+    // ============================= 内部成员变量 ===============================
     // 存储所有资源文件，每一个元素都是一个资源文件
     // Store all resources, every element is a resource
-    private static final Map<String, Map<String, String>> resources = new HashMap<>();
+    private final Map<String, Map<String, String>> resources = new HashMap<>();
 
     // 原本使用 java.util.ConcurrentHashMap 来保证存储资源空间的线程安全
     // 但是下面的操作有多步，而且需要保证原子性，所以需要加锁，这时候使用 HashMap 性能会更高
     // At first, java.util.ConcurrentHashMap is used to provide thread safe
     // However, more than one step need atomicity, so lock is needing
     // This time HashMap is faster than ConcurrentHashMap
-    private static final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
-    private static final Lock readLock = readWriteLock.readLock();
-    private static final Lock writeLock = readWriteLock.writeLock();
+    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    private final Lock readLock = readWriteLock.readLock();
+    private final Lock writeLock = readWriteLock.writeLock();
 
     // 全局配置信息，拥有一个默认配置
     // Global Config, it has a default config
-    private static TuzConfig config = new TuzConfig();
+    private TuzConfig config = new TuzConfig();
 
     /**
      * <p>获取全局配置</p>
@@ -110,8 +130,8 @@ public class Tuz {
      *
      * @return <p>全局配置信息</p><p>Global config</p>
      */
-    public static TuzConfig getConfig() {
-        return config;
+    public TuzConfig getConfig() {
+        return this.config;
     }
 
     /**
@@ -121,84 +141,110 @@ public class Tuz {
      * @param config <p>全局配置信息</p>
      *               <p>Global config</p>
      */
-    public static void setConfig(TuzConfig config) {
-        Tuz.config = config;
+    public void setConfig(TuzConfig config) {
+        this.config = config;
+    }
+    // ========================================================================
+
+    // 返回这个加载器的命名空间
+    // Return the namespace of this loader
+    private String namespaceOf(Loader loader) {
+        return loader.namespace();
+    }
+
+    // 返回这个加载器加载的资源
+    // 加载资源有可能出现异常，所以需要抛出异常
+    // Return the resources loaded
+    // Load may fail so exception is needed
+    private Map<String, String> resourcesOf(Loader loader) throws Throwable {
+        return loader.load();
+    }
+
+    // 加载这个加载器的资源
+    // 加载资源有可能出现异常，所以需要抛出异常
+    // Load resources of this loader
+    // Load may fail so exception is needed
+    private void loadInternal(Loader loader) throws Throwable {
+        resources.put(namespaceOf(loader), resourcesOf(loader));
     }
 
     /**
-     * <p>加载一个资源文件</p>
-     * <p>Load a resource</p>
+     * <p>加载一个加载器里面的资源</p>
+     * <p>Load resources of loader</p>
      *
-     * @param resource <p>要被加载的资源文件</p>
-     *                 <p>The resource to be loaded</p>
-     * @throws Throwable <p>找不到资源文件就会抛出这个异常</p>
-     *                   <p>The resource is not found</p>
+     * @param loader <p>资源所在的加载器</p>
+     *               <p>The loader to be loaded</p>
+     * @throws Throwable <p>加载出现问题就会抛出这个异常</p>
+     *                   <p>Load failed will cause exception</p>
      */
-    public static void load(Loadable resource) throws Throwable {
-        new LockTemplate<Void>().lockWith(writeLock, () -> {
-            resources.put(resource.namespace(), resource.load());
-            return null;
-        });
+    public void load(Loader loader) throws Throwable {
+        writeLock.lock();
+        try {
+            loadInternal(loader);
+        } finally {
+            writeLock.unlock();
+        }
 
         // 日志输出
-        LogHelper.debug("Namespace [" + resource.namespace() + "] is loaded!");
+        LogHelper.debug("Loader [" + namespaceOf(loader) + "] is loaded!");
     }
 
     /**
-     * <p>卸载一个资源文件</p>
-     * <p>UnLoad a resource</p>
+     * <p>卸载一个加载器</p>
+     * <p>UnLoad a loader</p>
      *
-     * @param resource <p>要被卸载的资源文件</p>
-     *                 <p>The resource to be unloaded</p>
-     * @throws Throwable <p>找不到资源文件就会抛出这个异常</p>
-     *                   <p>The resource is not found</p>
+     * @param loader <p>要被卸载的加载器</p>
+     *               <p>The loader to be unloaded</p>
      */
-    public static void unLoad(Loadable resource) throws Throwable {
-        unLoad(resource.namespace());
+    public void unLoad(Loader loader) {
+        writeLock.lock();
+        try {
+            resources.remove(namespaceOf(loader)); // 然后再移除资源库
+        } finally {
+            writeLock.unlock();
+        }
+
+        // 日志输出
+        LogHelper.debug("Loader [" + namespaceOf(loader) + "] is unloaded!");
     }
 
     /**
-     * <p>卸载一个命名空间</p>
-     * <p>UnLoad a namespace</p>
+     * <p>往指定的 loader 中添加新的资源</p>
+     * <p>Add new resources to the pointed loader</p>
      *
-     * @param namespace <p>要被卸载的命名空间</p>
-     *                  <p>The namespace to be unloaded</p>
-     * @throws Throwable <p>找不到资源文件就会抛出这个异常</p>
-     *                   <p>The resource is not found</p>
+     * @param targetLoader <p>指定的加载器，用于区分不同的资源</p>
+     *                     <p>Appointed loader to different resource</p>
+     * @param newResources <p>新添加的资源</p>
+     *                     <p>The resources to be appended</p>
      */
-    public static void unLoad(String namespace) throws Throwable {
-        new LockTemplate<Void>().lockWith(writeLock, () -> {
-            if (resources.containsKey(namespace)) {
-                resources.get(namespace).clear(); // 清除数据，方便 GC 回收
-                resources.remove(namespace); // 然后再移除资源库
+    public void appendResource(Loader targetLoader, Map<String, String> newResources) {
+        writeLock.lock();
+        try {
+            if (resources.containsKey(namespaceOf(targetLoader))) {
+                resources.get(namespaceOf(targetLoader)).putAll(newResources);
+
+                // 日志输出
+                LogHelper.debug("Resources " + newResources +
+                        " is appended to loader [ " + namespaceOf(targetLoader) + " ] !");
             }
-            return null;
-        });
-
-        // 日志输出
-        LogHelper.debug("Namespace [" + namespace + "] is unloaded!");
+        } finally {
+            writeLock.unlock();
+        }
     }
 
     /**
-     * <p>重新载入一个资源文件</p>
-     * <p>ReLoad a resource</p>
+     * <p>往指定的 loader 中添加新的资源</p>
+     * <p>Add new resources to the pointed loader</p>
      *
-     * @param resource <p>要被重新载入的资源文件</p>
-     *                 <p>The resource to be reloaded</p>
-     * @throws Throwable <p>找不到资源文件就会抛出这个异常</p>
-     *                     <p>The resource is not found</p>
+     * @param targetLoader <p>指定的加载器，用于区分不同的资源</p>
+     *                     <p>Appointed loader to different resource</p>
+     * @param key          <p>新添加的资源 key</p>
+     *                     <p>The key of resource to be appended</p>
+     * @param value        <p>新添加的资源 value</p>
+     *                     <p>The value of resource to be appended</p>
      */
-    public static void reLoad(Loadable resource) throws Throwable {
-        new LockTemplate<Void>().lockWith(writeLock, () -> {
-            if (resources.containsKey(resource.namespace())) {
-                resources.get(resource.namespace()).clear(); // 清除数据，方便 GC 回收
-            }
-            resources.put(resource.namespace(), resource.load());
-            return null;
-        });
-
-        // 日志输出
-        LogHelper.debug("Namespace [" + resource.namespace() + "] is reloaded!");
+    public void appendResource(Loader targetLoader, String key, String value) {
+        appendResource(targetLoader, Collections.singletonMap(key, value));
     }
 
     /**
@@ -212,102 +258,8 @@ public class Tuz {
      * @return <p>返回获取到的资源值，找不到返回 null</p>
      * <p>Return the value of the key, null if not found</p>
      */
-    public static String use(String key, String namespace) {
+    public String use(String key, String namespace) {
         return useGracefully(key, namespace, null);
-    }
-
-    /**
-     * <p>移除指定的 namespace 的资源值</p>
-     * <p>Remove the value of the namespace's key</p>
-     *
-     * @param key       <p>指定资源值的 key</p>
-     *                  <p>The key of the value</p>
-     * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
-     *                  <p>Appointed namespace to different resource</p>
-     * @throws Throwable <p>找不到资源文件就会抛出这个异常</p>
-     *                     <p>The resource is not found</p>
-     * @return <p>返回移除前的资源值，找不到返回 null</p>
-     * <p>Return the value of the removed key, null if not found</p>
-     */
-    public static String unUse(String key, String namespace) throws Throwable {
-        return new LockTemplate<String>().lockWith(
-                writeLock,
-                () -> resources.containsKey(namespace) ? resources.get(namespace).remove(key) : null
-        );
-    }
-
-    /**
-     * <p>往指定的 namespace 中添加新的资源值</p>
-     * <p>Add one value to the pointed namespace</p>
-     *
-     * @param resource  <p>要被添加的资源值</p>
-     *                  <p>The resource to be appended</p>
-     * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
-     *                  <p>Appointed namespace to different resource</p>
-     * @throws Throwable <p>找不到资源文件就会抛出这个异常</p>
-     *                     <p>The resource is not found</p>
-     */
-    public static void appendResource(Map<String, String> resource, String namespace) throws Throwable {
-        new LockTemplate<Void>().lockWith(writeLock, () -> {
-            if (resources.containsKey(namespace)) {
-                resources.get(namespace).putAll(resource);
-
-                // 日志输出
-                LogHelper.debug("Resource " + resource + " is appended to namespace [ " + namespace + " ] !");
-            }
-            return null;
-        });
-    }
-
-    /**
-     * <p>往指定的 namespace 中添加新的资源值</p>
-     * <p>Add one value to the pointed namespace</p>
-     *
-     * @param key       <p>要被添加的资源的 key</p>
-     *                  <p>The key of resource to be appended</p>
-     * @param value     <p>要被添加的资源值</p>、
-     *                  <p>The resource to be appended</p>
-     * @param namespace <p>指定的命名空间，用于区分不同的资源文件</p>
-     *                  <p>Appointed namespace to different resource</p>
-     * @throws Throwable <p>找不到资源文件就会抛出这个异常</p>
-     *                     <p>The resource is not found</p>
-     */
-    public static void appendResource(String key, String value, String namespace) throws Throwable {
-        new LockTemplate<Void>().lockWith(writeLock, () -> {
-            if (resources.containsKey(namespace)) {
-                resources.get(namespace).put(key, value);
-
-                // 日志输出
-                LogHelper.debug("Resource {" + key + "=" + value + "} is appended to namespace [ " + namespace + " ] !");
-            }
-            return null;
-        });
-    }
-
-    /**
-     * <p>获取指定 key 的属性值</p>
-     * <p>Fetch the value of the key</p>
-     *
-     * @param key          <p>指定的 key</p>
-     *                     <p>The key of the value</p>
-     * @param namespace    <p>指定的命名空间，用于区分不同的资源文件</p>
-     *                     <p>Appointed namespace to different resource</p>
-     * @param defaultValue <p>如果找不到这个 key 返回的默认值</p>
-     *                     <p>If the key is not found, return defaultValue</p>
-     * @return <p>返回获取到的属性值，找不到返回 null</p>
-     * <p>Return the value of the key, null if not found</p>
-     */
-    public static String useGracefully(String key, String namespace, String defaultValue) {
-        try {
-            return new LockTemplate<String>().lockWith(
-                    readLock,
-                    () -> resources.containsKey(namespace) ? resources.get(namespace).get(key) : defaultValue
-            );
-        } catch (Throwable t) {
-            // 日志记录
-            LogHelper.error(t.getMessage(), t);
-            return defaultValue;
-        }
     }
 
     /**
@@ -334,8 +286,33 @@ public class Tuz {
      * @return <p>返回获取到的属性值，找不到返回 null</p>
      * <p>Return the value of the key, null if not found</p>
      */
-    public static String use(String key) {
+    public String use(String key) {
         return useGracefully(key, null);
+    }
+
+    /**
+     * <p>获取指定 key 的属性值</p>
+     * <p>Fetch the value of the key</p>
+     *
+     * @param key          <p>指定的 key</p>
+     *                     <p>The key of the value</p>
+     * @param namespace    <p>指定的命名空间，用于区分不同的资源文件</p>
+     *                     <p>Appointed namespace to different resource</p>
+     * @param defaultValue <p>如果找不到这个 key 返回的默认值</p>
+     *                     <p>If the key is not found, return defaultValue</p>
+     * @return <p>返回获取到的属性值，找不到返回 null</p>
+     * <p>Return the value of the key, null if not found</p>
+     */
+    public String useGracefully(String key, String namespace, String defaultValue) {
+        readLock.lock();
+        try {
+            if (resources.containsKey(namespace)) {
+                return resources.get(namespace).get(key);
+            }
+            return defaultValue;
+        } finally {
+            readLock.unlock();
+        }
     }
 
     /**
@@ -364,66 +341,21 @@ public class Tuz {
      * @return <p>返回获取到的属性值，找不到返回 null</p>
      * <p>Return the value of the key, null if not found</p>
      */
-    public static String useGracefully(String key, String defaultValue) {
+    public String useGracefully(String key, String defaultValue) {
+        readLock.lock();
         try {
-            return new LockTemplate<String>().lockWith(readLock, () -> {
-                // 由于没有指定命名空间，所以需要遍历所有命名空间
-                for (String namespace : resources.keySet()) {
-
-                    Map<String, String> resource = resources.get(namespace);
-                    if (resource.containsKey(key)) {
-                        return resource.get(key);
-                    }
+            // 由于没有指定命名空间，所以需要遍历所有命名空间
+            for (Map.Entry<String, Map<String, String>> entries : resources.entrySet()) {
+                Map<String, String> resource = entries.getValue();
+                if (resource.containsKey(key)) {
+                    return resource.get(key);
                 }
+            }
 
-                // 找不到返回 null
-                return defaultValue;
-            });
-        } catch (Throwable throwable) {
-            LogHelper.error(throwable.getMessage(), throwable);
+            // 找不到返回 defaultValue
             return defaultValue;
-        }
-    }
-
-    /**
-     * <p>重新载入默认配置</p>
-     * <p>当你更改了 Tuz 的配置之后，希望回到最原始的默认配置</p>
-     * <p>另外，这里也可以解决一下一些问题，比如，在使用 NetPlugin 的时候，</p>
-     * <p>由于 config 的加载早于 load 方法执行，所以会导致默认配置有些找不到，</p>
-     * <p>当你也遇到类似的问题时，可以尝试在执行 load 方法之后，执行一下这个方法！</p>
-     * <p>Reload default config</p>
-     * <p>If change config of Tuz, and you want it back to default.</p>
-     * <p>Also, some problems happen because load method is back of initializing config.</p>
-     * <p>So, if you have some problems with this config,
-     * try to invoke this method after invoking load()</p>
-     */
-    public static void init() {
-        try {
-            new LockTemplate<Void>().lockWith(writeLock, () -> {
-                config = new TuzConfig();
-                return null;
-            });
-        } catch (Throwable t) {
-            LogHelper.error(t.getMessage(), t);
-        }
-    }
-
-    /**
-     * <p>清除一切已经加载的资源</p>
-     * <p>建议在程序关闭时调用！！！</p>
-     * <p>Clear all resources</p>
-     * <p>You should invoke this method before closing program</p>
-     */
-    public static void destroy() {
-        try {
-            new LockTemplate<Void>().lockWith(writeLock, () -> {
-                for (String namespace : resources.keySet()) {
-                    resources.get(namespace).clear();
-                }
-                return null;
-            });
-        } catch (Throwable t) {
-            LogHelper.error(t.getMessage(), t);
+        } finally {
+            readLock.unlock();
         }
     }
 }

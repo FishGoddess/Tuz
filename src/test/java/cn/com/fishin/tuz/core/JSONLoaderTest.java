@@ -16,10 +16,13 @@ import java.nio.charset.StandardCharsets;
  */
 public class JSONLoaderTest {
 
+    // Tuz 实例
+    private Tuz tuz = Tuz.instance();
+
     @Before
     public void before() {
         try {
-            Tuz.load(new ClasspathJSONLoader("test.json", "test", StandardCharsets.UTF_8));
+            tuz.load(new ClasspathJSONLoader("test.json", "test", StandardCharsets.UTF_8));
         } catch (Throwable t) {
             System.err.println(t.getMessage());
         }
@@ -52,22 +55,22 @@ public class JSONLoaderTest {
      */
     @Test
     public void testJSON() {
-        Assert.assertEquals(Tuz.use("status"), "0");
-        Assert.assertEquals(Tuz.use("status", "test"), "0");
-        Assert.assertNull(Tuz.use("status", "test2"));
-        Assert.assertEquals(Tuz.use("message"), "success");
-        Assert.assertEquals(Tuz.use("ok"), "true");
-        Assert.assertEquals(Tuz.use("data.title.id"), "001");
-        Assert.assertEquals(Tuz.use("data.title.name"), "test");
-        Assert.assertEquals(Tuz.use("data.title.null"), "{}");
-        Assert.assertEquals(Tuz.use("data.content[0].id"), "001");
-        Assert.assertEquals(Tuz.use("data.content[0].value"), "hello 001");
-        Assert.assertEquals(Tuz.use("data.content[0].arr[0]"), "1");
-        Assert.assertEquals(Tuz.use("data.content[0].arr[1]"), "非你莫属尽快发你说的");
-        Assert.assertEquals(Tuz.use("data.content[0].arr[2]"), "true");
-        Assert.assertEquals(Tuz.use("data.content[1].id"), "002");
-        Assert.assertEquals(Tuz.use("data.content[1].value"), "hello 002");
+        Assert.assertEquals(tuz.use("status"), "0");
+        Assert.assertEquals(tuz.use("status", "test"), "0");
+        Assert.assertNull(tuz.use("status", "test2"));
+        Assert.assertEquals(tuz.use("message"), "success");
+        Assert.assertEquals(tuz.use("ok"), "true");
+        Assert.assertEquals(tuz.use("data.title.id"), "001");
+        Assert.assertEquals(tuz.use("data.title.name"), "test");
+        Assert.assertEquals(tuz.use("data.title.null"), "{}");
+        Assert.assertEquals(tuz.use("data.content[0].id"), "001");
+        Assert.assertEquals(tuz.use("data.content[0].value"), "hello 001");
+        Assert.assertEquals(tuz.use("data.content[0].arr[0]"), "1");
+        Assert.assertEquals(tuz.use("data.content[0].arr[1]"), "非你莫属尽快发你说的");
+        Assert.assertEquals(tuz.use("data.content[0].arr[2]"), "true");
+        Assert.assertEquals(tuz.use("data.content[1].id"), "002");
+        Assert.assertEquals(tuz.use("data.content[1].value"), "hello 002");
 
-        System.out.println(Tuz.use("data.title"));
+        System.out.println(tuz.use("data.title"));
     }
 }

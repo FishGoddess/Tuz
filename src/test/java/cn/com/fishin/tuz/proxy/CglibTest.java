@@ -23,7 +23,8 @@ public class CglibTest {
     @Before
     public void before() {
         try {
-            Tuz.load(new ClasspathPropertiesLoader("test2.properties"));
+            Tuz tuz = Tuz.instance();
+            tuz.load(new ClasspathPropertiesLoader("test2.properties"));
         } catch (Throwable t) {
             System.err.println(t.getMessage());
         }

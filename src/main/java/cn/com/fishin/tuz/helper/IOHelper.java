@@ -20,14 +20,14 @@ import java.util.stream.Collectors;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/30 00:24:19</p>
  */
-public class IOHelper {
+public final class IOHelper {
 
     /**
      * <p>根据指定路径获取一个资源输入流</p>
      * <p>Get a inputStream from given path</p>
      *
-     * @param path    <p>指定的路径</p>
-     *                <p>Given path</p>
+     * @param path <p>指定的路径</p>
+     *             <p>Given path</p>
      * @return <p>返回读取器</p><p>Return inputStream</p>
      * @throws IOException <p>获取资源输入流异常</p><p>Get inputStream failed</p>
      */
@@ -65,12 +65,10 @@ public class IOHelper {
      * <p>根据指定路径获取一个资源读取器</p>
      * <p>Get a reader from given path</p>
      *
-     * @param path <p>指定的路径</p>
-     *             <p>Given path</p>
-     *
+     * @param path    <p>指定的路径</p>
+     *                <p>Given path</p>
      * @param charset <p>字符集</p>
      *                <p>Charset</p>
-     *
      * @return <p>返回读取器</p><p>Return reader</p>
      * @throws IOException <p>获取读取器异常</p><p>Get reader failed</p>
      */
@@ -140,7 +138,6 @@ public class IOHelper {
      *
      * @param resource <p>文件系统中的资源</p>
      *                 <p>The resource of file system</p>
-     *
      * @return <p>返回指向文件系统中这个资源的路径对象</p>
      * <p>Return a path to this resource in file system</p>
      */
@@ -156,8 +153,8 @@ public class IOHelper {
      *
      * @param resource <p>要被读取的文件路径</p>
      *                 <p>The path of this file</p>
-     * @param charset <p>读取使用的字符集</p>
-     *                <p>The charset of this file</p>
+     * @param charset  <p>读取使用的字符集</p>
+     *                 <p>The charset of this file</p>
      * @return <p>返回这个文件的全部字符</p><p>Return all chars in this file</p>
      */
     public static String linesOf(Path resource, Charset charset) {
@@ -167,6 +164,6 @@ public class IOHelper {
         } catch (IOException e) {
             LogHelper.error(e.getMessage(), e);
         }
-        return "{}";
+        return null;
     }
 }

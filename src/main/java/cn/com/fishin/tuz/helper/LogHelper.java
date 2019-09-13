@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * <p>Email: fishinlove@163.com</p>
  * <p>created by 2019/03/28 16:29:20</p>
  */
-public class LogHelper {
+public final class LogHelper {
 
     // 实际上这个代码应该每个类都有的，但是这里为了方便，就直接使用这个类
     // 为了方便切换日志模块

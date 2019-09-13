@@ -20,7 +20,8 @@ public class TuzSimpleDemo {
         // test 是命名空间，后面一个是资源加载器
         // "test.properties" 文件中有一个属性：number=16
 
-        Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+        Tuz tuz = Tuz.instance();
+        tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 当然，你也可以不指定命名空间，内部会自动生成一个命名空间
         // 不过，为了性能和正确性，还是建议您使用自定义的命名空间
@@ -37,7 +38,7 @@ public class TuzSimpleDemo {
         // API: use(String key, String namespace)
         // 其中上面的代码中 number 是资源名字，test 是命名空间
 
-        String number = Tuz.use("number", "test"); // ===> 返回 16
+        String number = tuz.use("number", "test"); // ===> 返回 16
         System.out.println(number);
 
         // 同样，您可以不指定命名空间，但是这不被推荐

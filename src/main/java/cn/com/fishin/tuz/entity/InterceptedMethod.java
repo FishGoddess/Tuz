@@ -16,10 +16,24 @@ import java.util.Arrays;
  */
 public class InterceptedMethod {
 
+    // 执行这个方法的对象
+    // The object who executes the method
     private Object executingObject = null;
+
+    // 这个方法对象
+    // The method itself
     private Method thisMethod = null;
+
+    // 执行方法的参数，可能为空
+    // The arguments passed, maybe null
     private Object[] args = null;
+
+    // 方法执行的结果，可能为空
+    // The result returned, maybe null
     private Object result = null;
+
+    // 方法执行的异常，可能为空
+    // The exception happened, maybe null
     private Exception exception = null;
 
     public InterceptedMethod() {}

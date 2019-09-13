@@ -25,7 +25,6 @@ import java.util.Properties;
  * </p>
  * <p>
  *
- * @see InputStreamPropertiesLoader
  *
  * @author Fish
  * <p>Email: fishinlove@163.com</p>

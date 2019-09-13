@@ -19,7 +19,8 @@ public class TuzConfigDemo {
 
         // 我们先以 cn.com.fishin.tuz.demo.TuzSimpleDemo2 作为切入点
         // 先看原本的例子：
-        Tuz.load(new ClasspathPropertiesLoader("test.properties"));
+        Tuz tuz = Tuz.instance();
+        tuz.load(new ClasspathPropertiesLoader("test.properties"));
         //xxxService service = DiPlugin.useInstance(xxxService.class);
         //service.say("Hello, Tuz!");
 
@@ -33,7 +34,7 @@ public class TuzConfigDemo {
         // 获取类的实例形式，默认是 true，也就是单例模式
         //private boolean singleton = true;
         // 你可以直接设置 Tuz 中的默认配置，但是不被推荐
-        Tuz.getConfig().setSingleton(false);
+        tuz.getConfig().setSingleton(false);
 
         // 这样获得的对象就是多例模式的
         xxxService service3 = DiPlugin.useInstance(xxxService.class);
@@ -46,7 +47,7 @@ public class TuzConfigDemo {
         newConfig.setSingleton(true); // 设置为单例模式
 
         // 设置配置
-        Tuz.setConfig(newConfig);
+        tuz.setConfig(newConfig);
 
         // 这样获得的对象又是单例模式啦！
         xxxService service5 = DiPlugin.useInstance(xxxService.class);

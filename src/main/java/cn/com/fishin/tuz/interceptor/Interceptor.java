@@ -6,6 +6,9 @@ import cn.com.fishin.tuz.entity.InterceptedMethod;
  * <p>拦截器接口</p>
  * <p>这个拦截器可以拦截到对象的所有方法，进行业务的主次解耦</p>
  * <p>建议直接使用默认的拦截器，选择性覆盖方法</p>
+ * <p>注意：</p>
+ * <p>如果 before 层级的拦截器返回 false，那么 after 级别的拦截器是不会被执行的
+ * 但是 afterReturning 是可以被执行的</p>
  *
  * @author Fish
  * <p>Email: fishinlove@163.com</p>
@@ -15,6 +18,11 @@ import cn.com.fishin.tuz.entity.InterceptedMethod;
  * <p>Interceptor interface</p>
  * <p>It will intercept all methods in an object</p>
  * <p>You may use default interceptor, and override methods seletively</p>
+ * <p>Attention:</p>
+ * <p>
+ * If level before return false, then level after will not be executed,
+ * but level afterReturning will
+ * </p>
  * @see DefaultInterceptor
  */
 public interface Interceptor {
@@ -35,7 +43,6 @@ public interface Interceptor {
      * <p>cn.com.fishin.tuz.entity.InterceptedMethod#setResult(java.lang.Object), </p>
      * <p>and return false to prevent invoking intercepted method</p>
      *
-     *
      * @param method <p>被拦截方法的信息</p><p>Intercepted method</p>
      * @return <p>true 允许下一个拦截器继续执行，false 反之</p><p>true allow next interceptor invoking</p>
      * @see cn.com.fishin.tuz.entity.InterceptedMethod#setResult(java.lang.Object)
@@ -55,7 +62,6 @@ public interface Interceptor {
      * <p>If you want the result of intercepted method, </p>
      * <p>call cn.com.fishin.tuz.entity.InterceptedMethod#getResult().</p>
      * <p>return false to prevent invoking next interceptor</p>
-     *
      *
      * @param method <p>被拦截方法的信息</p><p>Intercepted method</p>
      * @return <p>true 允许下一个拦截器继续执行，false 反之</p><p>true allow next interceptor invoking</p>
@@ -78,7 +84,6 @@ public interface Interceptor {
      * <p>so if you want to return a result, you should set the result by invoking </p>
      * <p>cn.com.fishin.tuz.entity.InterceptedMethod#setResult(java.lang.Object). </p>
      * <p>return false to prevent invoking intercepted method</p>
-     *
      *
      * @param method <p>被拦截方法的信息</p><p>Intercepted method</p>
      * @return <p>true 允许下一个拦截器继续执行，false 反之</p><p>true allow next interceptor invoking</p>

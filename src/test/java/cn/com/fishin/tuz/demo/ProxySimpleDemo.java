@@ -33,7 +33,8 @@ public class ProxySimpleDemo {
     public static void main(String[] args) throws Throwable {
 
         // 同样的，先加载资源文件，这样可以获取到具体的实现类
-        Tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
+        Tuz tuz = Tuz.instance();
+        tuz.load(new ClasspathPropertiesLoader("test.properties", "test"));
 
         // 直接获取实现类，而不用注入实现类的细节
         xxxService service = DiPlugin.useInstance(xxxService.class);
@@ -60,8 +61,8 @@ public class ProxySimpleDemo {
         // 注意：当这个类可以被继承时，使用 CGlib 来实现动态代理
         // 如果不可以被继承，就使用 JDK 来动态代理，这时要求该类必须实现接口，而且使用接口来接收
         xxxService serviceProxy = ProxyPlugin.useInstance(xxxService.class, new Interceptor[]{
+                new CacheInterceptor(), // 缓存拦截器
                 new LogInterceptor(), // 日志拦截器
-                new CacheInterceptor() // 缓存拦截器
         });
 
         // 这是一个对比

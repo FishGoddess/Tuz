@@ -94,7 +94,7 @@ public class ProxyPlugin {
      * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
      */
     public static <T> T useInstance(Class<T> classType, Interceptor[] interceptors) {
-        return useInstance(classType, Tuz.getConfig().isSingleton(), interceptors);
+        return useInstance(classType, Tuz.instance().getConfig().isSingleton(), interceptors);
     }
 
     /**
@@ -141,7 +141,7 @@ public class ProxyPlugin {
      * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
      */
     public static <T> T useInstance(String key, Class<T> classType, Interceptor[] interceptors) {
-        return useInstance(key, classType, Tuz.getConfig().isSingleton(), interceptors);
+        return useInstance(key, classType, Tuz.instance().getConfig().isSingleton(), interceptors);
     }
 
     /**
@@ -192,7 +192,7 @@ public class ProxyPlugin {
      * @return <p>返回得到的类被拦截器代理之后的实例</p><p>Return class instance after intercepting</p>
      */
     public static <T> T useInstance(String key, String namespace, Class<T> classType, Interceptor[] interceptors) {
-        return useInstance(key, namespace, classType, Tuz.getConfig().isSingleton(), interceptors);
+        return useInstance(key, namespace, classType, Tuz.instance().getConfig().isSingleton(), interceptors);
     }
 
     // 单例模式生成类代理实例，并缓存起来
