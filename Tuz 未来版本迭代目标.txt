@@ -1,0 +1,13 @@
+Tuz 未来版本更迭目标：
+
+1.1.0 版本：
+
+    1. 删除 TuzConfig 的配置，本身 Tuz 不需要配置。目前 TuzConfig 中的配置都是 plugin 里面用到的，应该交给 plugin 自己管。
+    2. 新增一个 StringJsonLoader，继承 AbstractJsonLoader，然后可以直接支持传递一个 String 字符串。
+    3. 让 JSON 支持 # 开头的注释，配置文件更有可读性。
+    4. 移除 slf4j 和 logback 日志模块，改用 JDK 自带的 juc 记录日志（我是极简主义者~~）。
+
+    
+1.1.1 版本：
+
+    1. 明确资源管理和容器的概念，对目前的 DiPlugin 和 ProxyPlugin 进行重构。
