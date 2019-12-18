@@ -6,6 +6,7 @@ Tuz 未来版本更迭目标：
     2. 新增一个 StringJsonLoader，继承 AbstractJsonLoader，然后可以直接支持传递一个 String 字符串。
     3. 让 JSON 支持 # 开头的注释，配置文件更有可读性。
     4. 移除 slf4j 和 logback 日志模块，改用 JDK 自带的 logging 记录日志（我是极简主义者~~）。
+       （另外，还是需要封装一个 LogHelper，考虑使用 Thread.getStackTrace 方法来获取具体调用方。至于这个方法可能带来的性能问题，有一句话概括的很好：Premature Optimization is the root of all evil :)。而且可以提供一个日志的开关，这样就可以避免这个方法的调用）
     5. 删除不用写命名空间的方法，精确获取配置，避免配置获取错误，也算是简化使用方式。
 
     
