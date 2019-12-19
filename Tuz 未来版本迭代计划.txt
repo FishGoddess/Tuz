@@ -24,7 +24,7 @@ Tuz 未来版本更迭目标：
 
 1.0.6 版本：
 
-    1. 移除 slf4j 和 logback 日志模块，改用 JDK 自带的 logging 记录日志（我是极简主义者~~）。
+    1. 移除 slf4j 和 logback 日志模块，改用 JDK 自带的 logging 记录日志或者自己写一个日志系统（我是极简主义者~~）。
        （另外，还是需要封装一个 LogHelper，考虑使用 Thread.getStackTrace 方法来获取具体调用方）
        （至于这个方法可能带来的性能问题，有一句话概括的很好：Premature Optimization is the root of all evil :)）
        （而且可以提供一个日志的开关，这样就可以避免这个方法的调用）
