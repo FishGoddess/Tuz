@@ -4,10 +4,11 @@ Tuz 未来版本更迭目标：
 
     1. 新增一个 StringJsonLoader，继承 AbstractJsonLoader，然后可以直接支持传递一个 String 字符串。
     2. 让 JSON 支持 # 开头的注释，配置文件更有可读性。
+    3. 废弃 TuzConfig 的配置，本身 Tuz 不需要配置。目前 TuzConfig 中的配置都是 plugin 里面用到的，应该交给 plugin 自己管。
 
 1.0.2 版本：
 
-    1. 标记不用写命名空间的方法为 Deprecated 的，后续要精确获取配置，避免配置获取错误，也算是简化使用方式。
+    1. 将不用写命名空间的方法标记为 Deprecated 的，后续要精确获取配置，避免配置获取错误，也算是简化使用方式。
     2. 对 redis 加载器进行必要性核查，有可能会被标记为 Deprecated 的，因为它涉及到具体实现了，这应该是由用户决定的。
     
 1.0.3 版本：
@@ -29,12 +30,8 @@ Tuz 未来版本更迭目标：
        （至于这个方法可能带来的性能问题，有一句话概括的很好：Premature Optimization is the root of all evil :)）
        （而且可以提供一个日志的开关，这样就可以避免这个方法的调用）
 
-1.0.7 版本：
-
-    1. 废弃 TuzConfig 的配置，本身 Tuz 不需要配置。目前 TuzConfig 中的配置都是 plugin 里面用到的，应该交给 plugin 自己管。
-
 1.1.0 版本：
 
     1. 明确资源管理和容器的概念
-    2. 对目前的 DiPlugin 和 ProxyPlugin 进行重构。
+    2. 对目前的 DiPlugin 和 ProxyPlugin 进行重构。考虑使用 JDK SPI 来实现依赖注入（但是只能针对接口？？？）。
     
