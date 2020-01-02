@@ -33,5 +33,5 @@ Tuz 未来版本更迭目标：
 1.1.0 版本：
 
     1. 明确资源管理和容器的概念
-    2. 对目前的 DiPlugin 和 ProxyPlugin 进行重构。考虑使用 JDK SPI 来实现依赖注入（但是只能针对接口？？？）。
+    2. 对目前的 DiPlugin 和 ProxyPlugin 进行重构。考虑使用 JDK SPI 来实现依赖注入（但是必须写 SPI 文件了）。
     
