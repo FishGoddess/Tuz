@@ -37,7 +37,7 @@
 ---
 + #### Tuz 官网：[http://www.fishgoddess.cn/tuz/](http://www.fishgoddess.cn/tuz/)
 
-+ #### 联系方式：fishinlove@163.com
++ #### 联系方式：fishgoddess@qq.com
 
 + #### 开源协议：[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 ---
